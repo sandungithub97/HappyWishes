@@ -1,26 +1,68 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html,
+body {
+  min-height: 100%;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+::selection {
+  background: var(--hw-accent, #e8d5a3);
+  color: var(--hw-secondary, #2c2416);
+}
+
+.hw-grain {
+  opacity: 0.22;
+  background-image: radial-gradient(
+    rgba(44, 36, 22, 0.2) 0.55px,
+    transparent 0.55px
+  );
+  background-size: 3px 3px;
+}
+
+@keyframes hw-bar {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.hw-bar {
+  display: inline-block;
+  animation: hw-bar 0.65s ease-in-out infinite;
+}
+
+@keyframes hw-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--hw-tilt, -8deg));
+  }
+  50% {
+    transform: translateY(-14px) rotate(var(--hw-tilt-end, 8deg));
+  }
+}
+
+.hw-float {
+  animation: hw-float 3.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hw-bar,
+  .hw-float {
+    animation: none;
+  }
 }
