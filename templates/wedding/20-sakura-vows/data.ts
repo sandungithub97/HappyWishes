@@ -61,8 +61,8 @@ const data: TemplateData = {
         alt: "Cherry blossoms",
       },
       {
-        src: "https://images.unsplash.com/photo-1490750967868-88aa6483ccb8?w=1200&q=80",
-        alt: "Spring flowers",
+        src: "https://www.studio-palette.com/wp/wp-content/uploads/2025/02/bda2ad129b1a349ae616747248aebf46-1.jpeg",
+        alt: "Japanese Theme",
       },
       {
         src: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=1200&q=80",
