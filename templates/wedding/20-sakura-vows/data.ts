@@ -17,7 +17,7 @@ const data: TemplateData = {
     slug: "sakura-vows",
     name: "Sakura Vows",
     mood: "Ivory, blush, ink — falling cherry blossoms",
-    standout: "Japanese invitation card with continuous sakura fall",
+    standout: "Shoji-door welcome, sakura fall, soft Japanese scroll motion",
     buildPhase: 4,
   },
   people: [
