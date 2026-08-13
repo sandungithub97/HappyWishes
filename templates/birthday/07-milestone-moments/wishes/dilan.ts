@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "dilan",
     name: "Milestone Moments",
     mood: "Big-number hero, champagne navy",
-    standout: "Hero age typography and photo grid by year",
-    buildPhase: 3,
+    standout: "Odometer age roll, parallax memory chapters, decade rail",
+    buildPhase: 4,
   },
   people: [{ name: "Dilan Jayasuriya", role: "Birthday star" }],
   event: {

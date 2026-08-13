@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "margaret-william",
     name: "Champagne Toast",
     mood: "Black, gold, formal",
-    standout: "Milestone anniversary tone — 10th, 25th, 50th",
-    buildPhase: 4,
+    standout: "Glass-clink gate, rising bubbles, gold shimmer headings",
+    buildPhase: 5,
   },
   people: [
     { name: "Margaret", role: "Honouree" },

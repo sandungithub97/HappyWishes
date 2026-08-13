@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "priya",
     name: "Surprise Reveal",
     mood: "Locked midnight, then a burst of colour",
-    standout: "Tap-to-reveal interaction for surprise parties",
-    buildPhase: 3,
+    standout: "Gift-box unwrap reveal, spotlight hero, celebration sparkle",
+    buildPhase: 4,
   },
   people: [{ name: "Priya", role: "Birthday star" }],
   event: {

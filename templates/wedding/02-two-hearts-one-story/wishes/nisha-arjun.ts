@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "nisha-arjun",
     name: "Two Hearts, One Story",
     mood: "Romantic timeline, blush & rose",
-    standout: "How we met → engagement → wedding, scroll-triggered chapters",
-    buildPhase: 3,
+    standout: "Book-open entrance, draw-on-scroll story spine, chapter parallax",
+    buildPhase: 4,
   },
   people: [
     { name: "Nisha Fernando", role: "Bride" },

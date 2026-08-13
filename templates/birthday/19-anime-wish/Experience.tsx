@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { MusicToggle } from "@/templates/_shared/components/MusicToggle";
 import { RsvpCard } from "@/templates/_shared/components/RsvpCard";
+import { ScrollHint } from "@/templates/_shared/components/ScrollHint";
 import { PlaceLink } from "@/templates/_shared/components/VenueMap";
 import { displayNames } from "@/templates/_shared/people";
 import { themeStyle } from "@/templates/_shared/theme";
@@ -24,9 +25,10 @@ function wishImg(data: TemplateData, file: string) {
 }
 
 function Starfield({ count = 64 }: { count?: number }) {
+  const reduce = useReducedMotion();
   const stars = useMemo(
     () =>
-      Array.from({ length: count }, (_, i) => ({
+      Array.from({ length: reduce ? Math.min(count, 18) : count }, (_, i) => ({
         id: i,
         left: `${(i * 47) % 100}%`,
         top: `${(i * 31) % 92}%`,
@@ -34,8 +36,27 @@ function Starfield({ count = 64 }: { count?: number }) {
         delay: (i % 14) * 0.28,
         duration: 1.8 + (i % 6) * 0.45,
       })),
-    [count],
+    [count, reduce],
   );
+
+  if (reduce) {
+    return (
+      <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-50">
+        {stars.map((star) => (
+          <span
+            key={star.id}
+            className="absolute rounded-full bg-white"
+            style={{
+              left: star.left,
+              top: star.top,
+              width: star.size,
+              height: star.size,
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -359,6 +380,90 @@ function Reveal({
   );
 }
 
+function IdleHero({
+  src,
+  alt,
+  opened,
+}: {
+  src: string;
+  alt: string;
+  opened: boolean;
+}) {
+  const reduce = useReducedMotion();
+
+  return (
+    <motion.div
+      className="relative mx-auto aspect-[3/4] w-full max-w-md"
+      initial={reduce || !opened ? false : { opacity: 0, x: -30 }}
+      animate={
+        opened
+          ? {
+              opacity: 1,
+              x: 0,
+              y: reduce ? 0 : [0, -6, 0],
+              scale: reduce ? 1 : [1, 1.012, 1],
+            }
+          : undefined
+      }
+      transition={{
+        opacity: { delay: 0.25, duration: 1, ease: soft },
+        x: { delay: 0.25, duration: 1, ease: soft },
+        y: { duration: 4.2, repeat: Infinity, ease: "easeInOut" },
+        scale: { duration: 4.2, repeat: Infinity, ease: "easeInOut" },
+      }}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-contain object-bottom drop-shadow-[0_30px_60px_rgba(255,107,157,0.35)]"
+        sizes="(max-width: 640px) 90vw, 420px"
+        priority
+      />
+      {!reduce && opened ? (
+        <motion.span
+          className="pointer-events-none absolute top-[22%] left-[38%] h-1 w-5 rounded-full bg-[#2a1a35]/80"
+          animate={{ scaleY: [1, 0.08, 1], opacity: [1, 1, 1] }}
+          transition={{
+            duration: 0.12,
+            repeat: Infinity,
+            repeatDelay: 3.8,
+            ease: "easeInOut",
+          }}
+        />
+      ) : null}
+    </motion.div>
+  );
+}
+
+function SceneSection({
+  children,
+  className,
+  wipe = "left",
+}: {
+  children: ReactNode;
+  className?: string;
+  wipe?: "left" | "right";
+}) {
+  const reduce = useReducedMotion();
+  const clipFrom =
+    wipe === "left"
+      ? "inset(0 100% 0 0 round 0px)"
+      : "inset(0 0 0 100% round 0px)";
+
+  return (
+    <motion.section
+      className={className}
+      initial={reduce ? false : { clipPath: clipFrom, opacity: 0.6 }}
+      whileInView={{ clipPath: "inset(0 0 0 0 round 0px)", opacity: 1 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 1.05, ease: soft }}
+    >
+      {children}
+    </motion.section>
+  );
+}
+
 export function Experience({ data }: { data: TemplateData }) {
   const reduce = useReducedMotion();
   const name = displayNames(data.people)[0] ?? "";
@@ -443,21 +548,11 @@ export function Experience({ data }: { data: TemplateData }) {
           >
             <div className="relative order-2 sm:order-1">
               <GlowPulse />
-              <motion.div
-                className="relative mx-auto aspect-[3/4] w-full max-w-md"
-                initial={reduce || !opened ? false : { opacity: 0, x: -30 }}
-                animate={opened ? { opacity: 1, x: 0 } : undefined}
-                transition={{ delay: 0.25, duration: 1, ease: soft }}
-              >
-                <Image
-                  src={wishImg(data, "anime-hero-girl.png")}
-                  alt={`${name} anime heroine`}
-                  fill
-                  className="object-contain object-bottom drop-shadow-[0_30px_60px_rgba(255,107,157,0.35)]"
-                  sizes="(max-width: 640px) 90vw, 420px"
-                  priority
-                />
-              </motion.div>
+              <IdleHero
+                src={wishImg(data, "anime-hero-girl.png")}
+                alt={`${name} anime heroine`}
+                opened={opened}
+              />
 
               <motion.div
                 className="absolute top-[8%] right-[2%] w-24 sm:w-32"
@@ -564,10 +659,11 @@ export function Experience({ data }: { data: TemplateData }) {
               </motion.div>
             </div>
           </motion.div>
+          {opened ? <ScrollHint className="!bottom-6" /> : null}
         </section>
 
         {/* Character gallery / stills */}
-        <section className="relative mx-auto max-w-5xl px-6 py-12">
+        <SceneSection className="relative mx-auto max-w-5xl px-6 py-12" wipe="left">
           <Reveal>
             <p
               className="mb-8 text-center text-[11px] tracking-[0.32em] uppercase"
@@ -621,10 +717,10 @@ export function Experience({ data }: { data: TemplateData }) {
               </Reveal>
             ))}
           </div>
-        </section>
+        </SceneSection>
 
         {/* Party / RSVP */}
-        <section className="relative mx-auto max-w-md px-6 py-20">
+        <SceneSection className="relative mx-auto max-w-md px-6 py-20" wipe="right">
           <Reveal>
             {data.event ? (
               <div className="mb-10 text-center">
@@ -659,9 +755,9 @@ export function Experience({ data }: { data: TemplateData }) {
               />
             ) : null}
           </Reveal>
-        </section>
+        </SceneSection>
 
-        <footer className="px-6 pb-16 text-center">
+        <SceneSection className="px-6 pb-16 text-center" wipe="left">
           <Reveal>
             <p
               className="font-[family-name:var(--font-display)] text-xl"
@@ -676,7 +772,7 @@ export function Experience({ data }: { data: TemplateData }) {
               Main character energy
             </p>
           </Reveal>
-        </footer>
+        </SceneSection>
       </motion.div>
 
       {opened && data.extras.backgroundMusic && data.media.music ? (

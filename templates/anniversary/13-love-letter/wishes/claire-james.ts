@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "claire-james",
     name: "Love Letter",
     mood: "Parchment, wax seal, intimate",
-    standout: "Envelope-opening animation and handwritten letter",
-    buildPhase: 4,
+    standout: "Wax-seal crack, paper unfold, rose petals, handwriting reveal",
+    buildPhase: 5,
   },
   people: [
     { name: "Claire", role: "From" },

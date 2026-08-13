@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "sam",
     name: "One Song, One Page",
     mood: "Ultra-minimal, one screen, one feeling",
-    standout: "One song + one photo + one message — built to share",
-    buildPhase: 4,
+    standout: "Audio-reactive glow, lyric lines timed to playback",
+    buildPhase: 6,
   },
   people: [{ name: "Sam", role: "For" }],
   copy: {

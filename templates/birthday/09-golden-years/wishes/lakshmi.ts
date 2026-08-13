@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "lakshmi",
     name: "Golden Years",
     mood: "Warm sepia, family tribute",
-    standout: "Tribute video/photo section and guestbook",
-    buildPhase: 3,
+    standout: "Album-open gate, Ken Burns photos, golden bokeh, vintage grain",
+    buildPhase: 4,
   },
   people: [{ name: "Lakshmi Wijesinghe", role: "Honouree" }],
   event: {

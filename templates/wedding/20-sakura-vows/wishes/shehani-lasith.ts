@@ -20,7 +20,7 @@ const data: TemplateData = {
     wishId: "shehani-lasith",
     name: "Sakura Vows",
     mood: "Ivory, blush, ink — falling cherry blossoms",
-    standout: "Shoji-door welcome, sakura fall, soft Japanese scroll motion",
+    standout: "Shoji doors, denser floral arch, washi paper invite, sakura fall",
     buildPhase: 4,
   },
   people: [

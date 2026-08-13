@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "ravi-anjali",
     name: "Years of Us",
     mood: "Warm copper timeline",
-    standout: "Year-by-year highlight photos",
-    buildPhase: 4,
+    standout: "Animated years/days counter, draw-on timeline, parallax chapters",
+    buildPhase: 5,
   },
   people: [
     { name: "Ravi", role: "Partner" },

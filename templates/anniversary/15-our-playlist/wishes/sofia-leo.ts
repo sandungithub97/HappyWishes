@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "sofia-leo",
     name: "Our Playlist",
     mood: "Vinyl black, neon coral, music-first",
-    standout: "Each song tied to a memory and a photo",
-    buildPhase: 4,
+    standout: "Spinning vinyl, equalizer bars, album-art track switches",
+    buildPhase: 5,
   },
   people: [
     { name: "Sofia", role: "Partner" },

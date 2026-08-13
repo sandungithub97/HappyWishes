@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "elena-mateo",
     name: "Rustic Vows",
     mood: "Earthy, hand-drawn florals",
-    standout: "Built-in RSVP — tap the place to open Maps",
-    buildPhase: 3,
+    standout: "Barn-door welcome, parchment texture, vines that grow on scroll",
+    buildPhase: 4,
   },
   people: [
     { name: "Elena Cruz", role: "Bride" },

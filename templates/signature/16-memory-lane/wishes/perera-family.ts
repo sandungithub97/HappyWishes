@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "perera-family",
     name: "Memory Lane",
     mood: "Film stills, rust & slate — reskins to any occasion",
-    standout: "Scrollytelling: scroll down = journey through time",
-    buildPhase: 4,
+    standout: "Full-bleed Ken Burns chapters, crossfade scenes, film stamp overlays",
+    buildPhase: 6,
   },
   people: [{ name: "The Perera Family", role: "Family" }],
   copy: {
@@ -65,19 +65,22 @@ const data: TemplateData = {
     scrollytelling: true,
     timeline: [
       {
-        label: "Then",
+        label: "Then · 1998",
         title: "The first house",
         body: "Too many people, not enough chairs, endless tea.",
+        place: "Nugegoda",
       },
       {
-        label: "After",
+        label: "After · 2012",
         title: "The years in between",
         body: "Birthdays stacked like photographs in a drawer.",
+        place: "Kandy road trips",
       },
       {
-        label: "Now",
+        label: "Now · 2026",
         title: "Still walking",
         body: "The lane is longer. The light is the same.",
+        place: "Wherever we gather",
       },
     ],
   },

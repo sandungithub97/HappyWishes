@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "maya",
     name: "Confetti Pop",
     mood: "Bright, playful, loud in the best way",
-    standout: "Confetti burst on load, stickers, music toggle",
-    buildPhase: 2,
+    standout: "Balloon-pop entrance, ambient sparkle, party stickers",
+    buildPhase: 4,
   },
   people: [{ name: "Maya Senanayake", role: "Birthday star" }],
   event: {

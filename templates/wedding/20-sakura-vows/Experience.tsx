@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { useEffect, useState, type ReactNode } from "react";
 import { PetalFall } from "@/templates/_shared/components/PetalFall";
+import { TextureOverlay } from "@/templates/_shared/components/TextureOverlay";
 import { PlaceLink } from "@/templates/_shared/components/VenueMap";
 import { RsvpCard } from "@/templates/_shared/components/RsvpCard";
 import { namesLine } from "@/templates/_shared/people";
@@ -287,29 +288,55 @@ function WelcomeGate({
       }
     >
       {/* Floral arch header */}
-      <div className="pointer-events-none absolute top-0 right-0 left-0 z-20 flex justify-center pt-4 sm:pt-6">
+      <div className="pointer-events-none absolute top-0 right-0 left-0 z-20 flex justify-center pt-3 sm:pt-5">
         <motion.div
-          className="relative flex w-[min(92vw,560px)] items-end justify-center"
+          className="relative flex w-[min(96vw,600px)] items-end justify-center"
           initial={reduce ? false : { opacity: 0, y: -18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: softEase }}
         >
           <div
-            className="absolute inset-x-6 bottom-0 h-10 rounded-t-[999px]"
+            className="absolute inset-x-4 bottom-0 h-14 rounded-t-[999px]"
             style={{
               background:
-                "linear-gradient(to top, color-mix(in srgb, #8a4a3d 70%, transparent), transparent)",
-              opacity: 0.35,
+                "linear-gradient(to top, color-mix(in srgb, #8a4a3d 55%, transparent), transparent)",
+              opacity: 0.3,
             }}
           />
-          <div className="relative flex items-center gap-1 sm:gap-2">
-            {[26, 34, 42, 50, 42, 34, 26].map((size, i) => (
-              <SakuraBloom
+          {/* Layered arch — denser floral canopy */}
+          <div className="relative flex items-end justify-center gap-0.5 sm:gap-1">
+            {[
+              { size: 22, y: 18, c: "#F2B6C6" },
+              { size: 30, y: 8, c: "#E89BB0" },
+              { size: 38, y: 2, c: "#D4849A" },
+              { size: 46, y: 0, c: "#F7C1D0" },
+              { size: 54, y: -4, c: "#E89BB0" },
+              { size: 46, y: 0, c: "#F2B6C6" },
+              { size: 38, y: 2, c: "#D4849A" },
+              { size: 30, y: 8, c: "#F7C1D0" },
+              { size: 22, y: 18, c: "#E89BB0" },
+            ].map((bloom, i) => (
+              <motion.div
                 key={i}
-                size={size}
-                color={["#F2B6C6", "#E89BB0", "#D4849A", "#F7C1D0"][i % 4]}
-                delay={0.15 + i * 0.07}
-              />
+                style={{ marginBottom: bloom.y }}
+                animate={
+                  reduce
+                    ? undefined
+                    : { y: [0, -3, 0], rotate: [-2, 2, -2] }
+                }
+                transition={{
+                  duration: 3.2 + (i % 3) * 0.4,
+                  delay: i * 0.08,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <SakuraBloom
+                  size={bloom.size}
+                  color={bloom.c}
+                  delay={0.12 + i * 0.05}
+                />
+              </motion.div>
             ))}
           </div>
         </motion.div>
@@ -379,7 +406,7 @@ function WelcomeGate({
       </div>
 
       <motion.div
-        className="relative z-40 mx-auto flex w-full max-w-[min(92vw,22rem)] flex-col items-center px-5 py-8 text-center sm:max-w-md sm:px-8 sm:py-10"
+        className="relative z-40 mx-auto flex w-full max-w-[min(92vw,22rem)] flex-col items-center overflow-hidden px-5 py-8 text-center sm:max-w-md sm:px-8 sm:py-10"
         style={{
           background:
             "linear-gradient(180deg, rgba(255,249,244,0.97) 0%, rgba(255,244,238,0.96) 100%)",
@@ -395,6 +422,8 @@ function WelcomeGate({
         }
         transition={{ duration: 0.55, ease: softEase }}
       >
+        <TextureOverlay variant="washi" opacity={0.4} className="!absolute inset-0 z-0" />
+        <div className="relative z-10 flex w-full flex-col items-center">
         <motion.p
           className="text-[11px] tracking-[0.42em] uppercase"
           style={{ color: "#D4849A" }}
@@ -442,6 +471,7 @@ function WelcomeGate({
         >
           Open the flowered doors
         </motion.button>
+        </div>
       </motion.div>
     </motion.div>
   );
@@ -533,7 +563,7 @@ export function Experience({ data }: { data: TemplateData }) {
             style={{ y: heroLift, opacity: heroFade }}
           >
             <motion.div
-              className="relative border px-8 py-16 text-center sm:px-12 sm:py-20"
+              className="relative overflow-hidden border px-8 py-16 text-center sm:px-12 sm:py-20"
               style={{
                 background:
                   "color-mix(in srgb, var(--hw-surface) 92%, transparent)",
@@ -543,6 +573,8 @@ export function Experience({ data }: { data: TemplateData }) {
               animate={opened ? { opacity: 1, y: 0, scale: 1 } : undefined}
               transition={{ duration: 1.2, delay: 0.2, ease: softEase }}
             >
+              <TextureOverlay variant="washi" opacity={0.35} className="!absolute inset-0" />
+              <div className="relative z-10">
               <p
                 className="text-sm tracking-[0.2em]"
                 style={{ color: "var(--hw-primary)" }}
@@ -591,6 +623,7 @@ export function Experience({ data }: { data: TemplateData }) {
                   />
                 </p>
               ) : null}
+              </div>
             </motion.div>
           </motion.div>
           {opened ? <ScrollHint /> : null}

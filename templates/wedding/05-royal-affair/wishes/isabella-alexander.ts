@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "isabella-alexander",
     name: "Royal Affair",
     mood: "Deep maroon & gold",
-    standout: "Video welcome and guest wishes wall",
-    buildPhase: 3,
+    standout: "Curtain-rise crest gate, gold foil headings, candlelight sparkle",
+    buildPhase: 4,
   },
   people: [
     { name: "Isabella Jayawardena", role: "Bride" },

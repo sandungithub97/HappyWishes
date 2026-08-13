@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "amara-julian",
     name: "Forever Starts Here",
     mood: "Elegant ivory & gold",
-    standout: "Soft fade-in photo carousel, countdown, background music",
-    buildPhase: 2,
+    standout: "Wax-seal envelope gate, gold bokeh, parallax hero, countdown",
+    buildPhase: 4,
   },
   people: [
     { name: "Amara Perera", role: "Bride" },

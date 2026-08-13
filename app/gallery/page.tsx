@@ -119,13 +119,19 @@ export default function GalleryPage() {
                         {item.meta.wishId}
                       </p>
                       <p
-                        className="mt-2 text-sm leading-6"
+                        className="mt-3 text-sm leading-6"
                         style={{ color: item.palette.muted }}
                       >
                         {item.people.map((person) => person.name).join(" & ")}
                       </p>
                       <p
-                        className="mt-3 text-sm leading-6"
+                        className="mt-3 line-clamp-2 text-sm leading-6"
+                        style={{ color: item.palette.text }}
+                      >
+                        {item.meta.standout}
+                      </p>
+                      <p
+                        className="mt-2 text-xs leading-5"
                         style={{ color: item.palette.muted }}
                       >
                         {item.meta.mood}

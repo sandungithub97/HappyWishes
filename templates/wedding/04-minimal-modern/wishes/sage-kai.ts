@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "sage-kai",
     name: "Minimal & Modern",
     mood: "Black, white, one accent",
-    standout: "Huge type, single hero, QR-friendly for print invites",
-    buildPhase: 3,
+    standout: "Editorial wipe entrance, scroll-linked type, cursor glow, QR",
+    buildPhase: 4,
   },
   people: [
     { name: "Sage", role: "Partner" },

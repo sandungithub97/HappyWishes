@@ -39,10 +39,10 @@ Leave that terminal running. Then open these in the browser:
 
 | Open this | You should see |
 |---|---|
-| http://localhost:3000 | **Forever Starts Here** — Amara & Julian wedding (the default live page) |
-| http://localhost:3000/gallery | All 21 templates as color cards |
-| http://localhost:3000/birthday/confetti-pop | Maya’s birthday demo (confetti on load) |
-| http://localhost:3000/wedding/rustic-vows | Elena & Mateo, with RSVP + map |
+| http://localhost:3000 | Whatever is set in `templates/live.ts` (currently Forever Starts Here) |
+| http://localhost:3000/gallery | All 21 templates with standout blurbs |
+| http://localhost:3000/birthday/confetti-pop/maya | Maya’s birthday demo |
+| http://localhost:3000/wedding/sakura-vows/shehani-lasith | Sakura Vows sample wish |
 
 Stop the server with `Ctrl+C`.
 
@@ -224,29 +224,29 @@ Or connect the repo to Vercel and add `NEXT_PUBLIC_SITE_URL` in the project envi
 
 ### `extras` by template
 
-| Template | Extra fields that matter |
+| Template | Extra fields · graphic standout |
 |---|---|
-| Forever Starts Here | `countdown`, `photoCarousel`, `backgroundMusic` |
-| Confetti Pop | `milestoneAge`, `stickers`, `rsvp`, `backgroundMusic` |
-| Two Hearts, One Story | `timeline` (chapters + optional photos) |
-| Rustic Vows | `rsvp`, `event.place` |
-| Minimal & Modern | `qrFriendly` |
-| Royal Affair | `videoWelcome`, `guestWall` |
-| Milestone Moments | `milestoneAge`, `memoryGrid` |
-| Kids' Wonderland | `milestoneAge`, `rsvp` |
-| Golden Years | `milestoneAge`, `videoWelcome`, `guestWall` |
-| Surprise Reveal | `milestoneAge`, `reveal.lockedLabel`, `reveal.unlockedHeadline` |
-| Still Us | `thenNow.then` / `thenNow.now` |
-| Years of Us | `timeline`, `event.date` (years/days counter) |
-| Love Letter | `letter.greeting`, `closing`, `signature` |
-| Champagne Toast | `milestoneAge`, `guestWall` |
-| Our Playlist | `songs[]` (title, artist, memory, photo) |
-| Memory Lane | `timeline` (one full-screen scene per item) |
-| One Song, One Page | `media.music` |
-| Video Wish | `media.video` |
-| Anime Wish | `milestoneAge`, `rsvp`, `backgroundMusic` (Your Name dusk entrance) |
-| Sakura Vows | `rsvp`, `copy.subhead` (Japanese line) |
-| Lankan Poruwa | `timeline` (ceremony chapters), `rsvp` |
+| Forever Starts Here | `countdown`, `photoCarousel`, `backgroundMusic` · wax-seal envelope gate, gold bokeh |
+| Confetti Pop | `milestoneAge`, `stickers`, `rsvp`, `backgroundMusic` · balloon-pop gate, sparkle |
+| Two Hearts, One Story | `timeline` · book-open gate, draw-on story spine |
+| Rustic Vows | `rsvp`, `event.place` · barn-door gate, growing vines |
+| Minimal & Modern | `qrFriendly` · editorial wipe, scroll type, cursor glow |
+| Royal Affair | `videoWelcome`, `guestWall` · curtain crest gate, gold shimmer |
+| Milestone Moments | `milestoneAge`, `memoryGrid` · odometer age, parallax chapters |
+| Kids' Wonderland | `milestoneAge`, `rsvp` · castle gate, star mascot |
+| Golden Years | `milestoneAge`, `videoWelcome`, `guestWall` · album gate, Ken Burns, grain |
+| Surprise Reveal | `milestoneAge`, `reveal.*` · gift-box unwrap entrance |
+| Still Us | `thenNow.then` / `thenNow.now` · polaroid gate, then/now slider |
+| Years of Us | `timeline`, `event.date` · animated counter, timeline spine |
+| Love Letter | `letter.greeting`, `closing`, `signature` · wax seal, handwriting reveal |
+| Champagne Toast | `milestoneAge`, `guestWall` · glass-clink gate, champagne bubbles |
+| Our Playlist | `songs[]` · spinning vinyl, equalizer bars |
+| Memory Lane | `timeline` (+ optional `place`) · Ken Burns chapters, film stamps |
+| One Song, One Page | `media.music` · reactive glow, timed lyric lines |
+| Video Wish | `media.video` · curtain rise, sparkle burst on end |
+| Anime Wish | `milestoneAge`, `rsvp`, `backgroundMusic` · character idle, scene wipes |
+| Sakura Vows | `rsvp`, `copy.subhead` · shoji doors, floral arch, washi |
+| Lankan Poruwa | `timeline`, `rsvp` · oil-lamp pahana gate, gold shimmer |
 
 ### RSVP collection (hosts)
 
@@ -262,47 +262,49 @@ Set `RSVP_ADMIN_SECRET` in `.env` (see `.env.example`). Guest-wall messages stil
 
 ## Template catalog
 
+Graphic enhancement phases **0–7** are complete (shared FX, all 21 designs, final polish). Production build verified (**Phase 8**).
+
 **Wedding**
 
-| Name | Preview URL |
-|---|---|
-| Forever Starts Here | `/wedding/forever-starts-here/amara-julian` |
-| Two Hearts, One Story | `/wedding/two-hearts-one-story` |
-| Rustic Vows | `/wedding/rustic-vows` |
-| Minimal & Modern | `/wedding/minimal-modern` |
-| Royal Affair | `/wedding/royal-affair` |
-| Sakura Vows | `/wedding/sakura-vows/shehani-lasith` |
-| Sakura Vows (2nd wish) | `/wedding/sakura-vows/aiko-kenji` |
-| Lankan Poruwa | `/wedding/lankan-poruwa/sanduni-kasun` |
+| Name | Preview URL | Standout |
+|---|---|---|
+| Forever Starts Here | `/wedding/forever-starts-here/amara-julian` | Wax-seal envelope gate, gold bokeh |
+| Two Hearts, One Story | `/wedding/two-hearts-one-story/nisha-arjun` | Book-open gate, story spine |
+| Rustic Vows | `/wedding/rustic-vows/elena-mateo` | Barn doors, growing vines |
+| Minimal & Modern | `/wedding/minimal-modern/sage-kai` | Editorial wipe, cursor glow |
+| Royal Affair | `/wedding/royal-affair/isabella-alexander` | Curtain crest, gold shimmer |
+| Sakura Vows | `/wedding/sakura-vows/shehani-lasith` | Shoji doors, floral arch |
+| Sakura Vows (2nd) | `/wedding/sakura-vows/aiko-kenji` | Same design, second wish |
+| Lankan Poruwa | `/wedding/lankan-poruwa/sanduni-kasun` | Oil-lamp pahana gate |
 
 **Birthday**
 
-| Name | Preview URL |
-|---|---|
-| Confetti Pop | `/birthday/confetti-pop` |
-| Milestone Moments | `/birthday/milestone-moments` |
-| Kids' Wonderland | `/birthday/kids-wonderland` |
-| Golden Years | `/birthday/golden-years` |
-| Surprise Reveal | `/birthday/surprise-reveal` |
-| Anime Wish | `/birthday/anime-wish` |
+| Name | Preview URL | Standout |
+|---|---|---|
+| Confetti Pop | `/birthday/confetti-pop/maya` | Balloon-pop gate, stickers |
+| Milestone Moments | `/birthday/milestone-moments/dilan` | Odometer age, decade rail |
+| Kids' Wonderland | `/birthday/kids-wonderland/ayaan` | Castle gate, star mascot |
+| Golden Years | `/birthday/golden-years/lakshmi` | Album gate, Ken Burns |
+| Surprise Reveal | `/birthday/surprise-reveal/priya` | Gift-box unwrap |
+| Anime Wish | `/birthday/anime-wish/hana` | Character art, scene wipes |
 
 **Anniversary**
 
-| Name | Preview URL |
-|---|---|
-| Still Us | `/anniversary/still-us` |
-| Years of Us | `/anniversary/years-of-us` |
-| Love Letter | `/anniversary/love-letter` |
-| Champagne Toast | `/anniversary/champagne-toast` |
-| Our Playlist | `/anniversary/our-playlist` |
+| Name | Preview URL | Standout |
+|---|---|---|
+| Still Us | `/anniversary/still-us/hannah-theo` | Polaroid gate, then/now slider |
+| Years of Us | `/anniversary/years-of-us/ravi-anjali` | Live years counter, timeline |
+| Love Letter | `/anniversary/love-letter/claire-james` | Wax seal, handwriting reveal |
+| Champagne Toast | `/anniversary/champagne-toast/margaret-william` | Glass clink, bubbles |
+| Our Playlist | `/anniversary/our-playlist/sofia-leo` | Vinyl spin, EQ bars |
 
 **Signature**
 
-| Name | Preview URL |
-|---|---|
-| Memory Lane | `/signature/memory-lane` |
-| One Song, One Page | `/signature/one-song-one-page` |
-| Video Wish | `/signature/video-wish` |
+| Name | Preview URL | Standout |
+|---|---|---|
+| Memory Lane | `/signature/memory-lane/perera-family` | Ken Burns chapters, film stamps |
+| One Song, One Page | `/signature/one-song-one-page/sam` | Reactive glow, lyric lines |
+| Video Wish | `/signature/video-wish/amal` | Curtain rise, end burst |
 
 ---
 

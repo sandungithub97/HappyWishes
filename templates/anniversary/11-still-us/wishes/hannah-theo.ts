@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "hannah-theo",
     name: "Still Us",
     mood: "Then vs now, soft pink",
-    standout: "Split-screen photo comparison and love-letter scroll",
-    buildPhase: 4,
+    standout: "Polaroid gate, then/now slider, floating frames",
+    buildPhase: 5,
   },
   people: [
     { name: "Hannah", role: "Partner" },

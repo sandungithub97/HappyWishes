@@ -77,6 +77,8 @@ export type TimelineItem = {
   title: string;
   body: string;
   photo?: string;
+  /** Optional stamp overlay (city / venue) for scrollytelling scenes */
+  place?: string;
 };
 
 export type SongMemory = {
@@ -142,7 +144,7 @@ export type TemplateMeta = {
   mood: string;
   standout: string;
   /** Build phase this design will be fully implemented in */
-  buildPhase: 2 | 3 | 4;
+  buildPhase: 2 | 3 | 4 | 5 | 6 | 7;
 };
 
 export type TemplateData = {

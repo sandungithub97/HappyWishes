@@ -17,7 +17,7 @@ const data: TemplateData = {
     wishId: "hana",
     name: "Anime Wish",
     mood: "Anime movie world — comet sky, cartoon heroes, soft bloom light",
-    standout: "Illustrated anime characters, sky world, sparkle FX, cinematic entrance",
+    standout: "Illustrated characters with idle motion, scene wipes, sparkle FX, cinematic gate",
     buildPhase: 4,
   },
   people: [{ name: "Hana", role: "Birthday star" }],

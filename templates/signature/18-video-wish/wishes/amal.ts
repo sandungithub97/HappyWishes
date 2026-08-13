@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "amal",
     name: "Video Wish",
     mood: "Teal frame, gold edge, message on film",
-    standout: "Hero is a short video with a themed frame",
-    buildPhase: 4,
+    standout: "Curtain-rise entrance, bokeh behind player, sparkle burst on end",
+    buildPhase: 6,
   },
   people: [{ name: "Amal", role: "From" }],
   copy: {

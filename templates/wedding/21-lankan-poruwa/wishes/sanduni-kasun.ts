@@ -20,7 +20,7 @@ const data: TemplateData = {
     wishId: "sanduni-kasun",
     name: "Lankan Poruwa",
     mood: "Maroon, temple gold, ivory — Kandyan ceremony",
-    standout: "Walks through Sri Lankan wedding traditions",
+    standout: "Oil-lamp pahana gate, gold shimmer names, tradition timeline",
     buildPhase: 4,
   },
   people: [

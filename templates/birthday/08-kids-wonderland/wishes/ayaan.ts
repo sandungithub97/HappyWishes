@@ -20,8 +20,8 @@ const data: TemplateData = {
     wishId: "ayaan",
     name: "Kids' Wonderland",
     mood: "Cartoon-bright, bouncing, simple",
-    standout: "Parent-uploaded photos and playful motion",
-    buildPhase: 3,
+    standout: "Castle gate, star buddy mascot, sparkle field, photo wiggle",
+    buildPhase: 4,
   },
   people: [{ name: "Ayaan", role: "Birthday kid" }],
   event: {
