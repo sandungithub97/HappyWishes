@@ -21,23 +21,23 @@ const data: TemplateData = {
     buildPhase: 4,
   },
   people: [
-    { name: "Aiko Nakamura", role: "Bride" },
-    { name: "Kenji Sato", role: "Groom" },
+    { name: "Shehani Perera", role: "Bride" },
+    { name: "Lasith Gamage", role: "Groom" },
   ],
   event: {
     date: "2027-03-28T15:00:00+09:00",
     timeLabel: "Sunday, 28 March 2027 · 3:00 PM",
     place: {
-      name: "Shinjuku Gyoen Garden",
-      city: "Tokyo",
-      mapUrl: "https://maps.google.com/?q=Shinjuku+Gyoen+Garden+Tokyo",
+      name: "The Lanka Club",
+      city: "Colombo",
+      mapUrl: "https://maps.google.com/?q=The+Lanka+Club+Tokyo",
     },
   },
   copy: {
-    headline: "Aiko & Kenji",
-    subhead: "桜の下で、永遠を誓います",
+    headline: "Shehani & Lasith",
+    subhead: "Under the falling blossoms",
     message:
-      "Under falling blossoms, two families become one. Please join us for tea, vows, and a long spring evening.",
+      "Two families become one. Please join us for tea, vows, and a long spring evening.",
     cta: "RSVP",
   },
   palette: {
