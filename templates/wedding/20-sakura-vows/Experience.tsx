@@ -155,13 +155,13 @@ function FloweredDoorPanel({
 
   return (
     <motion.div
-      className={`absolute inset-y-0 ${isLeft ? "left-0 origin-left" : "right-0 origin-right"} w-[min(50vw,420px)]`}
+      className={`absolute inset-y-0 ${isLeft ? "left-0 origin-left" : "right-0 origin-right"} w-[42%] max-w-[380px] sm:w-[min(44vw,400px)]`}
       style={{ transformStyle: "preserve-3d" }}
       animate={
         opening && !reduce
           ? {
               rotateY: isLeft ? -78 : 78,
-              x: isLeft ? "-6%" : "6%",
+              x: isLeft ? "-8%" : "8%",
               opacity: 0.2,
             }
           : { rotateY: 0, x: 0, opacity: 1 }
@@ -379,7 +379,15 @@ function WelcomeGate({
       </div>
 
       <motion.div
-        className="relative z-40 mx-auto flex max-w-md flex-col items-center px-6 text-center"
+        className="relative z-40 mx-auto flex w-full max-w-[min(92vw,22rem)] flex-col items-center px-5 py-8 text-center sm:max-w-md sm:px-8 sm:py-10"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(255,249,244,0.97) 0%, rgba(255,244,238,0.96) 100%)",
+          border: "1px solid #c9a27a",
+          boxShadow:
+            "0 18px 50px rgba(43, 36, 34, 0.18), 0 0 0 6px rgba(255, 249, 244, 0.55)",
+          backdropFilter: "blur(8px)",
+        }}
         animate={
           opening && !reduce
             ? { opacity: 0, y: -12, scale: 0.97 }
@@ -389,7 +397,7 @@ function WelcomeGate({
       >
         <motion.p
           className="text-[11px] tracking-[0.42em] uppercase"
-          style={{ color: "var(--hw-primary)" }}
+          style={{ color: "#D4849A" }}
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: softEase }}
@@ -397,8 +405,8 @@ function WelcomeGate({
           ようこそ · Welcome
         </motion.p>
         <motion.p
-          className="mt-6 font-[family-name:var(--font-display)] text-3xl leading-snug sm:text-4xl"
-          style={{ color: "var(--hw-secondary)" }}
+          className="mt-5 font-[family-name:var(--font-display)] text-[1.85rem] leading-snug sm:text-4xl"
+          style={{ color: "#2B2422" }}
           initial={reduce ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: softEase }}
@@ -407,7 +415,7 @@ function WelcomeGate({
         </motion.p>
         <motion.p
           className="mt-4 text-sm tracking-[0.18em]"
-          style={{ color: "var(--hw-muted)" }}
+          style={{ color: "#8A736C" }}
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.6 }}
@@ -418,12 +426,12 @@ function WelcomeGate({
         <motion.button
           type="button"
           onClick={open}
-          className="mt-12 rounded-full border px-8 py-3.5 text-[11px] tracking-[0.32em] uppercase transition-transform hover:scale-[1.03] active:scale-[0.98]"
+          className="mt-8 rounded-full border px-8 py-3.5 text-[11px] tracking-[0.32em] uppercase transition-transform hover:scale-[1.03] active:scale-[0.98]"
           style={{
             borderColor: "#c9a27a",
             background:
               "linear-gradient(180deg, #fff9f4 0%, #f7ebe3 100%)",
-            color: "var(--hw-secondary)",
+            color: "#2B2422",
             boxShadow: "0 10px 30px rgba(212, 132, 154, 0.18)",
           }}
           initial={reduce ? false : { opacity: 0, y: 16 }}
