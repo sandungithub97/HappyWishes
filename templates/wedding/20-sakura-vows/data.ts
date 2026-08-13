@@ -21,7 +21,7 @@ const data: TemplateData = {
     buildPhase: 4,
   },
   people: [
-    { name: "Shehani Perera", role: "Bride" },
+    { name: "Shehani Shashikala", role: "Bride" },
     { name: "Lasith Gamage", role: "Groom" },
   ],
   event: {
