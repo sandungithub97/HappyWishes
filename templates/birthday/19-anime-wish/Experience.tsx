@@ -178,6 +178,9 @@ export function Experience({ data }: { data: TemplateData }) {
               note={data.extras.rsvp.note}
               cta={data.copy.cta}
               storageKey={`hw-rsvp-${data.meta.slug}-${data.meta.wishId}`}
+              occasion={data.meta.occasion}
+              slug={data.meta.slug}
+              wishId={data.meta.wishId}
             />
           ) : null}
         </FadeIn>

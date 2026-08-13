@@ -248,7 +248,15 @@ Or connect the repo to Vercel and add `NEXT_PUBLIC_SITE_URL` in the project envi
 | Sakura Vows | `rsvp`, `copy.subhead` (Japanese line) |
 | Lankan Poruwa | `timeline` (ceremony chapters), `rsvp` |
 
-RSVP and guest-wall messages are stored in the visitor’s browser (`localStorage`). They are not a shared server database.
+### RSVP collection (hosts)
+
+Guests submit **name + attending/declines** on the wish page. Each reply is stored **per wish** (`occasion` + template `slug` + `wishId`), so lists never mix across couples/events.
+
+- Locally: saved under `.data/rsvp/` (gitignored).
+- On Vercel: set `BLOB_READ_WRITE_TOKEN` so replies persist in private Blob storage.
+- Host inbox: `/rsvp-inbox?occasion=wedding&template=sakura-vows&wish=shehani-lasith&secret=YOUR_RSVP_ADMIN_SECRET`
+
+Set `RSVP_ADMIN_SECRET` in `.env` (see `.env.example`). Guest-wall messages still use the visitor’s browser only (`localStorage`).
 
 ---
 

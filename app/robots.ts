@@ -7,7 +7,7 @@ export default function robots() {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/gallery",
+      disallow: ["/gallery", "/rsvp-inbox", "/api/rsvp"],
     },
     sitemap: `${site}/sitemap.xml`,
   };

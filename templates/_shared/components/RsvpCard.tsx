@@ -6,6 +6,9 @@ type Props = {
   note?: string;
   cta?: string;
   storageKey?: string;
+  occasion: string;
+  slug: string;
+  wishId: string;
 };
 
 type Saved = {
@@ -13,10 +16,19 @@ type Saved = {
   coming: "yes" | "no";
 };
 
-export function RsvpCard({ note, cta = "RSVP", storageKey }: Props) {
+export function RsvpCard({
+  note,
+  cta = "RSVP",
+  storageKey,
+  occasion,
+  slug,
+  wishId,
+}: Props) {
   const [name, setName] = useState("");
   const [coming, setComing] = useState<"yes" | "no" | null>(null);
   const [done, setDone] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!storageKey) return;
@@ -32,20 +44,47 @@ export function RsvpCard({ note, cta = "RSVP", storageKey }: Props) {
     }
   }, [storageKey]);
 
-  function submit(event: FormEvent) {
+  async function submit(event: FormEvent) {
     event.preventDefault();
-    if (!name.trim() || !coming) return;
-    if (storageKey) {
-      try {
-        window.localStorage.setItem(
-          storageKey,
-          JSON.stringify({ name: name.trim(), coming } satisfies Saved),
-        );
-      } catch {
-        /* ignore quota */
+    if (!name.trim() || !coming || sending) return;
+    setSending(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          occasion,
+          slug,
+          wishId,
+          name: name.trim(),
+          coming,
+        }),
+      });
+      const payload = (await response.json().catch(() => null)) as {
+        error?: string;
+      } | null;
+      if (!response.ok) {
+        throw new Error(payload?.error || "Could not send your RSVP");
       }
+
+      if (storageKey) {
+        try {
+          window.localStorage.setItem(
+            storageKey,
+            JSON.stringify({ name: name.trim(), coming } satisfies Saved),
+          );
+        } catch {
+          /* ignore quota */
+        }
+      }
+      setDone(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not send your RSVP");
+    } finally {
+      setSending(false);
     }
-    setDone(true);
   }
 
   if (done) {
@@ -87,6 +126,7 @@ export function RsvpCard({ note, cta = "RSVP", storageKey }: Props) {
           onChange={(event) => setName(event.target.value)}
           placeholder="Your name"
           required
+          disabled={sending}
           className="w-full rounded-xl border bg-transparent px-4 py-3 text-base outline-none"
           style={{
             borderColor: "var(--hw-border)",
@@ -105,6 +145,7 @@ export function RsvpCard({ note, cta = "RSVP", storageKey }: Props) {
             key={value}
             type="button"
             onClick={() => setComing(value)}
+            disabled={sending}
             className="rounded-xl border px-3 py-3 text-sm transition-colors"
             style={{
               borderColor: coming === value ? "var(--hw-primary)" : "var(--hw-border)",
@@ -121,11 +162,17 @@ export function RsvpCard({ note, cta = "RSVP", storageKey }: Props) {
       </div>
       <button
         type="submit"
-        className="mt-5 w-full rounded-xl py-3 text-sm font-semibold tracking-wide uppercase"
+        disabled={sending || !coming}
+        className="mt-5 w-full rounded-xl py-3 text-sm font-semibold tracking-wide uppercase disabled:opacity-60"
         style={{ background: "var(--hw-primary)", color: "var(--hw-surface)" }}
       >
-        Send
+        {sending ? "Sending…" : "Send"}
       </button>
+      {error ? (
+        <p className="mt-3 text-center text-xs" style={{ color: "#b42318" }}>
+          {error}
+        </p>
+      ) : null}
       {note ? (
         <p className="mt-3 text-center text-xs" style={{ color: "var(--hw-muted)" }}>
           {note}
