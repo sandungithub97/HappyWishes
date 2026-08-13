@@ -2,11 +2,8 @@
  * PERSONALIZE THIS FILE ONLY.
  * Names, dates, copy, photos, colors, and music all live here.
  *
- * Photos / music / video — use either:
- *   src: "https://..."        any image or file URL
- *   src: "hero.jpg"           public/media/.../wishes/{wishId}/images/hero.jpg
- *   src: "background.mp3"     public/media/.../wishes/{wishId}/music/background.mp3
- *   src: "wish.mp4"           public/media/.../wishes/{wishId}/video/wish.mp4
+ * Character art lives in:
+ *   public/media/birthday/19-anime-wish/wishes/{wishId}/images/
  *
  * meta.wishId must match this filename (without .ts).
  * URL: /{occasion}/{slug}/{wishId}
@@ -19,8 +16,8 @@ const data: TemplateData = {
     slug: "anime-wish",
     wishId: "hana",
     name: "Anime Wish",
-    mood: "Your Name dusk — indigo sky, comet light, soft city glow",
-    standout: "Comet entrance, starfield, original silhouette scene, cinematic wish",
+    mood: "Anime movie world — comet sky, cartoon heroes, soft bloom light",
+    standout: "Illustrated anime characters, sky world, sparkle FX, cinematic entrance",
     buildPhase: 4,
   },
   people: [{ name: "Hana", role: "Birthday star" }],
@@ -34,11 +31,11 @@ const data: TemplateData = {
     },
   },
   copy: {
-    headline: "Under the same sky",
-    subhead: "君の名は。Birthday",
+    headline: "Welcome to her movie night",
+    subhead: "アニメの世界へ",
     message:
-      "Hana — if our paths cross only once a year, let this night be the comet. May every wish you whisper tonight find you again tomorrow. Happy birthday. The sky remembers your name.",
-    cta: "I'll be there",
+      "Hana — tonight the sky opens like an opening theme. A comet for courage, a spirit for luck, and a whole anime world cheering your name. Level up another year. Happy birthday, main character.",
+    cta: "Join her episode",
   },
   palette: {
     background: "#070B1A",
@@ -57,24 +54,24 @@ const data: TemplateData = {
   media: {
     photos: [
       {
-        src: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1400&q=80",
-        alt: "Milky Way night sky",
-        caption: "Twilight",
+        src: "anime-world-sky.png",
+        alt: "Anime dusk sky world",
+        caption: "World map",
       },
       {
-        src: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=1400&q=80",
-        alt: "Tokyo dusk city lights",
-        caption: "City lights",
+        src: "anime-hero-girl.png",
+        alt: "Anime birthday heroine",
+        caption: "Heroine",
       },
       {
-        src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80",
-        alt: "Mountain under cloudy sky",
-        caption: "Crossing",
+        src: "anime-spirit-fox.png",
+        alt: "Cute spirit companion",
+        caption: "Spirit friend",
       },
     ],
     music: {
       src: "background.mp3",
-      title: "Night sky theme",
+      title: "Opening theme",
     },
   },
   extras: {
@@ -82,7 +79,7 @@ const data: TemplateData = {
     milestoneAge: 18,
     rsvp: {
       enabled: true,
-      note: "Meet under the comet — reply by 10 September.",
+      note: "Enter the world — reply by 10 September.",
     },
   },
 };
