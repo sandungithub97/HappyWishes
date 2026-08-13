@@ -38,18 +38,21 @@ export function RsvpInboxClient() {
   const [secret, setSecret] = useState(secretFromUrl);
   const [data, setData] = useState<InboxPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(Boolean(secretFromUrl));
 
   const queryReady = Boolean(occasion && slug && wishId);
+  const hasUrlSecret = Boolean(secretFromUrl);
 
   const load = useCallback(
     async (adminSecret: string) => {
       if (!queryReady) {
         setError("Add occasion, template, and wish query params.");
+        setLoading(false);
         return;
       }
       if (!adminSecret) {
         setError("Enter the RSVP admin secret.");
+        setLoading(false);
         return;
       }
       setLoading(true);
@@ -104,28 +107,44 @@ export function RsvpInboxClient() {
         Name-wise replies for this wish only — other wishes never mix in.
       </p>
 
-      <form
-        onSubmit={onSubmit}
-        className="mt-8 flex flex-col gap-3 rounded-2xl border border-[#e6d2cc] bg-[#fff9f7] p-5 sm:flex-row sm:items-end"
-      >
-        <label className="block flex-1 text-sm">
-          <span className="mb-1 block text-[#8a736c]">Admin secret</span>
-          <input
-            type="password"
-            value={secret}
-            onChange={(event) => setSecret(event.target.value)}
-            className="w-full rounded-xl border border-[#e6d2cc] bg-white px-3 py-2.5 outline-none"
-            autoComplete="current-password"
-          />
-        </label>
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-xl bg-[#2b2422] px-5 py-2.5 text-sm font-medium text-white disabled:opacity-60"
+      {hasUrlSecret ? (
+        <div className="mt-8 flex items-center justify-between gap-3">
+          <p className="text-sm text-[#8a736c]">
+            {loading ? "Loading replies…" : "Loaded from your bookmark link."}
+          </p>
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => void load(secretFromUrl)}
+            className="rounded-xl border border-[#e6d2cc] bg-white px-4 py-2 text-sm disabled:opacity-60"
+          >
+            Refresh
+          </button>
+        </div>
+      ) : (
+        <form
+          onSubmit={onSubmit}
+          className="mt-8 flex flex-col gap-3 rounded-2xl border border-[#e6d2cc] bg-[#fff9f7] p-5 sm:flex-row sm:items-end"
         >
-          {loading ? "Loading…" : "Load replies"}
-        </button>
-      </form>
+          <label className="block flex-1 text-sm">
+            <span className="mb-1 block text-[#8a736c]">Admin secret</span>
+            <input
+              type="password"
+              value={secret}
+              onChange={(event) => setSecret(event.target.value)}
+              className="w-full rounded-xl border border-[#e6d2cc] bg-white px-3 py-2.5 outline-none"
+              autoComplete="current-password"
+            />
+          </label>
+          <button
+            type="submit"
+            disabled={loading}
+            className="rounded-xl bg-[#2b2422] px-5 py-2.5 text-sm font-medium text-white disabled:opacity-60"
+          >
+            {loading ? "Loading…" : "Load replies"}
+          </button>
+        </form>
+      )}
 
       {!queryReady ? (
         <p className="mt-6 text-sm text-[#8a736c]">

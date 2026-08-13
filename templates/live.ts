@@ -30,5 +30,5 @@
  * 20 Sakura Vows                  wedding
  * 21 Lankan Poruwa                wedding
  */
-export const LIVE_TEMPLATE = 20;
-export const LIVE_WISH = "shehani-lasith";
+export const LIVE_TEMPLATE = 19;
+export const LIVE_WISH = "hana";

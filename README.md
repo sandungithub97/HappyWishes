@@ -244,7 +244,7 @@ Or connect the repo to Vercel and add `NEXT_PUBLIC_SITE_URL` in the project envi
 | Memory Lane | `timeline` (one full-screen scene per item) |
 | One Song, One Page | `media.music` |
 | Video Wish | `media.video` |
-| Anime Wish | `milestoneAge`, `stickers`, `rsvp`, `backgroundMusic` |
+| Anime Wish | `milestoneAge`, `rsvp`, `backgroundMusic` (Your Name dusk entrance) |
 | Sakura Vows | `rsvp`, `copy.subhead` (Japanese line) |
 | Lankan Poruwa | `timeline` (ceremony chapters), `rsvp` |
 

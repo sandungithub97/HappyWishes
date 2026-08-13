@@ -1,14 +1,14 @@
-import { M_PLUS_Rounded_1c, Zen_Maru_Gothic } from "next/font/google";
+import { Dela_Gothic_One, Noto_Sans_JP } from "next/font/google";
 import { Experience } from "./Experience";
 import type { TemplateData } from "@/templates/_shared/types";
 
-const display = M_PLUS_Rounded_1c({
+const display = Dela_Gothic_One({
   subsets: ["latin"],
-  weight: ["400", "700", "800"],
+  weight: "400",
   variable: "--font-display",
 });
 
-const body = Zen_Maru_Gothic({
+const body = Noto_Sans_JP({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   variable: "--font-body",
