@@ -1,16 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
-import { templateCatalog } from "@/templates/_shared/catalog";
+import { data } from "@/templates/deploy";
 import { getSiteUrl } from "@/templates/_shared/site";
-import { LIVE_TEMPLATE } from "@/templates/live";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
-const live = templateCatalog[LIVE_TEMPLATE - 1];
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -24,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: live?.palette.background ?? "#FBF7F0",
+  themeColor: data.palette.background,
   width: "device-width",
   initialScale: 1,
 };

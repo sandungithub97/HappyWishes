@@ -1,6 +1,6 @@
 import { Instrument_Sans, Instrument_Serif } from "next/font/google";
-import data from "./data";
 import { Experience } from "./Experience";
+import type { TemplateData } from "@/templates/_shared/types";
 
 const display = Instrument_Serif({
   subsets: ["latin"],
@@ -15,7 +15,7 @@ const body = Instrument_Sans({
   variable: "--font-body",
 });
 
-export default function Template() {
+export default function Template({ data }: { data: TemplateData }) {
   return (
     <div className={`${display.variable} ${body.variable}`}>
       <Experience data={data} />

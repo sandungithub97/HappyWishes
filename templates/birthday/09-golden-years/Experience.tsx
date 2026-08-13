@@ -86,7 +86,7 @@ export function Experience({ data }: { data: TemplateData }) {
       {data.extras.guestWall ? (
         <section className="px-6 py-16 pb-24">
           <FadeIn>
-            <GuestWall storageKey={`hw-wishes-${data.meta.slug}`} cta={data.copy.cta} />
+            <GuestWall storageKey={`hw-wishes-${data.meta.slug}-${data.meta.wishId}`} cta={data.copy.cta} />
           </FadeIn>
         </section>
       ) : null}

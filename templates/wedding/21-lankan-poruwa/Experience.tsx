@@ -127,7 +127,7 @@ export function Experience({ data }: { data: TemplateData }) {
             <RsvpCard
               note={data.extras.rsvp.note}
               cta={data.copy.cta}
-              storageKey={`hw-rsvp-${data.meta.slug}`}
+              storageKey={`hw-rsvp-${data.meta.slug}-${data.meta.wishId}`}
             />
           </FadeIn>
         </section>

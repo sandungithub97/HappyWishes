@@ -33,7 +33,7 @@ const photoTilt = ["-rotate-3", "rotate-2", "-rotate-1"];
 export function Experience({ data }: { data: TemplateData }) {
   const reduce = useReducedMotion();
   const [inRsvp, setInRsvp] = useState(false);
-  const rsvpKey = `hw-rsvp-${data.meta.slug}`;
+  const rsvpKey = `hw-rsvp-${data.meta.slug}-${data.meta.wishId}`;
   const name = displayNames(data.people)[0] ?? data.people[0]?.name ?? "";
   const age = data.extras.milestoneAge;
   const stickers = data.extras.stickers ?? [];

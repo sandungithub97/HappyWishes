@@ -99,25 +99,51 @@ Numbers:
                                               21 Lankan Poruwa
 ```
 
-### 2. Personalize it
+### 2. Personalize a wish (one couple / one guest)
 
-Edit **only** this file:
-
-```
-templates/{occasion}/{number}-{slug}/data.ts
-```
-
-Example for the current live wedding page:
+Each design can have **many** personalized wishes. Content lives here:
 
 ```
-templates/wedding/01-forever-starts-here/data.ts
+templates/{occasion}/{number}-{slug}/wishes/{wishId}.ts
 ```
 
-Change names, date, place, message, photo URLs, and colors there. Refresh the browser.
+Example — Sakura Vows for Shehani & Lasith:
 
-Do not put personal content in `Template.tsx` or `Experience.tsx`. Those are the design. `data.ts` is the content.
+```
+templates/wedding/20-sakura-vows/wishes/shehani-lasith.ts
+```
 
-To open Maps, set `event.place`. Clicking the place name opens Google Maps. Paste a Maps link into `mapUrl`, or just fill in `name` and `city`:
+Guest URL:
+
+```
+/wedding/sakura-vows/shehani-lasith
+```
+
+`meta.wishId` must match the filename (without `.ts`).
+
+**Add another couple on the same design:**
+
+1. Copy an existing wish file, e.g. `shehani-lasith.ts` → `nimal-dilani.ts`
+2. Change `meta.wishId` to `"nimal-dilani"`
+3. Edit names, date, place, photos, copy
+4. Register it in `templates/_shared/catalog.ts` inside that design’s `wishes: [...]` array
+5. Optional media folder:
+
+```
+public/media/wedding/20-sakura-vows/wishes/nimal-dilani/images/
+public/media/wedding/20-sakura-vows/wishes/nimal-dilani/music/
+```
+
+Pick the live homepage in `templates/live.ts`:
+
+```ts
+export const LIVE_TEMPLATE = 20;
+export const LIVE_WISH = "shehani-lasith";
+```
+
+Do not put personal content in `Template.tsx` or `Experience.tsx`. Those are the design.
+
+To open Maps, set `event.place`. Clicking the place name opens Google Maps:
 
 ```ts
 place: {
@@ -132,10 +158,10 @@ place: {
 **Photos — two ways (mix them in the same list):**
 
 1. **URL:** paste any `https://` image link into `src`.
-2. **Stored in the app:** drop the file in that template’s **images** folder, then use the filename:
+2. **Stored in the app:** drop the file in **that wish’s** images folder:
 
 ```
-public/media/wedding/01-forever-starts-here/images/hero.jpg
+public/media/wedding/20-sakura-vows/wishes/shehani-lasith/images/hero.jpg
 ```
 
 ```ts
@@ -145,17 +171,17 @@ photos: [
 ]
 ```
 
-**Music:** drop the file in **music**, then use the filename:
+**Music:** drop the file in that wish’s **music** folder:
 
 ```
-public/media/wedding/01-forever-starts-here/music/background.mp3
+public/media/wedding/20-sakura-vows/wishes/shehani-lasith/music/background.mp3
 ```
 
 ```ts
 music: { src: "background.mp3", title: "Our song" }
 ```
 
-**Video:** drop the file in **video** (`wish.mp4`). Until a local file exists, the music button stays disabled.
+**Video:** drop the file in that wish’s **video** folder (`wish.mp4`). Until a local file exists, the music button stays disabled.
 
 ### 4. Set the public URL before a real deploy
 
@@ -232,13 +258,14 @@ RSVP and guest-wall messages are stored in the visitor’s browser (`localStorag
 
 | Name | Preview URL |
 |---|---|
-| Forever Starts Here | `/wedding/forever-starts-here` |
+| Forever Starts Here | `/wedding/forever-starts-here/amara-julian` |
 | Two Hearts, One Story | `/wedding/two-hearts-one-story` |
 | Rustic Vows | `/wedding/rustic-vows` |
 | Minimal & Modern | `/wedding/minimal-modern` |
 | Royal Affair | `/wedding/royal-affair` |
-| Sakura Vows | `/wedding/sakura-vows` |
-| Lankan Poruwa | `/wedding/lankan-poruwa` |
+| Sakura Vows | `/wedding/sakura-vows/shehani-lasith` |
+| Sakura Vows (2nd wish) | `/wedding/sakura-vows/aiko-kenji` |
+| Lankan Poruwa | `/wedding/lankan-poruwa/sanduni-kasun` |
 
 **Birthday**
 
@@ -274,17 +301,15 @@ RSVP and guest-wall messages are stored in the visitor’s browser (`localStorag
 ## Folder map
 
 ```
-templates/live.ts                   ← change LIVE_TEMPLATE number (1–21)
+templates/live.ts                   ← LIVE_TEMPLATE + LIVE_WISH
 templates/{occasion}/{number}-{slug}/
-  data.ts                           ← EDIT THIS (content, photos, colors)
-  Template.tsx                      ← fonts for this design (rarely touch)
-  Experience.tsx                    ← layout and motion (rarely touch)
-public/media/{occasion}/{number}-{slug}/
-  images/                           ← jpg / png / webp
-  music/                            ← mp3
-  video/                            ← mp4
-app/page.tsx                        ← renders the live template
-app/gallery/page.tsx                ← catalog
+  Template.tsx / Experience.tsx     ← design (rarely touch)
+  wishes/{wishId}.ts                ← EDIT THIS (one file per couple/guest)
+public/media/{occasion}/{number}-{slug}/wishes/{wishId}/
+  images/  music/  video/           ← that wish’s local media
+app/page.tsx                        ← live wish at /
+app/gallery/page.tsx                ← all wishes
+app/[occasion]/[template]/[wish]/ ← /wedding/sakura-vows/shehani-lasith
 ```
 
 On every wish page:
@@ -306,10 +331,10 @@ Fonts are loaded in each `Template.tsx` with `next/font`. Changing `fonts` in `d
 
 ## Quick example: turn this into Maya’s birthday
 
-1. In `templates/live.ts` set `LIVE_TEMPLATE` to `6`.
+1. In `templates/live.ts` set `LIVE_TEMPLATE` to `6` and `LIVE_WISH` to `"maya"`.
 
-2. In `templates/birthday/06-confetti-pop/data.ts`, change `people`, `event`, `copy`, `palette`, and `media.photos`.
+2. In `templates/birthday/06-confetti-pop/wishes/maya.ts`, change `people`, `event`, `copy`, `palette`, and `media.photos`.
 
-3. Optional: put `background.mp3` in `public/media/birthday/06-confetti-pop/music/`.
+3. Optional: put `background.mp3` in `public/media/birthday/06-confetti-pop/wishes/maya/music/`.
 
-4. Open `/` — that is the page you send people.
+4. Open `/` — that is the page you send people. Or share `/birthday/confetti-pop/maya`.

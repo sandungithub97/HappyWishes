@@ -7,8 +7,9 @@ export default function sitemap() {
 
   return [
     { url: site, lastModified: now },
+    { url: `${site}/gallery`, lastModified: now },
     ...listTemplates().map((item) => ({
-      url: `${site}${templatePath(item.meta.occasion, item.meta.slug)}`,
+      url: `${site}${templatePath(item.meta.occasion, item.meta.slug, item.meta.wishId)}`,
       lastModified: now,
     })),
   ];

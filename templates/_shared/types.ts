@@ -131,7 +131,13 @@ export type TemplateExtras = {
 
 export type TemplateMeta = {
   occasion: Occasion;
+  /** Design slug, e.g. "sakura-vows" (URL segment) */
   slug: string;
+  /**
+   * Unique wish id — matches the filename in wishes/{wishId}.ts
+   * and the last URL segment: /{occasion}/{slug}/{wishId}
+   */
+  wishId: string;
   name: string;
   mood: string;
   standout: string;
@@ -164,5 +170,13 @@ export type TemplateData = {
 
 export type TemplateEntry = {
   data: TemplateData;
-  Template: ComponentType;
+  Template: ComponentType<{ data: TemplateData }>;
+};
+
+export type DesignEntry = {
+  /** Catalog number 1–21 */
+  number: number;
+  folder: string;
+  Template: ComponentType<{ data: TemplateData }>;
+  wishes: TemplateData[];
 };

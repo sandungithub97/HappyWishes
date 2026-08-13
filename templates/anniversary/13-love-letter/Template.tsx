@@ -1,6 +1,6 @@
 import { EB_Garamond, Great_Vibes } from "next/font/google";
-import data from "./data";
 import { Experience } from "./Experience";
+import type { TemplateData } from "@/templates/_shared/types";
 
 const display = Great_Vibes({
   subsets: ["latin"],
@@ -15,7 +15,7 @@ const body = EB_Garamond({
   variable: "--font-body",
 });
 
-export default function Template() {
+export default function Template({ data }: { data: TemplateData }) {
   return (
     <div className={`${display.variable} ${body.variable}`}>
       <Experience data={data} />

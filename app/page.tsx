@@ -8,7 +8,7 @@ export const metadata: Metadata = templateMetadata(data, "/");
 export default function Home() {
   return (
     <>
-      <Template />
+      <Template data={data} />
       <WishChrome data={data} />
     </>
   );

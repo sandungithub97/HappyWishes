@@ -77,6 +77,183 @@ function Reveal({
   );
 }
 
+function SakuraBloom({
+  className,
+  size = 28,
+  color = "#E8A0B4",
+  delay = 0,
+}: {
+  className?: string;
+  size?: number;
+  color?: string;
+  delay?: number;
+}) {
+  return (
+    <motion.svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 40 40"
+      fill="none"
+      aria-hidden
+      initial={{ opacity: 0, scale: 0.4, rotate: -20 }}
+      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+      transition={{ duration: 0.9, delay, ease: softEase }}
+    >
+      {[0, 72, 144, 216, 288].map((deg) => (
+        <ellipse
+          key={deg}
+          cx="20"
+          cy="11"
+          rx="5.2"
+          ry="9"
+          fill={color}
+          opacity="0.92"
+          transform={`rotate(${deg} 20 20)`}
+        />
+      ))}
+      <circle cx="20" cy="20" r="3.2" fill="#F7E7B8" />
+    </motion.svg>
+  );
+}
+
+const doorFlowers = [
+  { top: "8%", left: "12%", size: 34, color: "#F2B6C6", delay: 0.2 },
+  { top: "14%", left: "58%", size: 26, color: "#E89BB0", delay: 0.35 },
+  { top: "28%", left: "22%", size: 22, color: "#F7C1D0", delay: 0.45 },
+  { top: "38%", left: "68%", size: 30, color: "#D4849A", delay: 0.28 },
+  { top: "52%", left: "18%", size: 28, color: "#E8A0B4", delay: 0.5 },
+  { top: "62%", left: "55%", size: 24, color: "#F2B6C6", delay: 0.4 },
+  { top: "74%", left: "30%", size: 32, color: "#E89BB0", delay: 0.55 },
+  { top: "82%", left: "64%", size: 20, color: "#F7C1D0", delay: 0.32 },
+] as const;
+
+const burstPetals = Array.from({ length: 22 }, (_, i) => {
+  const angle = (i / 22) * Math.PI * 2;
+  const distance = 120 + (i % 5) * 38;
+  return {
+    id: i,
+    x: Math.cos(angle) * distance,
+    y: Math.sin(angle) * distance - 40,
+    rotate: i * 28,
+    size: 14 + (i % 4) * 6,
+    color: ["#F2B6C6", "#E89BB0", "#F7C1D0", "#D4849A", "#FFD6E0"][i % 5]!,
+    delay: 0.08 + (i % 7) * 0.03,
+  };
+});
+
+function FloweredDoorPanel({
+  side,
+  opening,
+  reduce,
+}: {
+  side: "left" | "right";
+  opening: boolean;
+  reduce: boolean | null;
+}) {
+  const isLeft = side === "left";
+
+  return (
+    <motion.div
+      className={`absolute inset-y-0 ${isLeft ? "left-0 origin-left" : "right-0 origin-right"} w-[min(50vw,420px)]`}
+      style={{ transformStyle: "preserve-3d" }}
+      animate={
+        opening && !reduce
+          ? {
+              rotateY: isLeft ? -78 : 78,
+              x: isLeft ? "-6%" : "6%",
+              opacity: 0.2,
+            }
+          : { rotateY: 0, x: 0, opacity: 1 }
+      }
+      transition={{ duration: 1.65, ease: [0.19, 1, 0.22, 1] }}
+    >
+      <div
+        className="relative h-full w-full overflow-hidden"
+        style={{
+          background: `
+            linear-gradient(
+              ${isLeft ? "90deg" : "270deg"},
+              #5c2f2a 0%,
+              #8a4a3d 12%,
+              #c9a27a 14%,
+              #f7efe6 16%,
+              #fff8f2 48%,
+              #f3e4da 84%,
+              #c9a27a 86%,
+              #8a4a3d 92%,
+              #5c2f2a 100%
+            )
+          `,
+          boxShadow: isLeft
+            ? "inset -24px 0 50px rgba(43, 36, 34, 0.12), 8px 0 40px rgba(43, 36, 34, 0.18)"
+            : "inset 24px 0 50px rgba(43, 36, 34, 0.12), -8px 0 40px rgba(43, 36, 34, 0.18)",
+          borderRight: isLeft ? "2px solid #c9a27a" : undefined,
+          borderLeft: !isLeft ? "2px solid #c9a27a" : undefined,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Lattice */}
+        <div
+          className="absolute inset-[10%] opacity-40"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, color-mix(in srgb, #8a4a3d 55%, transparent) 1px, transparent 1px),
+              linear-gradient(to bottom, color-mix(in srgb, #8a4a3d 55%, transparent) 1px, transparent 1px)
+            `,
+            backgroundSize: "28% 22%",
+            border: "1px solid color-mix(in srgb, #8a4a3d 45%, transparent)",
+          }}
+        />
+
+        {/* Center crest */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div
+            className="relative flex h-24 w-24 items-center justify-center rounded-full sm:h-28 sm:w-28"
+            style={{
+              border: "1.5px solid #c9a27a",
+              background:
+                "radial-gradient(circle, #fff9f4 0%, #f3e4da 70%, #e8c9a8 100%)",
+              boxShadow: "0 0 0 6px color-mix(in srgb, #fff8f2 70%, transparent)",
+            }}
+          >
+            <SakuraBloom size={42} color="#D4849A" delay={0.4} />
+          </div>
+        </div>
+
+        {/* Scattered blossoms on door */}
+        {doorFlowers.map((flower, index) => (
+          <div
+            key={`pos-${side}-${index}`}
+            className="pointer-events-none absolute"
+            style={{
+              top: flower.top,
+              left: isLeft ? flower.left : undefined,
+              right: isLeft ? undefined : flower.left,
+            }}
+          >
+            <SakuraBloom
+              size={flower.size}
+              color={flower.color}
+              delay={flower.delay + (isLeft ? 0 : 0.08)}
+            />
+          </div>
+        ))}
+
+        {/* Soft hanging cords */}
+        <div
+          className={`absolute top-[18%] ${isLeft ? "right-5" : "left-5"} h-[28%] w-px`}
+          style={{ background: "color-mix(in srgb, #8a4a3d 55%, transparent)" }}
+        />
+        <div
+          className={`absolute top-[18%] ${isLeft ? "right-4" : "left-4"} h-3 w-3 rounded-full`}
+          style={{ background: "#D4849A" }}
+        />
+      </div>
+    </motion.div>
+  );
+}
+
 function WelcomeGate({
   names,
   onOpen,
@@ -90,94 +267,132 @@ function WelcomeGate({
   function open() {
     if (opening) return;
     setOpening(true);
-    window.setTimeout(onOpen, reduce ? 200 : 1400);
+    window.setTimeout(onOpen, reduce ? 220 : 1950);
   }
 
   return (
     <motion.div
       className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
-      style={{ background: "var(--hw-bg)" }}
+      style={{
+        background: `
+          radial-gradient(ellipse at 50% 18%, #ffe8ef 0%, transparent 42%),
+          radial-gradient(ellipse at 50% 100%, #f3e4da 0%, transparent 48%),
+          #fbf6f2
+        `,
+      }}
       exit={
         reduce
           ? { opacity: 0 }
-          : { opacity: 0, transition: { duration: 0.5, delay: 0.15 } }
+          : { opacity: 0, transition: { duration: 0.55, delay: 0.1 } }
       }
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-40"
+      {/* Floral arch header */}
+      <div className="pointer-events-none absolute top-0 right-0 left-0 z-20 flex justify-center pt-4 sm:pt-6">
+        <motion.div
+          className="relative flex w-[min(92vw,560px)] items-end justify-center"
+          initial={reduce ? false : { opacity: 0, y: -18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: softEase }}
+        >
+          <div
+            className="absolute inset-x-6 bottom-0 h-10 rounded-t-[999px]"
+            style={{
+              background:
+                "linear-gradient(to top, color-mix(in srgb, #8a4a3d 70%, transparent), transparent)",
+              opacity: 0.35,
+            }}
+          />
+          <div className="relative flex items-center gap-1 sm:gap-2">
+            {[26, 34, 42, 50, 42, 34, 26].map((size, i) => (
+              <SakuraBloom
+                key={i}
+                size={size}
+                color={["#F2B6C6", "#E89BB0", "#D4849A", "#F7C1D0"][i % 4]}
+                delay={0.15 + i * 0.07}
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Warm courtyard glow behind doors */}
+      <motion.div
+        className="pointer-events-none absolute inset-[12%] rounded-[40%] opacity-0"
         style={{
-          background: `
-            radial-gradient(ellipse at 50% 20%, color-mix(in srgb, var(--hw-primary) 22%, transparent), transparent 55%),
-            radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--hw-accent) 28%, transparent), transparent 50%)
-          `,
+          background:
+            "radial-gradient(circle, #fff7f2 0%, #ffe0ea 35%, transparent 70%)",
         }}
+        animate={
+          opening && !reduce
+            ? { opacity: 1, scale: 1.15 }
+            : { opacity: 0, scale: 0.85 }
+        }
+        transition={{ duration: 1.2, ease: softEase }}
       />
 
-      {/* Left shoji door */}
-      <motion.div
-        className="absolute inset-y-0 left-0 w-1/2 origin-left"
-        style={{
-          background: `
-            linear-gradient(90deg, #f7efe8 0%, #fff9f5 55%, #f3e6df 100%)
-          `,
-          borderRight: "1px solid color-mix(in srgb, var(--hw-border) 80%, transparent)",
-          boxShadow: "inset -18px 0 40px rgba(43, 36, 34, 0.05)",
-        }}
-        animate={
-          opening && !reduce
-            ? { x: "-102%", rotateY: -8 }
-            : { x: 0, rotateY: 0 }
-        }
-        transition={{ duration: 1.25, ease: softEase }}
+      <div
+        className="absolute inset-0 z-10"
+        style={{ perspective: "1600px", perspectiveOrigin: "50% 50%" }}
       >
-        <div
-          className="absolute inset-4 grid grid-cols-3 grid-rows-4 gap-px opacity-35"
-          style={{ border: "1px solid var(--hw-border)" }}
-        >
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} style={{ border: "1px solid var(--hw-border)" }} />
-          ))}
-        </div>
-      </motion.div>
+        <FloweredDoorPanel side="left" opening={opening} reduce={reduce} />
+        <FloweredDoorPanel side="right" opening={opening} reduce={reduce} />
+      </div>
 
-      {/* Right shoji door */}
+      {/* Center seam / latch */}
       <motion.div
-        className="absolute inset-y-0 right-0 w-1/2 origin-right"
+        className="pointer-events-none absolute inset-y-[12%] left-1/2 z-20 w-px -translate-x-1/2"
         style={{
-          background: `
-            linear-gradient(270deg, #f7efe8 0%, #fff9f5 55%, #f3e6df 100%)
-          `,
-          borderLeft: "1px solid color-mix(in srgb, var(--hw-border) 80%, transparent)",
-          boxShadow: "inset 18px 0 40px rgba(43, 36, 34, 0.05)",
+          background:
+            "linear-gradient(to bottom, transparent, #c9a27a 20%, #c9a27a 80%, transparent)",
         }}
-        animate={
-          opening && !reduce
-            ? { x: "102%", rotateY: 8 }
-            : { x: 0, rotateY: 0 }
-        }
-        transition={{ duration: 1.25, ease: softEase }}
-      >
-        <div
-          className="absolute inset-4 grid grid-cols-3 grid-rows-4 gap-px opacity-35"
-          style={{ border: "1px solid var(--hw-border)" }}
-        >
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} style={{ border: "1px solid var(--hw-border)" }} />
-          ))}
-        </div>
-      </motion.div>
+        animate={opening ? { opacity: 0 } : { opacity: 0.8 }}
+        transition={{ duration: 0.4 }}
+      />
+
+      {/* Petal burst when doors open */}
+      <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center">
+        {burstPetals.map((petal) => (
+          <motion.div
+            key={petal.id}
+            className="absolute"
+            initial={{ opacity: 0, x: 0, y: 0, scale: 0.3, rotate: 0 }}
+            animate={
+              opening && !reduce
+                ? {
+                    opacity: [0, 1, 0],
+                    x: petal.x,
+                    y: petal.y,
+                    scale: [0.3, 1.1, 0.7],
+                    rotate: petal.rotate,
+                  }
+                : { opacity: 0, x: 0, y: 0 }
+            }
+            transition={{
+              duration: 1.45,
+              delay: petal.delay,
+              ease: softEase,
+            }}
+          >
+            <SakuraBloom size={petal.size} color={petal.color} delay={0} />
+          </motion.div>
+        ))}
+      </div>
 
       <motion.div
-        className="relative z-10 mx-auto flex max-w-md flex-col items-center px-6 text-center"
-        animate={opening && !reduce ? { opacity: 0, scale: 0.96 } : { opacity: 1, scale: 1 }}
-        transition={{ duration: 0.45, ease: softEase }}
+        className="relative z-40 mx-auto flex max-w-md flex-col items-center px-6 text-center"
+        animate={
+          opening && !reduce
+            ? { opacity: 0, y: -12, scale: 0.97 }
+            : { opacity: 1, y: 0, scale: 1 }
+        }
+        transition={{ duration: 0.55, ease: softEase }}
       >
         <motion.p
           className="text-[11px] tracking-[0.42em] uppercase"
           style={{ color: "var(--hw-primary)" }}
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: softEase }}
+          transition={{ duration: 0.9, delay: 0.2, ease: softEase }}
         >
           ようこそ · Welcome
         </motion.p>
@@ -186,7 +401,7 @@ function WelcomeGate({
           style={{ color: "var(--hw-secondary)" }}
           initial={reduce ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.35, ease: softEase }}
+          transition={{ duration: 1, delay: 0.4, ease: softEase }}
         >
           {names}
         </motion.p>
@@ -195,9 +410,9 @@ function WelcomeGate({
           style={{ color: "var(--hw-muted)" }}
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.9, delay: 0.55 }}
+          transition={{ duration: 0.9, delay: 0.6 }}
         >
-          桜の誓い · Sakura vows
+          桜の門 · Flowered wedding doors
         </motion.p>
 
         <motion.button
@@ -205,16 +420,19 @@ function WelcomeGate({
           onClick={open}
           className="mt-12 rounded-full border px-8 py-3.5 text-[11px] tracking-[0.32em] uppercase transition-transform hover:scale-[1.03] active:scale-[0.98]"
           style={{
-            borderColor: "var(--hw-border)",
-            background: "color-mix(in srgb, var(--hw-surface) 85%, transparent)",
+            borderColor: "#c9a27a",
+            background:
+              "linear-gradient(180deg, #fff9f4 0%, #f7ebe3 100%)",
             color: "var(--hw-secondary)",
+            boxShadow: "0 10px 30px rgba(212, 132, 154, 0.18)",
           }}
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.75, ease: softEase }}
+          transition={{ duration: 0.9, delay: 0.8, ease: softEase }}
+          whileHover={reduce ? undefined : { scale: 1.04 }}
           whileTap={{ scale: 0.98 }}
         >
-          Open the gate
+          Open the flowered doors
         </motion.button>
       </motion.div>
     </motion.div>
@@ -464,7 +682,7 @@ export function Experience({ data }: { data: TemplateData }) {
               <RsvpCard
                 note={data.extras.rsvp.note}
                 cta={data.copy.cta}
-                storageKey={`hw-rsvp-${data.meta.slug}`}
+                storageKey={`hw-rsvp-${data.meta.slug}-${data.meta.wishId}`}
               />
             </Reveal>
           </section>

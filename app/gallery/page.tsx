@@ -1,8 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { OCCASION_LABELS, OCCASIONS } from "@/templates/_shared/types";
-import { listByOccasion, templateCatalog } from "@/templates/_shared/catalog";
-import { LIVE_TEMPLATE } from "@/templates/live";
+import {
+  designCatalog,
+  listByOccasion,
+} from "@/templates/_shared/catalog";
+import { templatePath } from "@/templates/_shared/site";
+import { LIVE_TEMPLATE, LIVE_WISH } from "@/templates/live";
 
 export const metadata: Metadata = {
   title: "Template gallery",
@@ -10,16 +14,19 @@ export const metadata: Metadata = {
 };
 
 export default function GalleryPage() {
-  const live = templateCatalog[LIVE_TEMPLATE - 1];
+  const liveDesign = designCatalog[LIVE_TEMPLATE - 1];
+  const live =
+    liveDesign?.wishes.find((wish) => wish.meta.wishId === LIVE_WISH) ??
+    liveDesign?.wishes[0];
 
   return (
     <main className="min-h-screen bg-[#0c0c0f] text-[#f4f1ea]">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-24">
         <p className="text-[11px] font-medium tracking-[0.32em] uppercase text-[#a89870]">
-          Template gallery · not the live page
+          Wish gallery · not only one live page
         </p>
         <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight sm:text-6xl">
-          Pick one, then deploy it at /
+          Same design, many personal wishes
         </h1>
         <p className="mt-5 max-w-xl text-base leading-7 text-[#b8b4c8]">
           Guests see whatever is set in{" "}
@@ -31,12 +38,12 @@ export default function GalleryPage() {
                 href="/"
                 className="underline decoration-[#e8c872]/40 underline-offset-4"
               >
-                #{LIVE_TEMPLATE} {live.meta.occasion}/{live.meta.slug}
+                #{LIVE_TEMPLATE}/{LIVE_WISH}
               </Link>
             </>
           ) : null}
-          . Personalize it in that template&apos;s{" "}
-          <code className="text-[#e8c872]">data.ts</code>.
+          . Add more people by creating another file in{" "}
+          <code className="text-[#e8c872]">wishes/</code>.
         </p>
 
         <div className="mt-16 space-y-16">
@@ -47,20 +54,26 @@ export default function GalleryPage() {
               </h2>
               <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {listByOccasion(occasion).map((item) => {
-                  const number =
-                    templateCatalog.findIndex(
+                  const designNumber =
+                    designCatalog.find(
                       (entry) =>
-                        entry.meta.occasion === item.meta.occasion &&
-                        entry.meta.slug === item.meta.slug,
-                    ) + 1;
+                        entry.wishes[0]?.meta.occasion === item.meta.occasion &&
+                        entry.wishes[0]?.meta.slug === item.meta.slug,
+                    )?.number ?? 0;
                   const isLive =
                     live?.meta.occasion === item.meta.occasion &&
-                    live?.meta.slug === item.meta.slug;
+                    live?.meta.slug === item.meta.slug &&
+                    live?.meta.wishId === item.meta.wishId;
+                  const href = templatePath(
+                    item.meta.occasion,
+                    item.meta.slug,
+                    item.meta.wishId,
+                  );
 
                   return (
                     <Link
-                      key={item.meta.slug}
-                      href={`/${item.meta.occasion}/${item.meta.slug}`}
+                      key={`${item.meta.slug}-${item.meta.wishId}`}
+                      href={href}
                       className="group rounded-2xl border p-5 transition-transform duration-300 hover:-translate-y-0.5"
                       style={{
                         background: item.palette.surface,
@@ -97,8 +110,14 @@ export default function GalleryPage() {
                         className="mt-4 text-xl font-semibold tracking-tight"
                         style={{ color: item.palette.secondary }}
                       >
-                        {number}. {item.meta.name}
+                        {designNumber}. {item.meta.name}
                       </h3>
+                      <p
+                        className="mt-1 text-[11px] tracking-[0.16em] uppercase"
+                        style={{ color: item.palette.primary }}
+                      >
+                        {item.meta.wishId}
+                      </p>
                       <p
                         className="mt-2 text-sm leading-6"
                         style={{ color: item.palette.muted }}

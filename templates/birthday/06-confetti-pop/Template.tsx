@@ -1,6 +1,6 @@
 import { Fredoka, Nunito } from "next/font/google";
-import data from "./data";
 import { Experience } from "./Experience";
+import type { TemplateData } from "@/templates/_shared/types";
 
 const display = Fredoka({
   subsets: ["latin"],
@@ -14,7 +14,7 @@ const body = Nunito({
   variable: "--font-body",
 });
 
-export default function Template() {
+export default function Template({ data }: { data: TemplateData }) {
   return (
     <div className={`${display.variable} ${body.variable}`}>
       <Experience data={data} />

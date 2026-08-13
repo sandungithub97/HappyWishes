@@ -1,5 +1,12 @@
 /**
- * Change this number to pick the live page at /
+ * Pick what guests see at /
+ *
+ * LIVE_TEMPLATE = design number (1–21)
+ * LIVE_WISH     = wishId from wishes/{wishId}.ts (URL ending)
+ *
+ * Example Sakura Vows wishes:
+ *   shehani-lasith  → /wedding/sakura-vows/shehani-lasith
+ *   aiko-kenji      → /wedding/sakura-vows/aiko-kenji
  *
  *  1 Forever Starts Here          wedding
  *  2 Two Hearts, One Story        wedding
@@ -23,4 +30,5 @@
  * 20 Sakura Vows                  wedding
  * 21 Lankan Poruwa                wedding
  */
-export const LIVE_TEMPLATE = 1;
+export const LIVE_TEMPLATE = 20;
+export const LIVE_WISH = "shehani-lasith";

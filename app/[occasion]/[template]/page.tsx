@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
-import { getTemplateEntry, listTemplates } from "@/templates/_shared/registry";
+import {
+  getDefaultWish,
+  getWishEntry,
+  listDesigns,
+} from "@/templates/_shared/catalog";
 import { templateMetadata } from "@/templates/_shared/seo";
 import { templatePath } from "@/templates/_shared/site";
 import { WishChrome } from "@/templates/_shared/WishChrome";
@@ -9,32 +13,39 @@ type Props = {
 };
 
 export function generateStaticParams() {
-  return listTemplates().map((item) => ({
-    occasion: item.meta.occasion,
-    template: item.meta.slug,
-  }));
+  return listDesigns().map((design) => {
+    const first = design.wishes[0]!;
+    return {
+      occasion: first.meta.occasion,
+      template: first.meta.slug,
+    };
+  });
 }
 
 export async function generateMetadata({ params }: Props) {
   const { occasion, template } = await params;
-  const entry = getTemplateEntry(occasion, template);
-  if (!entry) return { title: "Happy Wishes" };
+  const data = getDefaultWish(occasion, template);
+  if (!data) return { title: "Happy Wishes" };
 
   return templateMetadata(
-    entry.data,
-    templatePath(entry.data.meta.occasion, entry.data.meta.slug),
+    data,
+    templatePath(data.meta.occasion, data.meta.slug, data.meta.wishId),
   );
 }
 
+/** /wedding/sakura-vows → first wish for that design */
 export default async function TemplatePage({ params }: Props) {
   const { occasion, template } = await params;
-  const entry = getTemplateEntry(occasion, template);
+  const data = getDefaultWish(occasion, template);
+  if (!data) notFound();
+
+  const entry = getWishEntry(occasion, template, data.meta.wishId);
   if (!entry) notFound();
 
   const Template = entry.Template;
   return (
     <>
-      <Template />
+      <Template data={entry.data} />
       <WishChrome data={entry.data} />
     </>
   );

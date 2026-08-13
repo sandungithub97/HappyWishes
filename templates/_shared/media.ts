@@ -25,12 +25,21 @@ export function resolveMediaSrc(
   return `/media/${occasion}/${folder}/${kind}/${trimmed}`;
 }
 
-export function bindMedia(data: TemplateData, folder: string): TemplateData {
+export function bindMedia(
+  data: TemplateData,
+  folder: string,
+  wishId?: string,
+): TemplateData {
   const occasion = data.meta.occasion;
+  const mediaFolder = wishId
+    ? `${folder}/wishes/${wishId}`
+    : folder;
   const image = (src: string) =>
-    resolveMediaSrc(src, occasion, folder, "images");
-  const song = (src: string) => resolveMediaSrc(src, occasion, folder, "music");
-  const clip = (src: string) => resolveMediaSrc(src, occasion, folder, "video");
+    resolveMediaSrc(src, occasion, mediaFolder, "images");
+  const song = (src: string) =>
+    resolveMediaSrc(src, occasion, mediaFolder, "music");
+  const clip = (src: string) =>
+    resolveMediaSrc(src, occasion, mediaFolder, "video");
   const optionalImage = (src?: string) => (src ? image(src) : src);
   const optionalSong = (src?: string) => (src ? song(src) : src);
 

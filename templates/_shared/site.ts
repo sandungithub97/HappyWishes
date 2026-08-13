@@ -5,6 +5,7 @@ export function getSiteUrl() {
   );
 }
 
-export function templatePath(occasion: string, slug: string) {
-  return `/${occasion}/${slug}`;
+export function templatePath(occasion: string, slug: string, wishId?: string) {
+  const base = `/${occasion}/${slug}`;
+  return wishId ? `${base}/${wishId}` : base;
 }
