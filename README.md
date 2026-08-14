@@ -4,6 +4,8 @@ Personalized wish pages for weddings, birthdays, anniversaries, and short signat
 
 Guests see **one** live page at `/`. You pick which template that is, then edit names, photos, colors, and copy in a single file.
 
+**All guest wish URLs + host RSVP inbox links:** see [`LINKS.md`](./LINKS.md).
+
 ---
 
 ## Run it

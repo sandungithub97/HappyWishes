@@ -1,7 +1,7 @@
 /**
  * Pick what guests see at /
  *
- * LIVE_TEMPLATE = design number (1–21)
+ * LIVE_TEMPLATE = design number (1–22)
  * LIVE_WISH     = wishId from wishes/{wishId}.ts (URL ending)
  *
  * Example Sakura Vows wishes:

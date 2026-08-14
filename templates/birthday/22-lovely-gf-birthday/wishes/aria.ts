@@ -17,7 +17,7 @@ const data: TemplateData = {
     wishId: "aria",
     name: "Lovely GF Birthday",
     mood: "Soft white, blush rose — heartbeat to word-heart for her",
-    standout: "ECG heartbeat → 3D word heart, autoplay love song",
+    standout: "ECG pulse → particle 3D heart with heartbeat, autoplay love song",
     buildPhase: 4,
   },
   people: [
