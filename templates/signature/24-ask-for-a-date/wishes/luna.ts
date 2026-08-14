@@ -10,15 +10,15 @@ const data: TemplateData = {
   meta: {
     occasion: "signature",
     slug: "ask-for-a-date",
-    wishId: "luna",
+    wishId: "shehani",
     name: "Ask For A Date",
     mood: "Romantic quiz — her favorite date picks, one question at a time",
     standout: "Step-by-step flavor quiz, summary card, final date ask",
     buildPhase: 4,
   },
   people: [
-    { name: "Luna", role: "To" },
-    { name: "Dev", role: "From" },
+    { name: "Shehani", role: "To" },
+    { name: "Devinda", role: "From" },
   ],
   event: {
     timeLabel: "This Saturday · 6 PM",
@@ -59,15 +59,15 @@ const data: TemplateData = {
   },
   extras: {
     letter: {
-      greeting: "Dear Luna,",
+      greeting: "Dear Shehani,",
       closing: "See you soon,",
-      signature: "Dev",
+      signature: "Devinda",
     },
     dateQuiz: {
       intro:
-        "Hey Luna, I want to plan the perfect evening — tell me your favorites, one question at a time.",
+        "Hey Shehani, I want to plan the perfect evening — tell me your favorites, one question at a time.",
       summaryHeadline: "Your dream date, noted",
-      askHeadline: "Luna, will you go on a date with me?",
+      askHeadline: "Shehani, will you go on a date with me?",
       yesLabel: "Yes, I'd love to",
       noHint: "That button doesn't work on this page 😊",
       yesMessage: "It's a date!",

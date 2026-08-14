@@ -12,15 +12,15 @@ const data: TemplateData = {
   meta: {
     occasion: "signature",
     slug: "do-you-love-me",
-    wishId: "mira",
+    wishId: "sandu",
     name: "Do You Love Me?",
     mood: "Playful trick question — dodging No, romantic Yes",
     standout: "Yes/No buttons, fleeing No, I love you too reveal",
     buildPhase: 4,
   },
   people: [
-    { name: "Mira", role: "To" },
-    { name: "Dev", role: "From" },
+    { name: "Sandu", role: "To" },
+    { name: "Devinda", role: "From" },
   ],
   copy: {
     headline: "Do you love me?",
@@ -52,19 +52,19 @@ const data: TemplateData = {
     ],
     music: {
       src: "love-me.mp3",
-      title: "For Mira",
+      title: "For Sandu",
     },
   },
   extras: {
     backgroundMusic: false,
     reveal: {
-      lockedLabel: 'Your "No" still sounds like Yes to me, Mira.',
+      lockedLabel: 'Your "No" still sounds like Yes to me, Sandu.',
       unlockedHeadline: "I love you too",
     },
     letter: {
-      greeting: "My Mira,",
+      greeting: "My Sandu,",
       closing: "Forever yours,",
-      signature: "Dev",
+      signature: "Devinda",
     },
   },
 };
