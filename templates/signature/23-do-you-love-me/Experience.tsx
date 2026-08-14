@@ -18,8 +18,129 @@ const soft = [0.22, 1, 0.36, 1] as const;
 const NO_HINTS = [
   "Nice try… that's not the one 💕",
   "Are you sure? Read the question again.",
-  "Wrong answer. The other button is waiting.",
+  "Your No still means Yes — I love you too 💕",
 ];
+
+const NO_CLICKS = 3;
+const ZONE_PAD = 10;
+
+type Point = { left: number; top: number };
+
+function measureSlots(
+  zone: HTMLElement,
+  btn: HTMLElement,
+): Point[] {
+  const zw = zone.clientWidth;
+  const zh = zone.clientHeight;
+  const bw = btn.offsetWidth;
+  const bh = btn.offsetHeight;
+  const maxLeft = Math.max(ZONE_PAD, zw - bw - ZONE_PAD);
+  const maxTop = Math.max(ZONE_PAD, zh - bh - ZONE_PAD);
+
+  return [
+    { left: Math.min(maxLeft, Math.max(ZONE_PAD, (zw - bw) / 2)), top: ZONE_PAD },
+    { left: ZONE_PAD, top: Math.min(maxTop, Math.max(ZONE_PAD, (zh - bh) / 2)) },
+    { left: maxLeft, top: maxTop },
+  ];
+}
+
+function DodgingNoButton({ onGiveUp }: { onGiveUp: () => void }) {
+  const reduce = useReducedMotion();
+  const zoneRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const slotsRef = useRef<Point[]>([]);
+  const [pos, setPos] = useState<Point>({ left: 0, top: 0 });
+  const [clicks, setClicks] = useState(0);
+  const [hint, setHint] = useState<string | null>(null);
+  const [laidOut, setLaidOut] = useState(false);
+
+  const applyLayout = useCallback((clickCount: number) => {
+    const zone = zoneRef.current;
+    const btn = btnRef.current;
+    if (!zone || !btn) return;
+
+    const slots = measureSlots(zone, btn);
+    slotsRef.current = slots;
+    const slotIndex = Math.min(clickCount, NO_CLICKS - 1);
+    setPos(slots[slotIndex] ?? slots[0]!);
+    setLaidOut(true);
+  }, []);
+
+  useEffect(() => {
+    applyLayout(clicks);
+
+    function onResize() {
+      applyLayout(clicks);
+    }
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [applyLayout, clicks]);
+
+  function handleNoClick() {
+    const next = clicks + 1;
+    setHint(NO_HINTS[Math.min(next - 1, NO_HINTS.length - 1)] ?? NO_HINTS[0]!);
+
+    if (next >= NO_CLICKS) {
+      setClicks(next);
+      const slots = slotsRef.current;
+      if (slots[2]) setPos(slots[2]);
+      window.setTimeout(onGiveUp, reduce ? 200 : 900);
+      return;
+    }
+
+    setClicks(next);
+    const slots = slotsRef.current;
+    if (slots[next]) setPos(slots[next]);
+  }
+
+  return (
+    <div className="mt-8 w-full max-w-sm">
+      <div
+        ref={zoneRef}
+        className="relative mx-auto h-36 w-full sm:h-40"
+      >
+        <motion.button
+          ref={btnRef}
+          type="button"
+          onClick={handleNoClick}
+          className="absolute z-10 rounded-full border px-8 py-3.5 text-sm tracking-[0.14em] uppercase whitespace-nowrap touch-manipulation"
+          style={{
+            borderColor: "var(--hw-border)",
+            background: "rgba(255,255,255,0.92)",
+            color: "var(--hw-muted)",
+            visibility: laidOut ? "visible" : "hidden",
+          }}
+          animate={{ left: pos.left, top: pos.top }}
+          transition={
+            reduce
+              ? { duration: 0 }
+              : { type: "spring", stiffness: 340, damping: 26 }
+          }
+          whileTap={{ scale: 0.96 }}
+        >
+          No
+        </motion.button>
+      </div>
+
+      <AnimatePresence mode="wait">
+        {hint ? (
+          <motion.p
+            key={hint}
+            className="mx-auto mt-4 max-w-xs px-2 text-center text-sm italic"
+            style={{ color: "var(--hw-primary)" }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.45, ease: soft }}
+          >
+            {hint}
+          </motion.p>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 function FallingHearts() {
   const reduce = useReducedMotion();
@@ -114,90 +235,6 @@ function AutoMusic({ src, title }: { src: string; title?: string }) {
       >
         {blocked && !playing ? "Tap for music" : playing ? "♪ On" : title ?? "Music"}
       </button>
-    </>
-  );
-}
-
-function DodgingNoButton({
-  onGiveUp,
-  containerRef,
-}: {
-  onGiveUp: () => void;
-  containerRef: React.RefObject<HTMLDivElement | null>;
-}) {
-  const reduce = useReducedMotion();
-  const btnRef = useRef<HTMLButtonElement>(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [attempts, setAttempts] = useState(0);
-  const [hint, setHint] = useState<string | null>(null);
-
-  const dodge = useCallback(() => {
-    const container = containerRef.current;
-    const btn = btnRef.current;
-    if (!container || !btn || reduce) return;
-
-    const cRect = container.getBoundingClientRect();
-    const bRect = btn.getBoundingClientRect();
-    const maxX = Math.max(0, cRect.width - bRect.width - 16);
-    const maxY = Math.max(0, cRect.height - bRect.height - 16);
-    const x = Math.random() * maxX - maxX / 2;
-    const y = Math.random() * maxY - maxY / 2;
-    setPos({ x, y });
-
-    setAttempts((n) => {
-      const next = n + 1;
-      setHint(NO_HINTS[Math.min(next - 1, NO_HINTS.length - 1)] ?? NO_HINTS[0]!);
-      if (next >= 4) {
-        window.setTimeout(onGiveUp, 600);
-      }
-      return next;
-    });
-  }, [containerRef, onGiveUp, reduce]);
-
-  function handleNoClick() {
-    if (reduce) {
-      onGiveUp();
-      return;
-    }
-    dodge();
-  }
-
-  return (
-    <>
-      <motion.button
-        ref={btnRef}
-        type="button"
-        onClick={handleNoClick}
-        onMouseEnter={reduce ? undefined : dodge}
-        onPointerEnter={reduce ? undefined : dodge}
-        className="relative z-10 rounded-full border px-8 py-3.5 text-sm tracking-[0.14em] uppercase transition-colors"
-        style={{
-          borderColor: "var(--hw-border)",
-          background: "rgba(255,255,255,0.85)",
-          color: "var(--hw-muted)",
-        }}
-        animate={{ x: pos.x, y: pos.y }}
-        transition={{ type: "spring", stiffness: 380, damping: 22 }}
-        whileTap={{ scale: 0.96 }}
-      >
-        No
-      </motion.button>
-
-      <AnimatePresence>
-        {hint ? (
-          <motion.p
-            key={hint}
-            className="absolute bottom-[18%] left-0 right-0 z-20 px-6 text-center text-sm italic"
-            style={{ color: "var(--hw-primary)" }}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.45, ease: soft }}
-          >
-            {hint}
-          </motion.p>
-        ) : null}
-      </AnimatePresence>
     </>
   );
 }
@@ -329,7 +366,6 @@ function RomanticReveal({
 
 export function Experience({ data }: { data: TemplateData }) {
   const reduce = useReducedMotion();
-  const questionRef = useRef<HTMLDivElement>(null);
 
   const to =
     data.people.find((p) => p.role === "To")?.name ?? data.people[0]?.name ?? "";
@@ -367,8 +403,7 @@ export function Experience({ data }: { data: TemplateData }) {
         {phase === "question" ? (
           <motion.section
             key="question"
-            ref={questionRef}
-            className="relative flex min-h-svh flex-col items-center justify-center px-6"
+            className="relative flex min-h-svh flex-col items-center justify-center px-6 pb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.98, filter: "blur(6px)" }}
@@ -405,7 +440,7 @@ export function Experience({ data }: { data: TemplateData }) {
             </motion.p>
 
             <motion.div
-              className="relative mt-14 flex min-h-[120px] w-full max-w-md flex-wrap items-center justify-center gap-4"
+              className="mt-14 flex w-full max-w-md flex-col items-center"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65, duration: 0.8 }}
@@ -432,10 +467,7 @@ export function Experience({ data }: { data: TemplateData }) {
                 {data.copy.cta ?? "Yes"}
               </motion.button>
 
-              <DodgingNoButton
-                containerRef={questionRef}
-                onGiveUp={() => setPhase("no")}
-              />
+              <DodgingNoButton onGiveUp={() => setPhase("no")} />
             </motion.div>
           </motion.section>
         ) : null}
