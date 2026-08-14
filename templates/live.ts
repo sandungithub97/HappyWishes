@@ -29,6 +29,7 @@
  * 19 Anime Wish                   birthday
  * 20 Sakura Vows                  wedding
  * 21 Lankan Poruwa                wedding
+ * 22 Lovely GF Birthday           birthday
  */
-export const LIVE_TEMPLATE = 1;
-export const LIVE_WISH = "amara-julian";
+export const LIVE_TEMPLATE = 22;
+export const LIVE_WISH = "aria";
