@@ -17,7 +17,7 @@ const data: TemplateData = {
     wishId: "aria",
     name: "Lovely GF Birthday",
     mood: "Modern romantic — soft white, blush rose, smooth scroll reveals",
-    standout: "Cinematic fade-in, parallax portrait, glass letter, autoplay song",
+    standout: "Heartbeat intro, falling hearts & birthday emojis, glass letter, autoplay song",
     buildPhase: 4,
   },
   people: [

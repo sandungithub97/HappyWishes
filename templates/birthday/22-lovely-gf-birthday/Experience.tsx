@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  AnimatePresence,
   motion,
   useMotionTemplate,
   useMotionValue,
@@ -10,7 +11,7 @@ import {
   useTransform,
 } from "motion/react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ParallaxLayer } from "@/templates/_shared/components/ParallaxLayer";
 import { ParticleField } from "@/templates/_shared/components/ParticleField";
 import { Reveal } from "@/templates/_shared/components/Reveal";
@@ -39,6 +40,158 @@ const fadeUp = {
     transition: { duration: 1.05, ease: soft },
   },
 };
+
+const FALLING_EMOJIS = ["♥", "💕", "💗", "💖", "🎂", "🎉", "✨", "🎈", "💝", "🥳"];
+
+function HeartbeatIntro({ onDone }: { onDone: () => void }) {
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    const id = window.setTimeout(onDone, reduce ? 700 : 3200);
+    return () => window.clearTimeout(id);
+  }, [onDone, reduce]);
+
+  const path =
+    "M0 50 H40 L48 50 L55 18 L62 82 L70 42 L78 50 H120 L128 50 L135 18 L142 82 L150 42 L158 50 H200 L208 50 L215 18 L222 82 L230 42 L238 50 H280";
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[45] flex items-center justify-center bg-[#FFFBFC] px-4"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0, scale: 1.03, filter: "blur(8px)" }}
+      transition={{ duration: 0.85, ease: soft }}
+    >
+      <div className="relative w-full max-w-2xl">
+        <motion.p
+          className="mb-8 text-center text-[11px] tracking-[0.42em] uppercase"
+          style={{ color: "var(--hw-muted)" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.15 }}
+        >
+          Listening for you
+        </motion.p>
+
+        <svg viewBox="0 0 280 100" className="h-auto w-full overflow-visible" aria-hidden>
+          <defs>
+            <linearGradient id="ecgGradLgf" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#F6C1D0" stopOpacity="0.2" />
+              <stop offset="40%" stopColor="#E38AA8" stopOpacity="1" />
+              <stop offset="100%" stopColor="#F6C1D0" stopOpacity="0.25" />
+            </linearGradient>
+            <filter id="ecgGlowLgf" x="-20%" y="-40%" width="140%" height="180%">
+              <feGaussianBlur stdDeviation="2.5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <line
+            x1="0"
+            y1="50"
+            x2="280"
+            y2="50"
+            stroke="rgba(227,138,168,0.15)"
+            strokeWidth="1"
+          />
+          <motion.path
+            d={path}
+            fill="none"
+            stroke="url(#ecgGradLgf)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            filter="url(#ecgGlowLgf)"
+            initial={{ pathLength: 0, opacity: 0.4 }}
+            animate={
+              reduce
+                ? { pathLength: 1, opacity: 1 }
+                : { pathLength: [0, 1], opacity: [0.5, 1, 1] }
+            }
+            transition={
+              reduce ? { duration: 0.5 } : { duration: 2.2, ease: "easeInOut" }
+            }
+          />
+        </svg>
+
+        <motion.div
+          className="mx-auto mt-8 flex justify-center"
+          animate={
+            reduce
+              ? undefined
+              : { scale: [1, 1.22, 1, 1.12, 1], opacity: [0.55, 1, 0.6, 1, 0.55] }
+          }
+          transition={{ duration: 1.05, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <span
+            className="text-3xl"
+            style={{
+              color: "var(--hw-primary)",
+              filter: "drop-shadow(0 0 12px rgba(227,138,168,0.45))",
+            }}
+          >
+            ♥
+          </span>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
+function FallingEmojiRain() {
+  const reduce = useReducedMotion();
+  const items = useMemo(
+    () =>
+      Array.from({ length: 22 }, (_, i) => ({
+        id: i,
+        emoji: FALLING_EMOJIS[i % FALLING_EMOJIS.length]!,
+        left: `${(i * 37) % 100}%`,
+        delay: (i % 10) * 0.45,
+        duration: 7 + (i % 6) * 1.2,
+        size: 16 + (i % 5) * 5,
+        drift: (i % 2 === 0 ? 1 : -1) * (8 + (i % 4) * 4),
+      })),
+    [],
+  );
+
+  if (reduce) return null;
+
+  return (
+    <div
+      className="pointer-events-none fixed inset-0 z-[6] overflow-hidden"
+      style={{ opacity: 0.5 }}
+      aria-hidden
+    >
+      {items.map((item) => (
+        <motion.span
+          key={item.id}
+          className="absolute select-none"
+          style={{
+            left: item.left,
+            top: "-6%",
+            fontSize: item.size,
+            lineHeight: 1,
+          }}
+          animate={{
+            y: ["0vh", "108vh"],
+            x: [0, item.drift, -item.drift * 0.5, 0],
+            rotate: [0, item.drift > 0 ? 18 : -18, 0],
+            opacity: [0, 0.85, 0.85, 0],
+          }}
+          transition={{
+            duration: item.duration,
+            delay: item.delay,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        >
+          {item.emoji}
+        </motion.span>
+      ))}
+    </div>
+  );
+}
 
 function AutoMusic({ src, title }: { src: string; title?: string }) {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -159,6 +312,7 @@ function SoftOrb({
 
 export function Experience({ data }: { data: TemplateData }) {
   const reduce = useReducedMotion();
+  const [introDone, setIntroDone] = useState(reduce);
   const [ready, setReady] = useState(reduce);
 
   const to =
@@ -187,9 +341,20 @@ export function Experience({ data }: { data: TemplateData }) {
   );
 
   useEffect(() => {
+    if (!introDone) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "";
+      };
+    }
+    document.body.style.overflow = "";
+  }, [introDone]);
+
+  useEffect(() => {
+    if (!introDone) return;
     const t = window.setTimeout(() => setReady(true), reduce ? 0 : 120);
     return () => window.clearTimeout(t);
-  }, [reduce]);
+  }, [introDone, reduce]);
 
   return (
     <main
@@ -229,14 +394,22 @@ export function Experience({ data }: { data: TemplateData }) {
       />
       <TextureOverlay variant="grain" opacity={0.06} className="fixed inset-0 -z-[8]" />
 
-      {/* Intro veil */}
+      <FallingEmojiRain />
+
+      <AnimatePresence>
+        {!introDone ? <HeartbeatIntro key="intro" onDone={() => setIntroDone(true)} /> : null}
+      </AnimatePresence>
+
+      {/* Intro veil — fades once heartbeat ends */}
       <motion.div
         className="pointer-events-none fixed inset-0 z-40 bg-[#FFFBFC]"
-        initial={{ opacity: 1 }}
-        animate={{ opacity: ready ? 0 : 1 }}
+        initial={{ opacity: introDone ? 0 : 1 }}
+        animate={{ opacity: introDone && ready ? 0 : introDone ? 0.4 : 1 }}
         transition={{ duration: 1.1, ease: soft }}
       />
 
+      {introDone ? (
+      <>
       {/* ——— Hero ——— */}
       <motion.section
         className="relative flex min-h-svh flex-col items-center justify-center px-6 pb-16 pt-24"
@@ -453,6 +626,8 @@ export function Experience({ data }: { data: TemplateData }) {
       </footer>
 
       <PlaceSection place={data.event?.place} />
+      </>
+      ) : null}
 
       {data.extras.backgroundMusic && data.media.music ? (
         <AutoMusic
