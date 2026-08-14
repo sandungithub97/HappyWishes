@@ -9,7 +9,7 @@ Guest wish pages and host **RSVP response** (inbox) links.
 
 Swap the host if you use a custom domain. Paths stay the same.
 
-**Live page at `/` right now:** template **#22** · wish **`aria`**  
+**Live page at `/` right now:** template **#24** · wish **`luna`**  
 → https://happy-wishes-eight.vercel.app/  
 (Change in `templates/live.ts`.)
 
@@ -69,6 +69,8 @@ Swap the host if you use a custom domain. Paths stay the same.
 | Memory Lane | perera-family | https://happy-wishes-eight.vercel.app/signature/memory-lane/perera-family |
 | One Song, One Page | sam | https://happy-wishes-eight.vercel.app/signature/one-song-one-page/sam |
 | Video Wish | amal | https://happy-wishes-eight.vercel.app/signature/video-wish/amal |
+| Do You Love Me? | mira | https://happy-wishes-eight.vercel.app/signature/do-you-love-me/mira |
+| Ask For A Date | luna | https://happy-wishes-eight.vercel.app/signature/ask-for-a-date/luna |
 
 ---
 
@@ -143,6 +145,8 @@ http://localhost:3000/anniversary/our-playlist/sofia-leo
 http://localhost:3000/signature/memory-lane/perera-family
 http://localhost:3000/signature/one-song-one-page/sam
 http://localhost:3000/signature/video-wish/amal
+http://localhost:3000/signature/do-you-love-me/mira
+http://localhost:3000/signature/ask-for-a-date/luna
 ```
 
 ---
@@ -172,13 +176,15 @@ http://localhost:3000/signature/video-wish/amal
 20 Sakura Vows                  wedding
 21 Lankan Poruwa                wedding
 22 Lovely GF Birthday           birthday
+23 Do You Love Me?              signature
+24 Ask For A Date               signature
 ```
 
-Example — set Lovely GF Birthday live:
+Example — set Ask For A Date live:
 
 ```ts
-export const LIVE_TEMPLATE = 22;
-export const LIVE_WISH = "aria";
+export const LIVE_TEMPLATE = 24;
+export const LIVE_WISH = "luna";
 ```
 
 ---

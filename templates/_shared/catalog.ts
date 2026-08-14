@@ -28,6 +28,8 @@ import AnimeWish from "../birthday/19-anime-wish/Template";
 import SakuraVows from "../wedding/20-sakura-vows/Template";
 import LankanPoruwa from "../wedding/21-lankan-poruwa/Template";
 import LovelyGfBirthday from "../birthday/22-lovely-gf-birthday/Template";
+import DoYouLoveMe from "../signature/23-do-you-love-me/Template";
+import AskForADate from "../signature/24-ask-for-a-date/Template";
 
 import foreverAmaraJulian from "../wedding/01-forever-starts-here/wishes/amara-julian";
 import twoHeartsNishaArjun from "../wedding/02-two-hearts-one-story/wishes/nisha-arjun";
@@ -56,6 +58,8 @@ import sakuraShehaniLasith from "../wedding/20-sakura-vows/wishes/shehani-lasith
 import sakuraAikoKenji from "../wedding/20-sakura-vows/wishes/aiko-kenji";
 import lankanSanduniKasun from "../wedding/21-lankan-poruwa/wishes/sanduni-kasun";
 import lovelyGfAria from "../birthday/22-lovely-gf-birthday/wishes/aria";
+import doYouLoveMeMira from "../signature/23-do-you-love-me/wishes/mira";
+import askForADateLuna from "../signature/24-ask-for-a-date/wishes/luna";
 
 type DesignInput = {
   number: number;
@@ -207,6 +211,18 @@ export const designCatalog: DesignEntry[] = [
     folder: "22-lovely-gf-birthday",
     Template: LovelyGfBirthday,
     wishes: [lovelyGfAria],
+  }),
+  design({
+    number: 23,
+    folder: "23-do-you-love-me",
+    Template: DoYouLoveMe,
+    wishes: [doYouLoveMeMira],
+  }),
+  design({
+    number: 24,
+    folder: "24-ask-for-a-date",
+    Template: AskForADate,
+    wishes: [askForADateLuna],
   }),
 ];
 

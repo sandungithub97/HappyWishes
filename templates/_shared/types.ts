@@ -95,6 +95,26 @@ export type MemoryItem = {
   photo: string;
 };
 
+export type DateQuizOption = {
+  label: string;
+  emoji?: string;
+};
+
+export type DateQuizQuestion = {
+  prompt: string;
+  options: DateQuizOption[];
+};
+
+export type DateQuiz = {
+  intro?: string;
+  questions: DateQuizQuestion[];
+  summaryHeadline?: string;
+  askHeadline?: string;
+  yesLabel?: string;
+  noHint?: string;
+  yesMessage?: string;
+};
+
 /**
  * Template-specific fields. Keep them here so `data.ts` stays
  * the only file you edit when personalizing a wish.
@@ -129,6 +149,7 @@ export type TemplateExtras = {
   scrollytelling?: boolean;
   qrFriendly?: boolean;
   stickers?: string[];
+  dateQuiz?: DateQuiz;
 };
 
 export type TemplateMeta = {
