@@ -16,8 +16,8 @@ const data: TemplateData = {
     slug: "lovely-gf-birthday",
     wishId: "aria",
     name: "Lovely GF Birthday",
-    mood: "Soft white, blush rose — heartbeat to word-heart for her",
-    standout: "ECG pulse → particle 3D heart with heartbeat, autoplay love song",
+    mood: "Modern romantic — soft white, blush rose, smooth scroll reveals",
+    standout: "Cinematic fade-in, parallax portrait, glass letter, autoplay song",
     buildPhase: 4,
   },
   people: [
@@ -30,10 +30,10 @@ const data: TemplateData = {
   },
   copy: {
     headline: "Happy Birthday, my love",
-    subhead: "Every beat is still yours",
+    subhead: "A wish made just for you",
     message:
-      "Aria — before I knew your name, my heart already knew the rhythm. Today I hope you feel how loud it gets when you walk into a room. Happy birthday, beautiful. Forever yours.",
-    cta: "Open my heart",
+      "You make ordinary days feel like something worth remembering. I hope today feels as special as you are — soft, bright, and completely yours. Happy birthday, my love.",
+    cta: "Scroll",
   },
   palette: {
     background: "#FFFBFC",
