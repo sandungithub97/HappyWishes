@@ -2,6 +2,17 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 
+type RsvpCopy = {
+  namePlaceholder?: string;
+  nameLabel?: string;
+  yes?: string;
+  no?: string;
+  send?: string;
+  sending?: string;
+  thanksYes?: string;
+  thanksNo?: string;
+};
+
 type Props = {
   note?: string;
   cta?: string;
@@ -9,12 +20,17 @@ type Props = {
   occasion: string;
   slug: string;
   wishId: string;
+  copy?: RsvpCopy;
 };
 
 type Saved = {
   name: string;
   coming: "yes" | "no";
 };
+
+function withName(template: string, name: string) {
+  return template.replaceAll("{name}", name);
+}
 
 export function RsvpCard({
   note,
@@ -23,7 +39,18 @@ export function RsvpCard({
   occasion,
   slug,
   wishId,
+  copy,
 }: Props) {
+  const labels = {
+    namePlaceholder: copy?.namePlaceholder ?? "Your name",
+    nameLabel: copy?.nameLabel ?? "Your name",
+    yes: copy?.yes ?? "Joyfully attends",
+    no: copy?.no ?? "Regretfully declines",
+    send: copy?.send ?? "Send",
+    sending: copy?.sending ?? "Sending…",
+    thanksYes: copy?.thanksYes ?? "Thank you, {name}. We cannot wait.",
+    thanksNo: copy?.thanksNo ?? "We'll miss you, {name}.",
+  };
   const [name, setName] = useState("");
   const [coming, setComing] = useState<"yes" | "no" | null>(null);
   const [done, setDone] = useState(false);
@@ -98,8 +125,8 @@ export function RsvpCard({
         }}
       >
         {coming === "yes"
-          ? `Thank you, ${name.trim()}. We cannot wait.`
-          : `We'll miss you, ${name.trim()}.`}
+          ? withName(labels.thanksYes, name.trim())
+          : withName(labels.thanksNo, name.trim())}
       </p>
     );
   }
@@ -114,17 +141,17 @@ export function RsvpCard({
       }}
     >
       <p
-        className="text-center text-[11px] tracking-[0.28em] uppercase"
+        className="text-center font-[family-name:var(--font-accent,var(--font-display))] text-base font-medium"
         style={{ color: "var(--hw-primary)" }}
       >
         {cta}
       </p>
       <label className="mt-6 block">
-        <span className="sr-only">Your name</span>
+        <span className="sr-only">{labels.nameLabel}</span>
         <input
           value={name}
           onChange={(event) => setName(event.target.value)}
-          placeholder="Your name"
+          placeholder={labels.namePlaceholder}
           required
           disabled={sending}
           className="w-full rounded-xl border bg-transparent px-4 py-3 text-base outline-none"
@@ -137,8 +164,8 @@ export function RsvpCard({
       <div className="mt-4 grid grid-cols-2 gap-3">
         {(
           [
-            ["yes", "Joyfully attends"],
-            ["no", "Regretfully declines"],
+            ["yes", labels.yes],
+            ["no", labels.no],
           ] as const
         ).map(([value, label]) => (
           <button
@@ -163,10 +190,10 @@ export function RsvpCard({
       <button
         type="submit"
         disabled={sending || !coming}
-        className="mt-5 w-full rounded-xl py-3 text-sm font-semibold tracking-wide uppercase disabled:opacity-60"
+        className="mt-5 w-full rounded-xl py-3 text-sm font-semibold disabled:opacity-60"
         style={{ background: "var(--hw-primary)", color: "var(--hw-surface)" }}
       >
-        {sending ? "Sending…" : "Send"}
+        {sending ? labels.sending : labels.send}
       </button>
       {error ? (
         <p className="mt-3 text-center text-xs" style={{ color: "#b42318" }}>

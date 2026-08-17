@@ -2,11 +2,12 @@
  * PERSONALIZE THIS FILE ONLY.
  * Names, dates, copy, photos, colors, and music all live here.
  *
+ * This design is written in Sinhala. Keep copy in Sinhala so the fonts
+ * (Noto Serif Sinhala / Yaldevi / Gemunu Libre) read as one voice.
+ *
  * Photos / music / video — use either:
  *   src: "https://..."        any image or file URL
  *   src: "hero.jpg"           public/media/.../wishes/{wishId}/images/hero.jpg
- *   src: "background.mp3"     public/media/.../wishes/{wishId}/music/background.mp3
- *   src: "wish.mp4"           public/media/.../wishes/{wishId}/video/wish.mp4
  *
  * meta.wishId must match this filename (without .ts).
  * URL: /{occasion}/{slug}/{wishId}
@@ -19,29 +20,29 @@ const data: TemplateData = {
     slug: "lankan-poruwa",
     wishId: "sanduni-kasun",
     name: "Lankan Poruwa",
-    mood: "Maroon, temple gold, ivory — Kandyan ceremony",
-    standout: "Oil-lamp pahana gate, gold shimmer names, tradition timeline",
+    mood: "Maroon, temple gold, ivory — Kandyan ceremony in Sinhala",
+    standout: "Sinhala serif names, modern sans body, pahana gate",
     buildPhase: 4,
   },
   people: [
-    { name: "Sanduni Perera", role: "Bride" },
-    { name: "Kasun Jayawardena", role: "Groom" },
+    { name: "සඳුනි පෙරේරා", role: "මනාලිය" },
+    { name: "කසුන් ජයවර්ධන", role: "මනාලයා" },
   ],
   event: {
     date: "2026-12-20T09:30:00+05:30",
-    timeLabel: "Sunday, 20 December 2026 · 9:30 AM",
+    timeLabel: "2026 දෙසැම්බර් 20, ඉරිදා · උදේ 9:30",
     place: {
-      name: "Temple Trees Garden",
-      city: "Kandy",
+      name: "ටෙම්පල් ට්‍රීස් උද්‍යානය",
+      city: "මහනුවර",
       mapUrl: "https://maps.google.com/?q=Temple+Trees+Garden+Kandy",
     },
   },
   copy: {
-    headline: "Sanduni & Kasun",
-    subhead: "ආයුබෝවන් · You are invited to our Poruwa",
+    headline: "සඳුනි සහ කසුන්",
+    subhead: "ආයුබෝවන් · අපේ පෝරුවට ඔබව ආරාධනා කරනවා",
     message:
-      "With our parents’ blessing we begin this life the Sri Lankan way — drums, an oil lamp, a poruwa of jackwood, and the people who raised us.",
-    cta: "RSVP",
+      "අපේ දෙමාපියන්ගේ ආශීර්වාදයෙන් මේ ජීවිතය අපි ආරම්භ කරනවා ශ්‍රී ලාංකේය සම්ප්‍රදායෙන් — බෙර, පහන, කොස් ලී පෝරුව, සහ අපව හදා වඩා ගත් අය සමඟ.",
+    cta: "පැමිණීම තහවුරු කරන්න",
   },
   palette: {
     background: "#F7F0E4",
@@ -54,60 +55,60 @@ const data: TemplateData = {
     border: "#E2CFA8",
   },
   fonts: {
-    display: "Abhaya Libre",
-    body: "Cormorant Garamond",
+    display: "Noto Serif Sinhala",
+    body: "Yaldevi",
   },
   media: {
     photos: [
       {
         src: "https://images.unsplash.com/photo-1582510003544-bf48bdd9b3b5?w=1200&q=80",
-        alt: "Temple architecture",
+        alt: "ක්ෂේත්‍ර වාස්තු විද්‍යාව",
       },
       {
         src: "https://images.unsplash.com/photo-1548013146-724950e3d0c7?w=1200&q=80",
-        alt: "Sri Lankan landscape",
+        alt: "ශ්‍රී ලංකාවේ භූ දර්ශනය",
       },
       {
         src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
-        alt: "Wedding portrait",
+        alt: "විවාහ ඡායාරූපය",
       },
     ],
   },
   extras: {
     rsvp: {
       enabled: true,
-      note: "Please reply by 1 November 2026 · traditional attire welcome",
+      note: "කරුණාකර 2026 නොවැම්බර් 1 වනදාට පෙර පිළිතුරු දෙන්න · සාම්ප්‍රදායික ඇඳුම් සාදරයෙන් පිළිගනිමු",
     },
     timeline: [
       {
         label: "01",
-        title: "Magul Bera",
-        body: "The wedding drums open the morning — a blessing in rhythm before anyone speaks.",
+        title: "මඟුල් බෙර",
+        body: "උදෑසන ආරම්භ වන්නේ මංගල බෙරයෙන් — කතා කිරීමට පෙර රිද්මයෙන් ලැබෙන ආශීර්වාදයක්.",
       },
       {
         label: "02",
-        title: "The oil lamp",
-        body: "Parents light the pahana together. The flame is the first guest: light for the home they will keep.",
+        title: "පහන",
+        body: "දෙමාපියන් එකට පහන දල්වනවා. ඒ ගිනිදැල්ල පළමු ආගන්තුකයා — ඔවුන් රැක ගන්නා ගෙදරට එන ආලෝකය.",
       },
       {
         label: "03",
-        title: "Poruwa ceremony",
-        body: "Bride and groom step onto the decorated wooden poruwa. Water is poured, rice is offered, and hands are bound in a white thread.",
+        title: "පෝරුව මංගල්‍යය",
+        body: "මනාලිය සහ මනාලයා සරසන ලද දැවමය පෝරුවට නගිනවා. පැන් වත් කරනවා, හාල් පූජා කරනවා, අත් සුදු නූලකින් බඳිනවා.",
       },
       {
         label: "04",
-        title: "Jayamangala Gatha",
-        body: "Seven verses of blessing are chanted. Each one asks for a long, honourable life together.",
+        title: "ජයමංගල ගාථා",
+        body: "ආශීර්වාදයේ ගාථා හතක් කියවනවා. එක එකක් දිගු, ගෞරවනීය එකට ජීවිතයක් පතනවා.",
       },
       {
         label: "05",
-        title: "Osariya & Nilame",
-        body: "She wears the Kandyan osariya; he the nilame jacket and mul anduma — colour, gold, and the island’s formal grace.",
+        title: "ඔසරිය සහ නිලමේ",
+        body: "ඇය උඩරට ඔසරිය පැළඳනවා; ඔහු නිලමේ කබාය සහ මුල් අඳුම — පාට, රන්, දිවයිනේ විධිමත් අලංකාරය.",
       },
       {
         label: "06",
-        title: "Homecoming",
-        body: "After the feast, the new couple is received at home with milk rice, sweets, and a house that has been waiting.",
+        title: "ගෙදරට එනවා",
+        body: "උත්සවයෙන් පසු නව යුවළ කිරිබත්, කැවිලි, සහ බලා සිටි ගෙදරක උණුසුම සමඟ පිළිගන්නවා.",
       },
     ],
   },

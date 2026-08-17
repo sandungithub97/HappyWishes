@@ -15,11 +15,33 @@ import { RsvpCard } from "@/templates/_shared/components/RsvpCard";
 import { ScrollHint } from "@/templates/_shared/components/ScrollHint";
 import { TextureOverlay } from "@/templates/_shared/components/TextureOverlay";
 import { PlaceLink } from "@/templates/_shared/components/VenueMap";
-import { displayNames, namesLine } from "@/templates/_shared/people";
+import { displayNames } from "@/templates/_shared/people";
 import { themeStyle } from "@/templates/_shared/theme";
 import type { TemplateData } from "@/templates/_shared/types";
 
 const soft = [0.22, 1, 0.36, 1] as const;
+
+const displayFont = "font-[family-name:var(--font-display)]";
+const accentFont = "font-[family-name:var(--font-accent)]";
+
+function Kicker({
+  children,
+  className,
+  color,
+}: {
+  children: ReactNode;
+  className?: string;
+  color?: string;
+}) {
+  return (
+    <p
+      className={`${accentFont} text-[1.05rem] font-medium leading-snug ${className ?? ""}`}
+      style={{ color: color ?? "var(--hw-primary)" }}
+    >
+      {children}
+    </p>
+  );
+}
 
 function GoldRule() {
   return (
@@ -213,19 +235,18 @@ function OilLampGate({
 
         <OilLamp lit={lit} />
 
-        <motion.p
-          className="mt-6 text-[11px] tracking-[0.4em] uppercase"
-          style={{ color: "#C9A227" }}
+        <motion.div
+          className="mt-6"
           initial={reduce ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8, ease: soft }}
         >
-          Poruwa ceremony
-        </motion.p>
+          <Kicker color="#C9A227">පෝරුව මංගල්‍යය</Kicker>
+        </motion.div>
 
         {subhead ? (
           <motion.p
-            className="mt-3 text-sm tracking-wide"
+            className="mt-3 text-base leading-8"
             style={{ color: "#2F5D3A" }}
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -236,7 +257,7 @@ function OilLampGate({
         ) : null}
 
         <motion.h1
-          className="mt-5 font-[family-name:var(--font-display)] text-3xl leading-snug sm:text-4xl"
+          className={`mt-5 ${displayFont} text-3xl font-semibold leading-[1.45] sm:text-4xl`}
           style={{
             color: "#6B0F1A",
             textShadow: "0 0 28px rgba(201,162,39,0.25)",
@@ -251,7 +272,7 @@ function OilLampGate({
         <motion.button
           type="button"
           onClick={open}
-          className="mt-10 rounded-full border px-8 py-3.5 text-[11px] tracking-[0.32em] uppercase"
+          className={`mt-10 rounded-full border px-8 py-3.5 ${accentFont} text-base font-medium`}
           style={{
             borderColor: "#C9A227",
             background:
@@ -265,7 +286,7 @@ function OilLampGate({
           whileHover={reduce ? undefined : { scale: 1.04 }}
           whileTap={{ scale: 0.98 }}
         >
-          Light the pahana
+          පහන දල්වන්න
         </motion.button>
       </motion.div>
     </motion.div>
@@ -297,7 +318,8 @@ function ShimmerHeading({
 export function Experience({ data }: { data: TemplateData }) {
   const reduce = useReducedMotion();
   const chapters = data.extras.timeline ?? [];
-  const couple = displayNames(data.people).join(" & ") || namesLine(data.people);
+  const given = displayNames(data.people);
+  const couple = given.join(" සහ ");
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {
@@ -322,6 +344,7 @@ export function Experience({ data }: { data: TemplateData }) {
     <main
       className="relative min-h-svh overflow-x-hidden bg-[var(--hw-bg)] font-[family-name:var(--font-body)] text-[var(--hw-text)]"
       style={themeStyle(data.palette)}
+      lang="si"
     >
       <style>{`
         @keyframes hw-gold-shimmer {
@@ -383,19 +406,18 @@ export function Experience({ data }: { data: TemplateData }) {
               <LotusMotif className="mx-auto mb-4 h-16 w-16" />
             </motion.div>
 
-            <motion.p
-              className="text-[11px] tracking-[0.38em] uppercase"
-              style={{ color: "var(--hw-primary)" }}
+            <motion.div
+              className="mt-2"
               initial={reduce || !opened ? false : { opacity: 0, y: 10 }}
               animate={opened ? { opacity: 1, y: 0 } : undefined}
               transition={{ delay: 0.25, duration: 0.8, ease: soft }}
             >
-              Poruwa ceremony
-            </motion.p>
+              <Kicker>පෝරුව මංගල්‍යය</Kicker>
+            </motion.div>
 
             {data.copy.subhead ? (
               <motion.p
-                className="mt-4 max-w-md text-sm leading-6 tracking-wide"
+                className="mt-5 max-w-lg text-lg leading-9"
                 style={{ color: "var(--hw-accent)" }}
                 initial={reduce || !opened ? false : { opacity: 0 }}
                 animate={opened ? { opacity: 1 } : undefined}
@@ -406,12 +428,25 @@ export function Experience({ data }: { data: TemplateData }) {
             ) : null}
 
             <motion.h1
-              className="mt-6 font-[family-name:var(--font-display)] text-5xl leading-tight sm:text-7xl"
+              className={`mt-7 ${displayFont} text-[2.7rem] font-semibold leading-[1.4] sm:text-6xl`}
               initial={reduce || !opened ? false : { opacity: 0, y: 20 }}
               animate={opened ? { opacity: 1, y: 0 } : undefined}
               transition={{ delay: 0.5, duration: 1, ease: soft }}
             >
-              <ShimmerHeading>{namesLine(data.people)}</ShimmerHeading>
+              <span className="flex flex-col items-center gap-1">
+                <ShimmerHeading>{given[0] ?? couple}</ShimmerHeading>
+                {given[1] ? (
+                  <>
+                    <span
+                      className={`${accentFont} text-xl font-medium sm:text-2xl`}
+                      style={{ color: "var(--hw-primary)" }}
+                    >
+                      සහ
+                    </span>
+                    <ShimmerHeading>{given[1]}</ShimmerHeading>
+                  </>
+                ) : null}
+              </span>
             </motion.h1>
 
             <motion.div
@@ -425,7 +460,7 @@ export function Experience({ data }: { data: TemplateData }) {
             </motion.div>
 
             <motion.p
-              className="mt-8 max-w-lg text-lg leading-8 italic"
+              className="mt-8 max-w-lg text-xl font-light leading-10"
               style={{ color: "var(--hw-muted)" }}
               initial={reduce || !opened ? false : { opacity: 0, y: 12 }}
               animate={opened ? { opacity: 1, y: 0 } : undefined}
@@ -436,7 +471,7 @@ export function Experience({ data }: { data: TemplateData }) {
 
             {data.event?.timeLabel ? (
               <motion.p
-                className="mt-8 font-[family-name:var(--font-display)] text-xl"
+                className={`mt-8 ${accentFont} text-xl font-medium leading-9`}
                 style={{ color: "var(--hw-secondary)" }}
                 initial={reduce || !opened ? false : { opacity: 0 }}
                 animate={opened ? { opacity: 1 } : undefined}
@@ -447,7 +482,7 @@ export function Experience({ data }: { data: TemplateData }) {
             ) : null}
 
             {data.event?.place ? (
-              <p className="mt-2 text-sm" style={{ color: "var(--hw-muted)" }}>
+              <p className="mt-3 text-base leading-8" style={{ color: "var(--hw-muted)" }}>
                 <PlaceLink
                   place={data.event.place}
                   className="underline underline-offset-4"
@@ -462,12 +497,7 @@ export function Experience({ data }: { data: TemplateData }) {
         {chapters.length > 0 ? (
           <section className="relative mx-auto max-w-2xl px-6 pb-8">
             <Reveal>
-              <p
-                className="mb-12 text-center text-[11px] tracking-[0.32em] uppercase"
-                style={{ color: "var(--hw-primary)" }}
-              >
-                The tradition
-              </p>
+              <Kicker className="mb-12 text-center">සම්ප්‍රදාය</Kicker>
             </Reveal>
 
             <div className="relative">
@@ -487,7 +517,7 @@ export function Experience({ data }: { data: TemplateData }) {
                     <li className="relative grid gap-3 sm:grid-cols-[4.5rem_1fr] sm:items-start">
                       <div className="relative">
                         <p
-                          className="font-[family-name:var(--font-display)] text-3xl"
+                          className={`${displayFont} text-3xl font-semibold tabular-nums`}
                           style={{
                             color: "var(--hw-primary)",
                             textShadow:
@@ -515,13 +545,13 @@ export function Experience({ data }: { data: TemplateData }) {
                         }}
                       >
                         <h2
-                          className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl"
+                          className={`${displayFont} text-2xl font-semibold leading-[1.45] sm:text-3xl`}
                           style={{ color: "var(--hw-secondary)" }}
                         >
                           {chapter.title}
                         </h2>
                         <p
-                          className="mt-2 text-base leading-7"
+                          className="mt-3 text-lg font-light leading-9"
                           style={{ color: "var(--hw-muted)" }}
                         >
                           {chapter.body}
@@ -569,12 +599,7 @@ export function Experience({ data }: { data: TemplateData }) {
         {data.extras.rsvp?.enabled ? (
           <section className="mx-auto max-w-md px-6 pb-24">
             <Reveal>
-              <p
-                className="mb-8 text-center text-[11px] tracking-[0.32em] uppercase"
-                style={{ color: "var(--hw-primary)" }}
-              >
-                Kindly reply
-              </p>
+              <Kicker className="mb-8 text-center">කරුණාකර පිළිතුරු දෙන්න</Kicker>
               <RsvpCard
                 note={data.extras.rsvp.note}
                 cta={data.copy.cta}
@@ -582,6 +607,16 @@ export function Experience({ data }: { data: TemplateData }) {
                 occasion={data.meta.occasion}
                 slug={data.meta.slug}
                 wishId={data.meta.wishId}
+                copy={{
+                  namePlaceholder: "ඔබේ නම",
+                  nameLabel: "ඔබේ නම",
+                  yes: "සතුටින් පැමිණෙනවා",
+                  no: "කණගාටුවෙන් නොපැමිණෙනවා",
+                  send: "යවන්න",
+                  sending: "යවමින්…",
+                  thanksYes: "ස්තුතියි, {name}. අපි ඔබව බලාගෙන ඉන්නවා.",
+                  thanksNo: "අපට ඔබ අමතක වේවි, {name}.",
+                }}
               />
             </Reveal>
           </section>
@@ -593,16 +628,16 @@ export function Experience({ data }: { data: TemplateData }) {
               <GoldRule />
             </div>
             <p
-              className="mt-6 font-[family-name:var(--font-display)] text-2xl"
+              className={`mt-6 ${displayFont} text-2xl font-semibold leading-[1.5]`}
               style={{ color: "var(--hw-secondary)" }}
             >
               {couple}
             </p>
             <p
-              className="mt-2 text-[11px] tracking-[0.28em] uppercase"
+              className={`mt-3 ${accentFont} text-base font-medium`}
               style={{ color: "var(--hw-muted)" }}
             >
-              With parents&apos; blessing
+              දෙමාපියන්ගේ ආශීර්වාදයෙන්
             </p>
           </Reveal>
         </footer>
