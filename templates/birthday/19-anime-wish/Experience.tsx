@@ -9,7 +9,7 @@ import {
   useTransform,
 } from "motion/react";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { MusicToggle } from "@/templates/_shared/components/MusicToggle";
 import { RsvpCard } from "@/templates/_shared/components/RsvpCard";
 import { ScrollHint } from "@/templates/_shared/components/ScrollHint";
@@ -256,11 +256,13 @@ function GlowPulse({ className }: { className?: string }) {
 function OpeningGate({
   data,
   name,
+  age,
   heroSrc,
   onEnter,
 }: {
   data: TemplateData;
   name: string;
+  age?: number;
   heroSrc: string;
   onEnter: () => void;
 }) {
@@ -276,7 +278,7 @@ function OpeningGate({
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-end justify-center overflow-hidden sm:items-center"
+      className="fixed inset-0 z-50 overflow-hidden"
       animate={phase === "exit" ? { opacity: 0, scale: 1.05 } : { opacity: 1, scale: 1 }}
       transition={{ duration: 1, ease: soft }}
     >
@@ -292,16 +294,46 @@ function OpeningGate({
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(7,11,26,0.3) 0%, rgba(7,11,26,0.5) 42%, rgba(7,11,26,0.94) 100%)",
+            "linear-gradient(180deg, rgba(7,11,26,0.45) 0%, rgba(7,11,26,0.55) 40%, rgba(7,11,26,0.88) 100%)",
         }}
       />
       <Starfield count={52} />
       <LightRays />
       <CometBurst active={phase !== "idle"} />
-      <GlowPulse />
+      <GlowPulse className="top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2" />
+
+      {/* Character — anchored bottom, behind title */}
+      <motion.div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 flex justify-center"
+        initial={reduce ? false : { opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35, duration: 1.1, ease: soft }}
+      >
+        <motion.div
+          className="relative h-[min(52vh,480px)] w-full max-w-md sm:max-w-lg"
+          animate={reduce ? undefined : { y: [0, -6, 0] }}
+          transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Image
+            src={heroSrc}
+            alt=""
+            fill
+            priority
+            className="object-contain object-bottom opacity-85"
+            sizes="(max-width: 640px) 90vw, 480px"
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-1/3"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(7,11,26,0.95) 0%, transparent 100%)",
+            }}
+          />
+        </motion.div>
+      </motion.div>
 
       <motion.div
-        className="absolute top-[10%] right-[5%] w-24 sm:top-[14%] sm:right-[10%] sm:w-32"
+        className="absolute top-[8%] right-[5%] z-20 w-20 sm:top-[10%] sm:right-[8%] sm:w-28"
         animate={reduce ? undefined : { y: [0, -14, 0], rotate: [-2, 3, -2] }}
         transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -317,68 +349,76 @@ function OpeningGate({
             alt="Spirit companion"
             fill
             className="object-cover"
-            sizes="128px"
+            sizes="112px"
           />
         </div>
       </motion.div>
 
-      <motion.div
-        className="absolute bottom-0 left-[-2%] w-[62%] max-w-lg sm:left-[4%] sm:w-[44%]"
-        initial={reduce ? false : { opacity: 0, x: -56, filter: "blur(12px)" }}
-        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-        transition={{ delay: 0.4, duration: 1.2, ease: soft }}
-      >
-        <motion.div
-          className="relative aspect-[3/4] w-full"
-          animate={reduce ? undefined : { y: [0, -8, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Image
-            src={heroSrc}
-            alt="Anime heroine"
-            fill
-            priority
-            className="object-contain object-bottom drop-shadow-[0_24px_60px_rgba(126,200,255,0.45)]"
-            sizes="(max-width: 640px) 62vw, 44vw"
-          />
-        </motion.div>
-      </motion.div>
-
-      <div className="relative z-10 mb-14 ml-auto w-full max-w-md px-6 text-center sm:mb-0 sm:mr-[7%] sm:ml-0 sm:text-left">
+      {/* Title card — centered middle */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
         <motion.p
-          className="text-[11px] tracking-[0.42em] uppercase"
+          className="font-[family-name:var(--font-body)] text-[11px] tracking-[0.42em] uppercase"
           style={{ color: "#7EC8FF" }}
-          initial={reduce ? false : { opacity: 0, y: 12 }}
+          initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.75, duration: 0.8, ease: soft }}
+          transition={{ delay: 0.55, duration: 0.85, ease: soft }}
         >
           {data.copy.subhead ?? "Anime world"}
         </motion.p>
+
+        {age ? (
+          <motion.p
+            className="mt-5 font-[family-name:var(--font-display)] text-[4.5rem] leading-none sm:text-[6rem]"
+            style={{
+              color: "#FF6B9D",
+              textShadow:
+                "0 0 40px rgba(255,107,157,0.55), 0 0 80px rgba(126,200,255,0.3)",
+            }}
+            initial={reduce ? false : { opacity: 0, scale: 0.8, filter: "blur(12px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ delay: 0.7, duration: 1, ease: soft }}
+          >
+            {age}
+          </motion.p>
+        ) : null}
+
         <motion.h1
-          className="mt-4 font-[family-name:var(--font-display)] text-3xl leading-tight sm:text-5xl"
+          className={`font-[family-name:var(--font-display)] text-3xl leading-tight sm:text-5xl ${age ? "mt-2" : "mt-5"}`}
           style={{
             color: "#F4F1FF",
             textShadow: "0 0 36px rgba(255,107,157,0.45)",
           }}
-          initial={reduce ? false : { opacity: 0, y: 22, filter: "blur(8px)" }}
+          initial={reduce ? false : { opacity: 0, y: 24, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ delay: 0.95, duration: 1, ease: soft }}
+          transition={{ delay: 0.85, duration: 1, ease: soft }}
         >
-          {name}&apos;s anime night
+          {name}
         </motion.h1>
+
         <motion.p
-          className="mt-3 text-sm leading-relaxed"
+          className="mt-3 max-w-sm font-[family-name:var(--font-display)] text-lg sm:text-xl"
+          style={{ color: "#F4C27A" }}
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.05, duration: 0.8 }}
+        >
+          {data.copy.headline}
+        </motion.p>
+
+        <motion.p
+          className="mt-4 max-w-sm text-sm leading-relaxed"
           style={{ color: "#C5CBE8" }}
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
+          transition={{ delay: 1.15, duration: 0.8 }}
         >
-          The comet is crossing. Step into her movie.
+          Tap below — her birthday story begins.
         </motion.p>
+
         <motion.button
           type="button"
           onClick={enter}
-          className="mt-8 rounded-full border px-8 py-3.5 text-[11px] tracking-[0.34em] uppercase"
+          className="mt-8 rounded-full border px-9 py-3.5 font-[family-name:var(--font-display)] text-[11px] tracking-[0.34em] uppercase"
           style={{
             borderColor: "rgba(255,107,157,0.55)",
             background:
@@ -388,7 +428,7 @@ function OpeningGate({
           }}
           initial={reduce ? false : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.75, ease: soft }}
+          transition={{ delay: 1.35, duration: 0.75, ease: soft }}
           whileHover={reduce ? undefined : { scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
         >
@@ -463,27 +503,25 @@ function HeroCharacter({
 
   return (
     <motion.div
-      className="relative mx-auto aspect-[3/4] w-full max-w-md"
-      initial={reduce || !opened ? false : { opacity: 0, x: -36, filter: "blur(12px)" }}
+      className="relative mx-auto h-[min(46vh,380px)] w-full max-w-[min(100%,320px)] sm:max-w-sm"
+      initial={reduce || !opened ? false : { opacity: 0, y: 24, filter: "blur(12px)" }}
       animate={
         opened
           ? {
               opacity: 1,
-              x: 0,
+              y: reduce ? 0 : [0, -6, 0],
               filter: "blur(0px)",
-              y: reduce ? 0 : [0, -8, 0],
             }
           : undefined
       }
       transition={{
         opacity: { delay: 0.2, duration: 1.1, ease: soft },
-        x: { delay: 0.2, duration: 1.1, ease: soft },
-        filter: { delay: 0.2, duration: 1.1 },
         y: { duration: 4.5, repeat: Infinity, ease: "easeInOut" },
+        filter: { delay: 0.2, duration: 1.1 },
       }}
     >
       <div
-        className="absolute inset-[8%] rounded-full opacity-60 blur-3xl"
+        className="absolute inset-[5%] rounded-full opacity-60 blur-3xl"
         style={{
           background:
             "radial-gradient(circle, rgba(255,107,157,0.35) 0%, rgba(126,200,255,0.2) 50%, transparent 70%)",
@@ -493,114 +531,72 @@ function HeroCharacter({
         src={src}
         alt={alt}
         fill
-        className="object-contain object-bottom drop-shadow-[0_30px_70px_rgba(255,107,157,0.4)]"
-        sizes="(max-width: 640px) 90vw, 420px"
+        className="object-contain object-bottom drop-shadow-[0_24px_50px_rgba(255,107,157,0.35)]"
+        sizes="(max-width: 640px) 80vw, 320px"
         priority
       />
     </motion.div>
   );
 }
 
-/** Three anime stills in one cinematic viewport — scroll parallax per panel. */
-function AnimeTriptych({ photos }: { photos: Photo[] }) {
+/** Three scene stills in one view window — not a scroll gallery. */
+function SceneViewWindow({ photos }: { photos: Photo[] }) {
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
+  const panels = photos.slice(0, 3);
+  const offsets = [-10, 0, 10];
 
-  const frameY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [40, -40]);
-  const glowOpacity = useTransform(scrollYProgress, [0.2, 0.5, 0.8], [0.3, 0.7, 0.3]);
-
-  const offsets = [-12, 0, 12];
+  if (panels.length === 0) return null;
 
   return (
-    <section ref={ref} className="relative px-4 py-20 sm:px-6 sm:py-28">
+    <section className="relative px-4 py-12 sm:px-6 sm:py-16">
       <Reveal>
         <p
-          className="mb-8 text-center text-[11px] tracking-[0.34em] uppercase"
+          className="mb-6 text-center text-[11px] tracking-[0.32em] uppercase"
           style={{ color: "var(--hw-accent)" }}
         >
-          Character scroll
+          Scene preview
         </p>
       </Reveal>
 
-      <motion.div style={{ y: frameY }} className="relative mx-auto max-w-6xl">
-        <motion.div
-          className="pointer-events-none absolute -inset-4 rounded-3xl opacity-50 blur-2xl"
-          style={{
-            opacity: glowOpacity,
-            background:
-              "linear-gradient(135deg, rgba(255,107,157,0.25), rgba(126,200,255,0.2))",
-          }}
-        />
-
+      <div className="relative mx-auto max-w-5xl">
         <div
           className="relative overflow-hidden rounded-2xl border p-3 sm:p-4"
           style={{
             borderColor: "rgba(126,200,255,0.35)",
-            background: "rgba(10,14,32,0.85)",
-            boxShadow: "0 32px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,246,232,0.08)",
+            background: "rgba(10,14,32,0.88)",
+            boxShadow: "0 24px 60px rgba(0,0,0,0.4)",
           }}
         >
-          <div className="mb-3 flex items-center justify-between px-1">
-            <span
-              className="text-[10px] tracking-[0.28em] uppercase"
-              style={{ color: "var(--hw-muted)" }}
-            >
-              Film stills · 24 fps
-            </span>
-            <span
-              className="font-[family-name:var(--font-display)] text-xs"
-              style={{ color: "var(--hw-secondary)" }}
-            >
-              Act II
-            </span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 sm:gap-4">
-            {photos.slice(0, 3).map((photo, index) => (
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            {panels.map((photo, index) => (
               <motion.figure
                 key={photo.src}
                 className="group relative min-w-0 overflow-hidden rounded-xl border"
-                style={{
-                  borderColor: "rgba(126,200,255,0.22)",
-                }}
-                initial={
-                  reduce ? false : { opacity: 0, y: 24 + index * 8 + (offsets[index] ?? 0) }
-                }
+                style={{ borderColor: "rgba(126,200,255,0.22)" }}
+                initial={reduce ? false : { opacity: 0, y: 20 + index * 6 }}
                 whileInView={{ opacity: 1, y: offsets[index] ?? 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: index * 0.12, duration: 0.9, ease: soft }}
-                whileHover={reduce ? undefined : { y: (offsets[index] ?? 0) - 6, scale: 1.02 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ delay: index * 0.1, duration: 0.85, ease: soft }}
               >
-                <div className="relative aspect-[3/4] overflow-hidden bg-black/40">
+                <div className="relative aspect-[3/4] overflow-hidden bg-black/50">
                   <Image
                     src={photo.src}
                     alt={photo.alt}
                     fill
-                    sizes="(max-width: 640px) 30vw, 20vw"
-                    className="object-contain object-bottom transition-transform duration-700 group-hover:scale-[1.04]"
+                    sizes="(max-width: 640px) 30vw, 18vw"
+                    className="object-contain object-bottom transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                   <div
                     className="pointer-events-none absolute inset-0"
                     style={{
                       background:
-                        "linear-gradient(to top, rgba(7,11,26,0.85) 0%, transparent 55%)",
-                    }}
-                  />
-                  <motion.div
-                    className="pointer-events-none absolute inset-0 opacity-0 mix-blend-screen group-hover:opacity-50"
-                    style={{
-                      background:
-                        "radial-gradient(circle at 50% 80%, rgba(126,200,255,0.45), transparent 60%)",
+                        "linear-gradient(to top, rgba(7,11,26,0.8) 0%, transparent 50%)",
                     }}
                   />
                 </div>
                 {photo.caption ? (
                   <figcaption
-                    className="absolute right-0 bottom-0 left-0 px-2 py-2 text-center text-[9px] tracking-[0.14em] uppercase sm:text-[10px]"
+                    className="absolute right-0 bottom-0 left-0 py-2 text-center text-[10px] tracking-[0.12em] uppercase"
                     style={{ color: "var(--hw-text)" }}
                   >
                     {photo.caption}
@@ -610,7 +606,7 @@ function AnimeTriptych({ photos }: { photos: Photo[] }) {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
@@ -619,13 +615,13 @@ export function Experience({ data }: { data: TemplateData }) {
   const reduce = useReducedMotion();
   const name = displayNames(data.people)[0] ?? "";
   const age = data.extras.milestoneAge;
-  const chapters = data.extras.timeline ?? [];
   const [opened, setOpened] = useState(false);
 
   const heroSrc =
     data.media.heroImage?.src ??
-    data.media.photos[0]?.src ??
     wishImg(data, "anime-hero-girl.png");
+
+  const viewPhotos = data.media.photos.filter((photo) => photo.src !== heroSrc);
 
   useEffect(() => {
     if (!opened) {
@@ -659,6 +655,7 @@ export function Experience({ data }: { data: TemplateData }) {
             key="gate"
             data={data}
             name={name}
+            age={age}
             heroSrc={heroSrc}
             onEnter={() => setOpened(true)}
           />
@@ -703,41 +700,14 @@ export function Experience({ data }: { data: TemplateData }) {
         transition={{ duration: 1.15, ease: soft, delay: opened ? 0.08 : 0 }}
       >
         {/* Act I — hero */}
-        <section className="relative flex min-h-svh items-end justify-center px-4 pb-12 pt-24 sm:items-center sm:pb-20">
+        <section className="relative px-4 pt-[max(5rem,10vh)] pb-6 sm:px-6 sm:pb-10">
           <motion.div
             style={{ y: heroY, opacity: heroFade }}
-            className="relative grid w-full max-w-5xl items-end gap-8 sm:grid-cols-[1.05fr_0.95fr] sm:gap-6"
+            className="relative mx-auto grid w-full max-w-5xl items-center gap-8 lg:grid-cols-[1fr_auto] lg:gap-10"
           >
-            <div className="relative order-2 sm:order-1">
-              <GlowPulse className="top-[10%] left-1/2 h-72 w-72 -translate-x-1/2" />
-              <HeroCharacter src={heroSrc} alt={`${name} — main character`} opened={opened} />
-
-              <motion.div
-                className="absolute top-[6%] right-[0%] w-20 sm:top-[8%] sm:right-[4%] sm:w-28"
-                animate={reduce ? undefined : { y: [0, -16, 0], rotate: [-3, 4, -3] }}
-                transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <div
-                  className="relative aspect-square overflow-hidden rounded-full"
-                  style={{
-                    boxShadow: "0 0 36px rgba(126,200,255,0.45)",
-                    border: "2px solid rgba(255,246,232,0.4)",
-                  }}
-                >
-                  <Image
-                    src={wishImg(data, "anime-spirit-fox.png")}
-                    alt="Spirit friend"
-                    fill
-                    className="object-cover"
-                    sizes="112px"
-                  />
-                </div>
-              </motion.div>
-            </div>
-
-            <div className="order-1 px-1 text-center sm:order-2 sm:pb-20 sm:text-left">
+            <div className="relative order-1 text-center lg:pr-4 lg:text-left">
               <motion.p
-                className="text-[11px] tracking-[0.4em] uppercase"
+                className="text-xs font-semibold tracking-[0.28em] uppercase"
                 style={{ color: "var(--hw-accent)" }}
                 initial={reduce || !opened ? false : { opacity: 0, y: 10 }}
                 animate={opened ? { opacity: 1, y: 0 } : undefined}
@@ -746,13 +716,26 @@ export function Experience({ data }: { data: TemplateData }) {
                 {data.copy.subhead}
               </motion.p>
 
+              <motion.p
+                className="mt-4 font-[family-name:var(--font-display)] text-3xl leading-tight sm:text-4xl"
+                style={{
+                  color: "var(--hw-secondary)",
+                  textShadow: "0 0 28px rgba(244,194,122,0.35)",
+                }}
+                initial={reduce || !opened ? false : { opacity: 0, y: 14 }}
+                animate={opened ? { opacity: 1, y: 0 } : undefined}
+                transition={{ delay: 0.22, duration: 0.85, ease: soft }}
+              >
+                {data.copy.headline}
+              </motion.p>
+
               {age ? (
                 <motion.p
-                  className="mt-4 font-[family-name:var(--font-display)] text-[5.5rem] leading-none sm:text-[7rem]"
+                  className="mt-4 font-[family-name:var(--font-display)] text-[5rem] leading-none sm:text-[6.5rem]"
                   style={{
                     color: "var(--hw-primary)",
                     textShadow:
-                      "0 0 40px rgba(255,107,157,0.55), 0 0 80px rgba(126,200,255,0.25)",
+                      "0 0 40px rgba(255,107,157,0.6), 0 0 80px rgba(126,200,255,0.3)",
                   }}
                   initial={
                     reduce || !opened
@@ -764,7 +747,7 @@ export function Experience({ data }: { data: TemplateData }) {
                       ? { opacity: 1, scale: 1, filter: "blur(0px)" }
                       : undefined
                   }
-                  transition={{ delay: 0.3, duration: 1.1, ease: soft }}
+                  transition={{ delay: 0.35, duration: 1.1, ease: soft }}
                 >
                   {age}
                 </motion.p>
@@ -775,90 +758,53 @@ export function Experience({ data }: { data: TemplateData }) {
                 style={{ color: "var(--hw-text)" }}
                 initial={reduce || !opened ? false : { opacity: 0, y: 18 }}
                 animate={opened ? { opacity: 1, y: 0 } : undefined}
-                transition={{ delay: 0.45, duration: 0.85, ease: soft }}
+                transition={{ delay: 0.48, duration: 0.85, ease: soft }}
               >
                 {name}
               </motion.h1>
 
-              <motion.p
-                className="mt-3 text-lg"
-                style={{ color: "var(--hw-secondary)" }}
-                initial={reduce || !opened ? false : { opacity: 0 }}
-                animate={opened ? { opacity: 1 } : undefined}
-                transition={{ delay: 0.6, duration: 0.8 }}
-              >
-                {data.copy.headline}
-              </motion.p>
-
               <motion.div
-                className="relative mx-auto mt-8 max-w-sm rounded-3xl rounded-bl-md border px-5 py-4 text-left sm:mx-0"
+                className="relative mx-auto mt-8 max-w-md rounded-2xl border-2 px-6 py-6 text-left lg:mx-0"
                 style={{
-                  background: "rgba(18,24,51,0.9)",
-                  borderColor: "rgba(126,200,255,0.35)",
-                  boxShadow: "0 16px 40px rgba(0,0,0,0.35)",
+                  background:
+                    "linear-gradient(145deg, rgba(255,107,157,0.18) 0%, rgba(18,24,51,0.95) 45%)",
+                  borderColor: "rgba(255,107,157,0.55)",
+                  boxShadow:
+                    "0 20px 50px rgba(0,0,0,0.4), 0 0 40px rgba(255,107,157,0.15)",
                 }}
-                initial={reduce || !opened ? false : { opacity: 0, y: 20 }}
+                initial={reduce || !opened ? false : { opacity: 0, y: 22 }}
                 animate={opened ? { opacity: 1, y: 0 } : undefined}
-                transition={{ delay: 0.75, duration: 0.85, ease: soft }}
+                transition={{ delay: 0.62, duration: 0.9, ease: soft }}
               >
-                <p className="text-sm leading-7">{data.copy.message}</p>
-                <span
-                  className="absolute -bottom-2 left-8 h-3 w-3 rotate-45 border-r border-b"
-                  style={{
-                    background: "rgba(18,24,51,0.9)",
-                    borderColor: "rgba(126,200,255,0.35)",
-                  }}
-                />
+                <p
+                  className="text-[10px] font-bold tracking-[0.3em] uppercase"
+                  style={{ color: "var(--hw-primary)" }}
+                >
+                  Birthday wish
+                </p>
+                <p className="mt-3 text-base leading-8 font-medium sm:text-lg sm:leading-9">
+                  {data.copy.message}
+                </p>
               </motion.div>
             </div>
+
+            <div className="relative order-2 flex justify-center lg:justify-end">
+              <GlowPulse className="top-1/2 left-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2" />
+              <HeroCharacter src={heroSrc} alt={`${name} — main character`} opened={opened} />
+            </div>
           </motion.div>
-          {opened ? <ScrollHint className="!bottom-8" /> : null}
+
+          {opened ? (
+            <div className="relative mt-8 flex justify-center">
+              <ScrollHint />
+            </div>
+          ) : null}
         </section>
 
-        {/* Act II — triptych gallery */}
-        {data.media.photos.length > 0 ? (
-          <AnimeTriptych photos={data.media.photos} />
-        ) : null}
+        {/* Scene view — three different characters, not the hero */}
+        {viewPhotos.length > 0 ? <SceneViewWindow photos={viewPhotos} /> : null}
 
-        {/* Act chapters */}
-        {chapters.length > 0 ? (
-          <SceneSection className="relative mx-auto max-w-lg px-6 py-12" wipe="right">
-            <div className="space-y-4">
-              {chapters.map((chapter, index) => (
-                <Reveal key={chapter.title} delay={index * 0.06}>
-                  <div
-                    className="rounded-2xl border px-5 py-5"
-                    style={{
-                      background: "rgba(18,24,51,0.75)",
-                      borderColor: "rgba(126,200,255,0.22)",
-                    }}
-                  >
-                    <p
-                      className="text-[10px] tracking-[0.3em] uppercase"
-                      style={{ color: "var(--hw-accent)" }}
-                    >
-                      {chapter.label}
-                    </p>
-                    <h2
-                      className="mt-2 font-[family-name:var(--font-display)] text-xl"
-                      style={{ color: "var(--hw-secondary)" }}
-                    >
-                      {chapter.title}
-                    </h2>
-                    <p
-                      className="mt-2 text-sm leading-6"
-                      style={{ color: "var(--hw-muted)" }}
-                    >
-                      {chapter.body}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </SceneSection>
-        ) : null}
-
-        {/* Act III — party */}
+        {/* Party / RSVP */}
         <SceneSection className="relative mx-auto max-w-md px-6 py-20" wipe="left">
           <Reveal>
             {data.event ? (
@@ -867,7 +813,7 @@ export function Experience({ data }: { data: TemplateData }) {
                   className="text-[11px] tracking-[0.32em] uppercase"
                   style={{ color: "var(--hw-accent)" }}
                 >
-                  Next episode
+                  Next scene
                 </p>
                 <p className="mt-3 font-[family-name:var(--font-display)] text-2xl">
                   {data.event.timeLabel}
@@ -899,16 +845,16 @@ export function Experience({ data }: { data: TemplateData }) {
         <SceneSection className="px-6 pb-20 text-center" wipe="right">
           <Reveal>
             <p
-              className="font-[family-name:var(--font-display)] text-xl"
+              className="font-[family-name:var(--font-display)] text-2xl"
               style={{ color: "var(--hw-secondary)" }}
             >
-              {name}
+              Happy Birthday, {name}!
             </p>
             <p
               className="mt-2 text-[11px] tracking-[0.28em] uppercase"
               style={{ color: "var(--hw-muted)" }}
             >
-              Main character · To be continued
+              Main character energy
             </p>
           </Reveal>
         </SceneSection>

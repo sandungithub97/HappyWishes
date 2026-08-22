@@ -1,14 +1,14 @@
-import { Baloo_2, Quicksand } from "next/font/google";
+import { Bangers, Nunito } from "next/font/google";
 import { Experience } from "./Experience";
 import type { TemplateData } from "@/templates/_shared/types";
 
-const display = Baloo_2({
+const display = Bangers({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400",
   variable: "--font-display",
 });
 
-const body = Quicksand({
+const body = Nunito({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
   variable: "--font-body",

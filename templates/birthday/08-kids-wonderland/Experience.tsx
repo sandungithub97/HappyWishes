@@ -23,7 +23,7 @@ import type { TemplateData } from "@/templates/_shared/types";
 const spring = { type: "spring" as const, stiffness: 280, damping: 18 };
 const soft = [0.22, 1, 0.36, 1] as const;
 
-const PARTY_EMOJIS = ["🎈", "🎂", "⭐", "🦕", "🎉", "✨", "🧁", "🎁", "🌈", "🎪"];
+const WEB_EMOJIS = ["🕷️", "🕸️", "🦸", "⭐", "🎂", "🎉", "💥", "🎁", "🕷️", "🕸️"];
 
 const stickerSlots: Array<{
   top?: string;
@@ -40,17 +40,10 @@ const stickerSlots: Array<{
   { bottom: "16%", right: "7%", delay: 0.24 },
 ];
 
-const photoTilt = ["-rotate-3", "rotate-2", "-rotate-2", "rotate-1", "-rotate-1"];
+const photoTilt = ["-rotate-3", "rotate-2", "-rotate-2", "rotate-1"];
 
-const gateBalloons = [
-  { x: "8%", y: "18%", color: "#FB7185", delay: 0 },
-  { x: "82%", y: "12%", color: "#0369A1", delay: 0.4 },
-  { x: "14%", y: "62%", color: "#FDE047", delay: 0.8 },
-  { x: "78%", y: "58%", color: "#7AE7FF", delay: 0.55 },
-];
-
-/** Original cute star-critter mascot (not from any franchise). */
-function StarBuddy({ className }: { className?: string }) {
+/** Original friendly web-hero mascot — not any licensed character. */
+function WebHero({ className }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -59,72 +52,149 @@ function StarBuddy({ className }: { className?: string }) {
       width="120"
       height="120"
     >
-      <circle cx="60" cy="62" r="38" fill="#FFE066" />
-      <circle cx="60" cy="62" r="32" fill="#FFF3A8" />
-      <ellipse cx="48" cy="58" rx="5" ry="7" fill="#2B2422" />
-      <ellipse cx="72" cy="58" rx="5" ry="7" fill="#2B2422" />
-      <circle cx="50" cy="56" r="1.5" fill="#fff" />
-      <circle cx="74" cy="56" r="1.5" fill="#fff" />
+      <ellipse cx="60" cy="72" rx="28" ry="34" fill="#1565C0" />
+      <ellipse cx="60" cy="74" rx="22" ry="28" fill="#1976D2" />
       <path
-        d="M52 72c4 6 12 6 16 0"
-        stroke="#E85A71"
-        strokeWidth="3"
+        d="M48 68h24M52 76h16M54 84h12"
+        stroke="#0D47A1"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <circle cx="60" cy="38" r="26" fill="#E62429" />
+      <path d="M34 38c0-14 12-24 26-24s26 10 26 24" fill="#C62828" />
+      <ellipse cx="48" cy="36" rx="9" ry="11" fill="#FFFFFF" />
+      <ellipse cx="72" cy="36" rx="9" ry="11" fill="#FFFFFF" />
+      <ellipse cx="49" cy="37" rx="4" ry="6" fill="#1E293B" />
+      <ellipse cx="73" cy="37" rx="4" ry="6" fill="#1E293B" />
+      <path
+        d="M54 48c3 3 9 3 12 0"
+        stroke="#1E293B"
+        strokeWidth="2"
         strokeLinecap="round"
         fill="none"
       />
-      <circle cx="42" cy="68" r="5" fill="#FFB4C4" opacity="0.7" />
-      <circle cx="78" cy="68" r="5" fill="#FFB4C4" opacity="0.7" />
       <path
-        d="M60 18l4 12 12 2-9 8 3 12-10-6-10 6 3-12-9-8 12-2z"
-        fill="#FF9F1C"
+        d="M60 58 L52 72 M60 58 L68 72"
+        stroke="#1565C0"
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M38 52 L28 44 M82 52 L92 44"
+        stroke="#1565C0"
+        strokeWidth="4"
+        strokeLinecap="round"
       />
     </svg>
   );
 }
 
-function FloatingBalloon({
-  x,
-  y,
-  color,
-  delay,
-  reduce,
+function CornerWeb({
+  corner,
+  className,
 }: {
-  x: string;
-  y: string;
-  color: string;
-  delay: number;
-  reduce: boolean;
+  corner: "tl" | "tr" | "bl" | "br";
+  className?: string;
 }) {
+  const reduce = useReducedMotion();
+  const position = {
+    tl: "top-0 left-0",
+    tr: "top-0 right-0 rotate-90",
+    bl: "bottom-0 left-0 -rotate-90",
+    br: "bottom-0 right-0 rotate-180",
+  }[corner];
+
+  const spokes = [0, 22, 45, 68, 90];
+  const rings = [18, 36, 54, 72];
+
   return (
-    <motion.div
-      className="pointer-events-none absolute"
-      style={{ left: x, top: y }}
-      animate={reduce ? undefined : { y: [0, -18, 0], rotate: [-2, 2, -2] }}
-      transition={{ duration: 3.6 + delay, repeat: Infinity, ease: "easeInOut", delay }}
+    <motion.svg
+      className={`pointer-events-none absolute ${position} h-28 w-28 sm:h-40 sm:w-40 ${className ?? ""}`}
+      viewBox="0 0 100 100"
       aria-hidden
+      animate={reduce ? undefined : { opacity: [0.35, 0.65, 0.35] }}
+      transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
     >
-      <svg width="52" height="72" viewBox="0 0 52 72">
-        <ellipse cx="26" cy="28" rx="22" ry="26" fill={color} />
-        <ellipse cx="18" cy="20" rx="6" ry="9" fill="rgba(255,255,255,0.35)" />
-        <path d="M26 54 L22 64 L30 64 Z" fill={color} opacity="0.85" />
-        <path
-          d="M26 64 Q20 68 26 72 Q32 68 26 64"
-          stroke="#94A3B8"
-          strokeWidth="1.5"
-          fill="none"
-        />
-      </svg>
-    </motion.div>
+      <g stroke="rgba(255,255,255,0.5)" strokeWidth="0.9" fill="none">
+        {spokes.map((deg) => {
+          const rad = (deg * Math.PI) / 180;
+          return (
+            <line
+              key={deg}
+              x1="0"
+              y1="0"
+              x2={Math.cos(rad) * 95}
+              y2={Math.sin(rad) * 95}
+            />
+          );
+        })}
+        {rings.map((r) => (
+          <path
+            key={r}
+            d={`M ${r} 0 A ${r} ${r} 0 0 1 0 ${r}`}
+          />
+        ))}
+      </g>
+    </motion.svg>
   );
 }
 
-function FallingPartyRain() {
+function CornerWebs({ className }: { className?: string }) {
+  return (
+    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className ?? ""}`}>
+      <CornerWeb corner="tl" />
+      <CornerWeb corner="tr" />
+      <CornerWeb corner="bl" />
+      <CornerWeb corner="br" />
+    </div>
+  );
+}
+
+/** Animated web strands in corners */
+function SwingingWebStrands() {
+  const reduce = useReducedMotion();
+  if (reduce) return null;
+
+  const strands = [
+    { x: "4%", y: "0", rotate: 35, delay: 0 },
+    { x: "92%", y: "0", rotate: -35, delay: 0.5 },
+    { x: "2%", y: "78%", rotate: -25, delay: 0.3 },
+    { x: "88%", y: "80%", rotate: 25, delay: 0.7 },
+  ];
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      {strands.map((strand) => (
+        <motion.div
+          key={`${strand.x}-${strand.y}`}
+          className="absolute h-32 w-px origin-top sm:h-44"
+          style={{
+            left: strand.x,
+            top: strand.y,
+            rotate: strand.rotate,
+            background:
+              "linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.05))",
+          }}
+          animate={{ rotate: [strand.rotate - 4, strand.rotate + 4, strand.rotate - 4] }}
+          transition={{
+            duration: 4 + strand.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: strand.delay,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function FallingWebRain() {
   const reduce = useReducedMotion();
   const items = useMemo(
     () =>
-      Array.from({ length: 24 }, (_, i) => ({
+      Array.from({ length: 22 }, (_, i) => ({
         id: i,
-        emoji: PARTY_EMOJIS[i % PARTY_EMOJIS.length]!,
+        emoji: WEB_EMOJIS[i % WEB_EMOJIS.length]!,
         left: `${(i * 41) % 100}%`,
         delay: (i % 12) * 0.5,
         duration: 8 + (i % 7) * 1.1,
@@ -139,7 +209,7 @@ function FallingPartyRain() {
   return (
     <div
       className="pointer-events-none fixed inset-0 z-[5] overflow-hidden"
-      style={{ opacity: 0.55 }}
+      style={{ opacity: 0.5 }}
       aria-hidden
     >
       {items.map((item) => (
@@ -172,7 +242,7 @@ function FallingPartyRain() {
   );
 }
 
-function CastleGate({
+function WebGate({
   name,
   age,
   onOpen,
@@ -195,27 +265,20 @@ function CastleGate({
       className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden px-4"
       style={{
         background: `
-          radial-gradient(ellipse at 50% 15%, rgba(255,255,255,0.75) 0%, transparent 50%),
-          radial-gradient(ellipse at 20% 80%, rgba(253,224,71,0.35) 0%, transparent 42%),
-          linear-gradient(180deg, #7EC8FF 0%, #C4E7FF 35%, #FFE8F0 70%, #FFF5E8 100%)
+          radial-gradient(ellipse at 50% 0%, rgba(230,36,41,0.25) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 100%, rgba(21,101,192,0.35) 0%, transparent 45%),
+          linear-gradient(180deg, #0B1628 0%, #152238 55%, #0B1628 100%)
         `,
       }}
       exit={{ opacity: 0, transition: { duration: 0.55 } }}
     >
-      <ParticleField
-        variant="bubble"
-        count={16}
-        colors={["rgba(255,255,255,0.55)", "rgba(126,200,255,0.45)", "rgba(253,224,71,0.35)"]}
-      />
+      <CornerWebs />
+      <SwingingWebStrands />
       <ParticleField
         variant="sparkle"
-        count={22}
-        colors={["#ffffff", "#FFE066", "#FFB4C4", "#7EC8FF"]}
+        count={20}
+        colors={["#ffffff", "#E62429", "#1565C0", "#94A3B8"]}
       />
-
-      {gateBalloons.map((balloon) => (
-        <FloatingBalloon key={balloon.x} {...balloon} reduce={!!reduce} />
-      ))}
 
       <motion.div
         className="relative z-10 flex max-w-sm flex-col items-center text-center"
@@ -228,52 +291,74 @@ function CastleGate({
       >
         <p
           className="mb-3 text-[11px] font-extrabold tracking-[0.38em] uppercase"
-          style={{ color: "#5B4B8A" }}
+          style={{ color: "#94A3B8" }}
         >
-          You&apos;re invited
+          Hero alert
         </p>
 
         <div className="relative">
-          <svg width="260" height="168" viewBox="0 0 260 168" aria-hidden>
-            {/* Castle body */}
-            <rect x="20" y="58" width="48" height="98" fill="#E8A87C" rx="2" />
-            <rect x="106" y="38" width="48" height="118" fill="#D4916A" rx="2" />
-            <rect x="192" y="58" width="48" height="98" fill="#E8A87C" rx="2" />
-            <polygon points="44,58 20,32 68,32" fill="#FB7185" />
-            <polygon points="130,38 106,8 154,8" fill="#FB7185" />
-            <polygon points="216,58 192,32 240,32" fill="#FB7185" />
-            <rect x="118" y="108" width="24" height="48" fill="#6B3F2A" rx="1" />
-            <circle cx="130" cy="78" r="10" fill="#7EC8FF" opacity="0.85" />
-
-            {/* Left door */}
+          <svg width="240" height="200" viewBox="0 0 240 200" aria-hidden>
+            <circle cx="120" cy="100" r="88" fill="none" stroke="#1565C0" strokeWidth="3" opacity="0.5" />
+            <circle cx="120" cy="100" r="70" fill="none" stroke="#E62429" strokeWidth="2" opacity="0.45" />
+            {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
+              const rad = (deg * Math.PI) / 180;
+              return (
+                <line
+                  key={deg}
+                  x1="120"
+                  y1="100"
+                  x2={120 + Math.cos(rad) * 88}
+                  y2={100 + Math.sin(rad) * 88}
+                  stroke="rgba(255,255,255,0.35)"
+                  strokeWidth="1"
+                />
+              );
+            })}
+            {[30, 55, 80].map((r) => (
+              <circle
+                key={r}
+                cx="120"
+                cy="100"
+                r={r}
+                fill="none"
+                stroke="rgba(255,255,255,0.3)"
+                strokeWidth="0.8"
+              />
+            ))}
             <motion.g
               animate={
-                opening && !reduce ? { x: -58, opacity: 0.65 } : { x: 0, opacity: 1 }
+                opening && !reduce ? { x: -52, opacity: 0.5 } : { x: 0, opacity: 1 }
               }
               transition={{ duration: 0.85, ease: soft }}
             >
-              <rect x="118" y="108" width="12" height="48" fill="#8B5E3C" rx="1" />
+              <path
+                d="M120 55 L75 145 L120 125 L165 145 Z"
+                fill="#E62429"
+                opacity="0.85"
+              />
             </motion.g>
-            {/* Right door */}
             <motion.g
               animate={
-                opening && !reduce ? { x: 58, opacity: 0.65 } : { x: 0, opacity: 1 }
+                opening && !reduce ? { x: 52, opacity: 0.5 } : { x: 0, opacity: 1 }
               }
               transition={{ duration: 0.85, ease: soft }}
             >
-              <rect x="130" y="108" width="12" height="48" fill="#8B5E3C" rx="1" />
+              <path
+                d="M120 55 L75 145 L120 125 L165 145 Z"
+                fill="#1565C0"
+                opacity="0.75"
+                transform="scale(-1,1) translate(-240,0)"
+              />
             </motion.g>
-            {/* Door arch highlight */}
-            <rect x="118" y="108" width="24" height="6" fill="#A67C52" rx="1" />
           </svg>
 
           <motion.div
-            className="absolute -top-2 left-1/2 -translate-x-1/2"
+            className="absolute -top-4 left-1/2 -translate-x-1/2"
             animate={
               reduce
                 ? undefined
                 : opening
-                  ? { y: -40, scale: 1.15, rotate: [0, -8, 8, 0] }
+                  ? { y: -36, scale: 1.12, rotate: [0, -10, 10, 0] }
                   : { y: [0, -10, 0] }
             }
             transition={
@@ -282,22 +367,22 @@ function CastleGate({
                 : { duration: 2.4, repeat: Infinity, ease: "easeInOut" }
             }
           >
-            <StarBuddy className="h-20 w-20" />
+            <WebHero className="h-24 w-24" />
           </motion.div>
         </div>
 
         <motion.h1
-          className="mt-2 font-[family-name:var(--font-display)] text-3xl sm:text-4xl"
-          style={{ color: "#0369A1" }}
+          className="mt-2 font-[family-name:var(--font-display)] text-4xl tracking-wide sm:text-5xl"
+          style={{ color: "#E62429", textShadow: "0 3px 0 #1565C0" }}
         >
-          {name}&apos;s Wonderland
+          {name}&apos;s Web Party
         </motion.h1>
         {age ? (
           <p
-            className="mt-1 font-[family-name:var(--font-display)] text-xl"
-            style={{ color: "#FB7185" }}
+            className="mt-1 font-[family-name:var(--font-display)] text-2xl tracking-wide"
+            style={{ color: "#FFFFFF" }}
           >
-            Turning {age}!
+            Level {age}!
           </p>
         ) : null}
 
@@ -307,20 +392,20 @@ function CastleGate({
           disabled={opening}
           className="mt-8 rounded-full px-9 py-4 text-sm font-extrabold tracking-wide uppercase disabled:opacity-70"
           style={{
-            background: "linear-gradient(180deg, #FFE066, #FF9F1C)",
-            color: "#2B2422",
-            boxShadow: "0 8px 0 #E08500",
+            background: "linear-gradient(180deg, #E62429, #B71C1C)",
+            color: "#FFFFFF",
+            boxShadow: "0 8px 0 #1565C0",
           }}
           whileHover={reduce ? undefined : { scale: 1.04, y: -2 }}
-          whileTap={{ scale: 0.97, y: 2, boxShadow: "0 4px 0 #E08500" }}
+          whileTap={{ scale: 0.97, y: 2, boxShadow: "0 4px 0 #1565C0" }}
         >
-          {opening ? "Opening…" : "Open the castle"}
+          {opening ? "Swinging in…" : "Swing inside"}
         </motion.button>
       </motion.div>
 
       {opening ? (
         <ConfettiBurst
-          colors={["#FB7185", "#FDE047", "#0369A1", "#7AE7FF", "#ffffff"]}
+          colors={["#E62429", "#1565C0", "#FFFFFF", "#94A3B8"]}
         />
       ) : null}
     </motion.div>
@@ -339,8 +424,7 @@ export function Experience({ data }: { data: TemplateData }) {
     data.palette.primary,
     data.palette.secondary,
     data.palette.accent,
-    "#ffffff",
-    "#7AE7FF",
+    "#94A3B8",
   ];
 
   const { scrollYProgress } = useScroll();
@@ -365,7 +449,7 @@ export function Experience({ data }: { data: TemplateData }) {
     >
       <AnimatePresence>
         {!opened ? (
-          <CastleGate
+          <WebGate
             key="gate"
             name={name}
             age={age}
@@ -375,21 +459,13 @@ export function Experience({ data }: { data: TemplateData }) {
       </AnimatePresence>
 
       {opened ? <ConfettiBurst colors={confettiColors} count={100} /> : null}
-      {opened ? <FallingPartyRain /> : null}
+      {opened ? <FallingWebRain /> : null}
       {opened ? (
         <ParticleField variant="sparkle" count={24} colors={confettiColors} />
       ) : null}
-      {opened ? (
-        <ParticleField
-          variant="bubble"
-          count={14}
-          colors={[
-            "rgba(251,113,133,0.35)",
-            "rgba(253,224,71,0.3)",
-            "rgba(3,105,161,0.25)",
-          ]}
-        />
-      ) : null}
+
+      <CornerWebs className="fixed inset-0 z-[4]" />
+      {opened ? <SwingingWebStrands /> : null}
 
       <div
         className="pointer-events-none absolute inset-0 opacity-90"
@@ -434,20 +510,6 @@ export function Experience({ data }: { data: TemplateData }) {
         })}
 
         <section className="relative flex min-h-svh flex-col items-center justify-center px-6 py-24 text-center">
-          {data.media.heroImage ? (
-            <div className="pointer-events-none absolute inset-0 overflow-hidden">
-              <Image
-                src={data.media.heroImage.src}
-                alt=""
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover object-center"
-                style={{ opacity: 0.14 }}
-              />
-            </div>
-          ) : null}
-
           <motion.div
             style={{ y: heroY, opacity: heroFade, scale: heroScale }}
             className="relative z-10"
@@ -460,7 +522,7 @@ export function Experience({ data }: { data: TemplateData }) {
               }
               transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
             >
-              <StarBuddy className="mx-auto" />
+              <WebHero className="mx-auto" />
             </motion.div>
 
             <motion.p
@@ -479,7 +541,7 @@ export function Experience({ data }: { data: TemplateData }) {
                 style={{
                   color: "var(--hw-primary)",
                   textShadow:
-                    "0 10px 0 color-mix(in srgb, var(--hw-secondary) 45%, transparent)",
+                    "0 8px 0 var(--hw-secondary), 0 0 32px rgba(230,36,41,0.45)",
                 }}
                 initial={reduce || !opened ? false : { scale: 0.35, rotate: -10 }}
                 animate={opened ? { scale: 1, rotate: 0 } : undefined}
@@ -524,8 +586,8 @@ export function Experience({ data }: { data: TemplateData }) {
                 href="#details"
                 className="mt-10 inline-flex rounded-full px-8 py-3.5 text-sm font-extrabold tracking-wide uppercase shadow-[0_8px_0_var(--hw-secondary)] transition-transform hover:-translate-y-0.5 active:translate-y-1 active:shadow-none"
                 style={{
-                  background: "var(--hw-accent)",
-                  color: "var(--hw-text)",
+                  background: "var(--hw-primary)",
+                  color: "#FFFFFF",
                 }}
                 initial={reduce || !opened ? false : { opacity: 0, y: 18 }}
                 animate={opened ? { opacity: 1, y: 0 } : undefined}
@@ -546,7 +608,7 @@ export function Experience({ data }: { data: TemplateData }) {
                 className="mb-8 text-center text-[11px] font-extrabold tracking-[0.32em] uppercase"
                 style={{ color: "var(--hw-accent)" }}
               >
-                Party vibes
+                Hero moments
               </p>
             </Reveal>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
@@ -602,7 +664,7 @@ export function Experience({ data }: { data: TemplateData }) {
                 className="mb-10 text-center text-[11px] font-extrabold tracking-[0.32em] uppercase"
                 style={{ color: "var(--hw-primary)" }}
               >
-                What we&apos;re doing
+                Mission schedule
               </p>
             </Reveal>
             <ol className="space-y-5">
@@ -659,7 +721,7 @@ export function Experience({ data }: { data: TemplateData }) {
                   className="text-[11px] font-extrabold tracking-[0.32em] uppercase"
                   style={{ color: "var(--hw-accent)" }}
                 >
-                  When & where
+                  Hero HQ
                 </p>
                 <p
                   className="mt-4 font-[family-name:var(--font-display)] text-2xl"

@@ -19,7 +19,7 @@ const data: TemplateData = {
     wishId: "hana",
     name: "Anime Wish",
     mood: "Anime movie night — comet twilight, soft bloom, cinematic scroll",
-    standout: "Cinematic gate, parallax sky, triptych gallery, comet scroll trail",
+    standout: "Cinematic gate, hero portrait, three-panel scene view, comet scroll",
     buildPhase: 4,
   },
   people: [{ name: "Hana", role: "Birthday star" }],
@@ -33,11 +33,11 @@ const data: TemplateData = {
     },
   },
   copy: {
-    headline: "Her story continues tonight",
-    subhead: "アニメの世界へ",
+    headline: "Happy 18th Birthday!",
+    subhead: "An anime movie night just for you",
     message:
-      "Hana — the sky splits open like an opening theme. A comet for courage, a cat spirit for luck, and a whole cast cheering your name. Level up another year. Happy birthday, main character.",
-    cta: "Join her episode",
+      "Hana, you are the main character tonight. The sky opens wide, the comet crosses, and everyone who loves you is here to cheer you on. May this year bring brave adventures, warm friendships, and moments worth framing. Happy birthday!",
+    cta: "Count me in",
   },
   palette: {
     background: "#070B1A",
@@ -51,7 +51,7 @@ const data: TemplateData = {
   },
   fonts: {
     display: "Dela Gothic One",
-    body: "Noto Sans JP",
+    body: "Nunito",
   },
   media: {
     heroImage: {
@@ -60,19 +60,19 @@ const data: TemplateData = {
     },
     photos: [
       {
-        src: design("anime.png"),
-        alt: "Main character portrait",
-        caption: "Episode 18 — Hana",
-      },
-      {
         src: design("anime1.png"),
         alt: "Spirit guardian",
-        caption: "Spirit realm",
+        caption: "Guardian",
       },
       {
         src: design("anime2.png"),
         alt: "Celebration mode",
-        caption: "After-party arc",
+        caption: "Party arc",
+      },
+      {
+        src: "anime-spirit-fox.png",
+        alt: "Spirit companion",
+        caption: "Sidekick",
       },
     ],
     music: {
@@ -83,26 +83,9 @@ const data: TemplateData = {
   extras: {
     backgroundMusic: true,
     milestoneAge: 18,
-    timeline: [
-      {
-        label: "Act I",
-        title: "Twilight gate",
-        body: "The comet crosses. You step into her movie world.",
-      },
-      {
-        label: "Act II",
-        title: "Character scroll",
-        body: "Three frames — main cast, spirit guide, celebration mode.",
-      },
-      {
-        label: "Act III",
-        title: "Birthday scene",
-        body: "Rooftop party under the same sky as the opening credits.",
-      },
-    ],
     rsvp: {
       enabled: true,
-      note: "Enter the world — reply by 10 September.",
+      note: "Please reply by 10 September.",
     },
   },
 };

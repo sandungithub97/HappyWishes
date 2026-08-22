@@ -1,4 +1,4 @@
-import { Dela_Gothic_One, Noto_Sans_JP } from "next/font/google";
+import { Dela_Gothic_One, Nunito } from "next/font/google";
 import { Experience } from "./Experience";
 import type { TemplateData } from "@/templates/_shared/types";
 
@@ -8,9 +8,9 @@ const display = Dela_Gothic_One({
   variable: "--font-display",
 });
 
-const body = Noto_Sans_JP({
+const body = Nunito({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-body",
 });
 
