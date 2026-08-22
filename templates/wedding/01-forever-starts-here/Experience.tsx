@@ -7,6 +7,7 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Countdown } from "@/templates/_shared/components/Countdown";
 import { MusicToggle } from "@/templates/_shared/components/MusicToggle";
@@ -21,6 +22,28 @@ import { themeStyle } from "@/templates/_shared/theme";
 import type { TemplateData } from "@/templates/_shared/types";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+function CoupleBackground({ src, alt }: { src: string; alt: string }) {
+  return (
+    <motion.div
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.2, ease, delay: 0.15 }}
+      aria-hidden
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center"
+        style={{ opacity: 0.2 }}
+      />
+    </motion.div>
+  );
+}
 
 function Flourish() {
   return (
@@ -281,6 +304,13 @@ export function Experience({ data }: { data: TemplateData }) {
         ) : null}
       </AnimatePresence>
 
+      {opened && data.media.heroImage ? (
+        <CoupleBackground
+          src={data.media.heroImage.src}
+          alt={data.media.heroImage.alt}
+        />
+      ) : null}
+
       <TextureOverlay variant="grain" opacity={0.28} />
       {opened ? (
         <ParticleField
@@ -295,6 +325,7 @@ export function Experience({ data }: { data: TemplateData }) {
       ) : null}
 
       <motion.div
+        className="relative z-10"
         initial={false}
         animate={
           opened

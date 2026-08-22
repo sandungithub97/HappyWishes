@@ -58,6 +58,10 @@ const data: TemplateData = {
     body: "Outfit",
   },
   media: {
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80",
+      alt: "Amara and Julian — wedding couple",
+    },
     photos: [
       {
         src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80",

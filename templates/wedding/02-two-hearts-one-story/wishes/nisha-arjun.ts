@@ -58,6 +58,10 @@ const data: TemplateData = {
     body: "Source Sans 3",
   },
   media: {
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1600&q=80",
+      alt: "Nisha and Arjun — engagement portrait",
+    },
     photos: [
       {
         src: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1200&q=80",
