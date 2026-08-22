@@ -22,6 +22,9 @@ import type { TemplateData } from "@/templates/_shared/types";
 
 const spring = { type: "spring" as const, stiffness: 280, damping: 18 };
 const soft = [0.22, 1, 0.36, 1] as const;
+/** Deep blue for shadows & accents — kept separate from light text secondary. */
+const DEEP_BLUE = "#1565C0";
+const DISPLAY_GLOW = "0 2px 16px rgba(0,0,0,0.45)";
 
 const WEB_EMOJIS = ["🕷️", "🕸️", "🦸", "⭐", "🎂", "🎉", "💥", "🎁", "🕷️", "🕸️"];
 
@@ -291,7 +294,7 @@ function WebGate({
       >
         <p
           className="mb-3 text-[11px] font-extrabold tracking-[0.38em] uppercase"
-          style={{ color: "#94A3B8" }}
+          style={{ color: "var(--hw-muted)" }}
         >
           Hero alert
         </p>
@@ -373,14 +376,17 @@ function WebGate({
 
         <motion.h1
           className="mt-2 font-[family-name:var(--font-display)] text-4xl tracking-wide sm:text-5xl"
-          style={{ color: "#E62429", textShadow: "0 3px 0 #1565C0" }}
+          style={{
+            color: "var(--hw-primary)",
+            textShadow: `0 3px 0 ${DEEP_BLUE}, ${DISPLAY_GLOW}`,
+          }}
         >
           {name}&apos;s Web Party
         </motion.h1>
         {age ? (
           <p
             className="mt-1 font-[family-name:var(--font-display)] text-2xl tracking-wide"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--hw-text)", textShadow: DISPLAY_GLOW }}
           >
             Level {age}!
           </p>
@@ -392,12 +398,12 @@ function WebGate({
           disabled={opening}
           className="mt-8 rounded-full px-9 py-4 text-sm font-extrabold tracking-wide uppercase disabled:opacity-70"
           style={{
-            background: "linear-gradient(180deg, #E62429, #B71C1C)",
+            background: "linear-gradient(180deg, var(--hw-primary), #B71C1C)",
             color: "#FFFFFF",
-            boxShadow: "0 8px 0 #1565C0",
+            boxShadow: `0 8px 0 ${DEEP_BLUE}`,
           }}
           whileHover={reduce ? undefined : { scale: 1.04, y: -2 }}
-          whileTap={{ scale: 0.97, y: 2, boxShadow: "0 4px 0 #1565C0" }}
+          whileTap={{ scale: 0.97, y: 2, boxShadow: `0 4px 0 ${DEEP_BLUE}` }}
         >
           {opening ? "Swinging in…" : "Swing inside"}
         </motion.button>
@@ -526,7 +532,7 @@ export function Experience({ data }: { data: TemplateData }) {
             </motion.div>
 
             <motion.p
-              className="mt-4 text-[11px] font-extrabold tracking-[0.34em] uppercase"
+              className="mt-4 text-[11px] font-semibold tracking-[0.34em] uppercase"
               style={{ color: "var(--hw-secondary)" }}
               initial={reduce || !opened ? false : { opacity: 0, y: 14 }}
               animate={opened ? { opacity: 1, y: 0 } : undefined}
@@ -540,8 +546,7 @@ export function Experience({ data }: { data: TemplateData }) {
                 className="mt-3 font-[family-name:var(--font-display)] text-[7rem] leading-none font-bold sm:text-[9.5rem]"
                 style={{
                   color: "var(--hw-primary)",
-                  textShadow:
-                    "0 8px 0 var(--hw-secondary), 0 0 32px rgba(230,36,41,0.45)",
+                  textShadow: `0 8px 0 ${DEEP_BLUE}, 0 0 32px rgba(255,77,85,0.45), ${DISPLAY_GLOW}`,
                 }}
                 initial={reduce || !opened ? false : { scale: 0.35, rotate: -10 }}
                 animate={opened ? { scale: 1, rotate: 0 } : undefined}
@@ -553,7 +558,7 @@ export function Experience({ data }: { data: TemplateData }) {
 
             <motion.h1
               className="mt-1 font-[family-name:var(--font-display)] text-5xl font-bold sm:text-7xl"
-              style={{ color: "var(--hw-text)" }}
+              style={{ color: "var(--hw-text)", textShadow: DISPLAY_GLOW }}
               initial={reduce || !opened ? false : { opacity: 0, y: 28 }}
               animate={opened ? { opacity: 1, y: 0 } : undefined}
               transition={{ ...spring, delay: 0.12 }}
@@ -563,7 +568,7 @@ export function Experience({ data }: { data: TemplateData }) {
 
             <motion.p
               className="mt-4 font-[family-name:var(--font-display)] text-2xl sm:text-3xl"
-              style={{ color: "var(--hw-secondary)" }}
+              style={{ color: "var(--hw-secondary)", textShadow: DISPLAY_GLOW }}
               initial={reduce || !opened ? false : { opacity: 0 }}
               animate={opened ? { opacity: 1 } : undefined}
               transition={{ delay: 0.35, duration: 0.6 }}
@@ -572,7 +577,7 @@ export function Experience({ data }: { data: TemplateData }) {
             </motion.p>
 
             <motion.p
-              className="mx-auto mt-6 max-w-md text-base leading-7 sm:text-lg"
+              className="mx-auto mt-6 max-w-md text-base font-normal leading-7 sm:text-lg"
               style={{ color: "var(--hw-muted)" }}
               initial={reduce || !opened ? false : { opacity: 0, y: 12 }}
               animate={opened ? { opacity: 1, y: 0 } : undefined}
@@ -584,10 +589,11 @@ export function Experience({ data }: { data: TemplateData }) {
             {data.copy.cta ? (
               <motion.a
                 href="#details"
-                className="mt-10 inline-flex rounded-full px-8 py-3.5 text-sm font-extrabold tracking-wide uppercase shadow-[0_8px_0_var(--hw-secondary)] transition-transform hover:-translate-y-0.5 active:translate-y-1 active:shadow-none"
+                className="mt-10 inline-flex rounded-full px-8 py-3.5 text-sm font-extrabold tracking-wide uppercase transition-transform hover:-translate-y-0.5 active:translate-y-1 active:shadow-none"
                 style={{
                   background: "var(--hw-primary)",
                   color: "#FFFFFF",
+                  boxShadow: `0 8px 0 ${DEEP_BLUE}`,
                 }}
                 initial={reduce || !opened ? false : { opacity: 0, y: 18 }}
                 animate={opened ? { opacity: 1, y: 0 } : undefined}
@@ -605,8 +611,8 @@ export function Experience({ data }: { data: TemplateData }) {
           <section className="relative mx-auto max-w-5xl px-6 py-10 sm:py-16">
             <Reveal>
               <p
-                className="mb-8 text-center text-[11px] font-extrabold tracking-[0.32em] uppercase"
-                style={{ color: "var(--hw-accent)" }}
+                className="mb-8 text-center text-[11px] font-semibold tracking-[0.32em] uppercase"
+                style={{ color: "var(--hw-secondary)" }}
               >
                 Hero moments
               </p>
@@ -644,7 +650,7 @@ export function Experience({ data }: { data: TemplateData }) {
                       {photo.caption ? (
                         <p
                           className="px-2 py-3 text-center font-[family-name:var(--font-display)] text-sm font-semibold"
-                          style={{ color: "var(--hw-secondary)" }}
+                          style={{ color: "var(--hw-text)" }}
                         >
                           {photo.caption}
                         </p>
@@ -661,8 +667,8 @@ export function Experience({ data }: { data: TemplateData }) {
           <section className="relative mx-auto max-w-lg px-6 py-12 sm:py-16">
             <Reveal>
               <p
-                className="mb-10 text-center text-[11px] font-extrabold tracking-[0.32em] uppercase"
-                style={{ color: "var(--hw-primary)" }}
+                className="mb-10 text-center text-[11px] font-semibold tracking-[0.32em] uppercase"
+                style={{ color: "var(--hw-secondary)" }}
               >
                 Mission schedule
               </p>
@@ -686,12 +692,12 @@ export function Experience({ data }: { data: TemplateData }) {
                     <div className="text-left">
                       <h2
                         className="font-[family-name:var(--font-display)] text-xl font-bold"
-                        style={{ color: "var(--hw-secondary)" }}
+                        style={{ color: "var(--hw-text)" }}
                       >
                         {chapter.title}
                       </h2>
                       <p
-                        className="mt-1 text-sm leading-6"
+                        className="mt-1 text-sm font-normal leading-6"
                         style={{ color: "var(--hw-muted)" }}
                       >
                         {chapter.body}
@@ -718,19 +724,19 @@ export function Experience({ data }: { data: TemplateData }) {
                 }}
               >
                 <p
-                  className="text-[11px] font-extrabold tracking-[0.32em] uppercase"
-                  style={{ color: "var(--hw-accent)" }}
+                  className="text-[11px] font-semibold tracking-[0.32em] uppercase"
+                  style={{ color: "var(--hw-secondary)" }}
                 >
                   Hero HQ
                 </p>
                 <p
                   className="mt-4 font-[family-name:var(--font-display)] text-2xl"
-                  style={{ color: "var(--hw-secondary)" }}
+                  style={{ color: "var(--hw-text)" }}
                 >
                   {data.event.timeLabel}
                 </p>
                 {data.event.place ? (
-                  <p className="mt-2 text-sm" style={{ color: "var(--hw-muted)" }}>
+                  <p className="mt-2 text-sm font-normal" style={{ color: "var(--hw-muted)" }}>
                     <PlaceLink
                       place={data.event.place}
                       className="underline underline-offset-4"

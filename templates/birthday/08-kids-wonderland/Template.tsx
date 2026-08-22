@@ -10,7 +10,7 @@ const display = Bangers({
 
 const body = Nunito({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-body",
 });
 

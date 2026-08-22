@@ -41,13 +41,13 @@ const data: TemplateData = {
   },
   palette: {
     background: "#0B1628",
-    surface: "#152238",
-    primary: "#E62429",
-    secondary: "#1565C0",
+    surface: "#1A2F4A",
+    primary: "#FF4D55",
+    secondary: "#8EC5FF",
     accent: "#FFFFFF",
-    text: "#F8FAFC",
-    muted: "#94A3B8",
-    border: "#2A4A7A",
+    text: "#FFFFFF",
+    muted: "#C8D8EA",
+    border: "#3D5A80",
   },
   fonts: {
     display: "Bangers",
@@ -56,9 +56,19 @@ const data: TemplateData = {
   media: {
     photos: [
       {
-        src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=85",
-        alt: "Colourful party balloons",
-        caption: "HQ decorations",
+        src: "https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=1200&q=85",
+        alt: "Kids dressed as web-slinging heroes",
+        caption: "Hero squad assembled",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1541337076810-efaab169cb2d?w=1200&q=85",
+        alt: "Boy in a superhero mask and cape",
+        caption: "Birthday hero mode",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1529347599731-ec02b259c9f0?w=1200&q=85",
+        alt: "Boy holding blue and red party balloons",
+        caption: "HQ balloon drop",
       },
       {
         src: "https://images.unsplash.com/photo-1558304970-27d9f2fadc29?w=1200&q=85",
@@ -67,13 +77,8 @@ const data: TemplateData = {
       },
       {
         src: "https://images.unsplash.com/photo-1515488042361-ee00e17d4b44?w=1200&q=85",
-        alt: "Kids celebrating",
-        caption: "Hero squad",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=85",
-        alt: "Kid having fun",
-        caption: "Mission fun",
+        alt: "Kids celebrating at a birthday party",
+        caption: "Mission complete",
       },
     ],
   },
