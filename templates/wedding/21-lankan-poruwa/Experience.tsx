@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { useEffect, useState, type ReactNode } from "react";
 import { ParticleField } from "@/templates/_shared/components/ParticleField";
+import { PetalFall } from "@/templates/_shared/components/PetalFall";
 import { Reveal } from "@/templates/_shared/components/Reveal";
 import { RsvpCard } from "@/templates/_shared/components/RsvpCard";
 import { ScrollHint } from "@/templates/_shared/components/ScrollHint";
@@ -20,6 +21,15 @@ import { themeStyle } from "@/templates/_shared/theme";
 import type { TemplateData } from "@/templates/_shared/types";
 
 const soft = [0.22, 1, 0.36, 1] as const;
+
+const petalColors = [
+  "#C9A227",
+  "#E8C96A",
+  "#FFF0D0",
+  "#F5E6C8",
+  "#E8D4A8",
+  "#D4A574",
+];
 
 const displayFont = "font-[family-name:var(--font-display)]";
 const accentFont = "font-[family-name:var(--font-accent)]";
@@ -231,6 +241,14 @@ function OilLampGate({
     >
       <TextureOverlay variant="paper" opacity={0.45} />
       {heroImage ? <HeroBackground src={heroImage.src} alt={heroImage.alt} /> : null}
+      {!reduce ? (
+        <PetalFall
+          fixed={false}
+          count={22}
+          colors={petalColors}
+          className="z-0 opacity-75"
+        />
+      ) : null}
       <ParticleField
         variant="bokeh"
         count={20}
@@ -260,7 +278,7 @@ function OilLampGate({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8, ease: soft }}
         >
-          <Kicker color="#C9A227">පෝරුව මංගල්‍යය</Kicker>
+          <Kicker color="#C9A227">පෝරු මංගල්‍යය</Kicker>
         </motion.div>
 
         {subhead ? (
@@ -305,7 +323,7 @@ function OilLampGate({
           whileHover={reduce ? undefined : { scale: 1.04 }}
           whileTap={{ scale: 0.98 }}
         >
-          පහන දල්වන්න
+          පහන දල්වමු
         </motion.button>
       </motion.div>
     </motion.div>
@@ -385,10 +403,13 @@ export function Experience({ data }: { data: TemplateData }) {
       </AnimatePresence>
 
       <TextureOverlay variant="paper" opacity={0.35} />
+      {opened && !reduce ? (
+        <PetalFall count={44} colors={petalColors} className="opacity-90" />
+      ) : null}
       {opened ? (
         <ParticleField
           variant="bokeh"
-          count={18}
+          count={14}
           colors={[
             "rgba(201,162,39,0.35)",
             "rgba(255,213,106,0.22)",
@@ -438,7 +459,7 @@ export function Experience({ data }: { data: TemplateData }) {
               animate={opened ? { opacity: 1, y: 0 } : undefined}
               transition={{ delay: 0.25, duration: 0.8, ease: soft }}
             >
-              <Kicker>පෝරුව මංගල්‍යය</Kicker>
+              <Kicker>පෝරු මංගල්‍යය</Kicker>
             </motion.div>
 
             {data.copy.subhead ? (
@@ -523,7 +544,7 @@ export function Experience({ data }: { data: TemplateData }) {
         {chapters.length > 0 ? (
           <section className="relative mx-auto max-w-2xl px-6 pb-8">
             <Reveal>
-              <Kicker className="mb-12 text-center">සම්ප්‍රදාය</Kicker>
+              <Kicker className="mb-12 text-center">මංගල්‍ය සිරිත්</Kicker>
             </Reveal>
 
             <div className="relative">
@@ -594,7 +615,7 @@ export function Experience({ data }: { data: TemplateData }) {
         {data.media.photos.length > 0 ? (
           <section className="mx-auto max-w-5xl px-6 py-16">
             <Reveal>
-              <Kicker className="mb-10 text-center">අපේ ගැලරිය</Kicker>
+              <Kicker className="mb-10 text-center">අපේ මතක</Kicker>
             </Reveal>
             <div className="grid gap-4 sm:grid-cols-3">
             {data.media.photos.map((photo, index) => (
@@ -668,7 +689,7 @@ export function Experience({ data }: { data: TemplateData }) {
               className={`mt-3 ${accentFont} text-base font-medium`}
               style={{ color: "var(--hw-muted)" }}
             >
-              දෙමාපියන්ගේ ආශීර්වාදයෙන්
+              මාපියන්ගේ ආශීර්වාදයෙන්
             </p>
           </Reveal>
         </footer>

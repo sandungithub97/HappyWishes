@@ -16,11 +16,16 @@ type Petal = {
 type Props = {
   colors?: string[];
   count?: number;
+  className?: string;
+  /** When false, canvas is absolute (for gates/modals). Default: fixed full viewport. */
+  fixed?: boolean;
 };
 
 export function PetalFall({
   colors = ["#F7C1D0", "#E8A0B4", "#FFD6E0", "#F4B8C5"],
   count = 48,
+  className,
+  fixed = true,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -109,7 +114,7 @@ export function PetalFall({
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-30"
+      className={`pointer-events-none inset-0 z-30 ${fixed ? "fixed" : "absolute"} ${className ?? ""}`}
       aria-hidden
     />
   );
