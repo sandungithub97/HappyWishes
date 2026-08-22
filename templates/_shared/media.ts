@@ -46,6 +46,9 @@ export function bindMedia(
   return {
     ...data,
     media: {
+      heroImage: data.media.heroImage
+        ? { ...data.media.heroImage, src: image(data.media.heroImage.src) }
+        : undefined,
       photos: data.media.photos.map((photo) => ({
         ...photo,
         src: image(photo.src),

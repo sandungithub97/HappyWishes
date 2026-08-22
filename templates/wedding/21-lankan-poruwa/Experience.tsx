@@ -43,6 +43,22 @@ function Kicker({
   );
 }
 
+function HeroBackground({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority
+        sizes="100vw"
+        className="object-contain object-center"
+        style={{ opacity: 0.2 }}
+      />
+    </div>
+  );
+}
+
 function GoldRule() {
   return (
     <svg
@@ -170,10 +186,12 @@ function OilLamp({ lit }: { lit: boolean }) {
 function OilLampGate({
   names,
   subhead,
+  heroImage,
   onOpen,
 }: {
   names: string;
   subhead?: string;
+  heroImage?: { src: string; alt: string };
   onOpen: () => void;
 }) {
   const reduce = useReducedMotion();
@@ -212,6 +230,7 @@ function OilLampGate({
       }
     >
       <TextureOverlay variant="paper" opacity={0.45} />
+      {heroImage ? <HeroBackground src={heroImage.src} alt={heroImage.alt} /> : null}
       <ParticleField
         variant="bokeh"
         count={20}
@@ -359,6 +378,7 @@ export function Experience({ data }: { data: TemplateData }) {
             key="gate"
             names={couple}
             subhead={data.copy.subhead}
+            heroImage={data.media.heroImage}
             onOpen={() => setOpened(true)}
           />
         ) : null}
@@ -387,6 +407,12 @@ export function Experience({ data }: { data: TemplateData }) {
         transition={{ duration: 1.05, ease: soft, delay: opened ? 0.05 : 0 }}
       >
         <section className="relative flex min-h-svh flex-col items-center justify-center px-6 py-24 text-center">
+          {data.media.heroImage ? (
+            <HeroBackground
+              src={data.media.heroImage.src}
+              alt={data.media.heroImage.alt}
+            />
+          ) : null}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
@@ -397,7 +423,7 @@ export function Experience({ data }: { data: TemplateData }) {
             }}
           />
 
-          <motion.div style={{ y: heroY, opacity: heroFade }} className="relative">
+          <motion.div style={{ y: heroY, opacity: heroFade }} className="relative z-10">
             <motion.div
               initial={reduce || !opened ? false : { opacity: 0, scale: 0.9 }}
               animate={opened ? { opacity: 1, scale: 1 } : undefined}
@@ -566,7 +592,11 @@ export function Experience({ data }: { data: TemplateData }) {
         ) : null}
 
         {data.media.photos.length > 0 ? (
-          <section className="mx-auto grid max-w-5xl gap-4 px-6 py-16 sm:grid-cols-3">
+          <section className="mx-auto max-w-5xl px-6 py-16">
+            <Reveal>
+              <Kicker className="mb-10 text-center">අපේ ගැලරිය</Kicker>
+            </Reveal>
+            <div className="grid gap-4 sm:grid-cols-3">
             {data.media.photos.map((photo, index) => (
               <Reveal key={photo.src} delay={index * 0.08}>
                 <div
@@ -593,6 +623,7 @@ export function Experience({ data }: { data: TemplateData }) {
                 </div>
               </Reveal>
             ))}
+            </div>
           </section>
         ) : null}
 

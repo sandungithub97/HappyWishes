@@ -181,6 +181,7 @@ export type TemplateData = {
   palette: Palette;
   fonts: Fonts;
   media: {
+    heroImage?: Photo;
     photos: Photo[];
     music?: MusicTrack;
     video?: {

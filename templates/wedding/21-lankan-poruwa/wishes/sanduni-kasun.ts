@@ -7,6 +7,8 @@
  *
  * Photos / music / video — use either:
  *   src: "https://..."        any image or file URL
+ *   src: "/media/wedding/21-lankan-poruwa/images/wed.jpeg"
+ *                             design-level folder (shared across wishes)
  *   src: "hero.jpg"           public/media/.../wishes/{wishId}/images/hero.jpg
  *
  * meta.wishId must match this filename (without .ts).
@@ -59,18 +61,22 @@ const data: TemplateData = {
     body: "Yaldevi",
   },
   media: {
+    heroImage: {
+      src: "/media/wedding/21-lankan-poruwa/images/bg_img.png",
+      alt: "මනාල දඹයා",
+    },
     photos: [
       {
-        src: "https://images.unsplash.com/photo-1582510003544-bf48bdd9b3b5?w=1200&q=80",
-        alt: "ක්ෂේත්‍ර වාස්තු විද්‍යාව",
+        src: "/media/wedding/21-lankan-poruwa/images/wed.jpeg",
+        alt: "සඳුනි සහ කසුන්",
       },
       {
-        src: "https://images.unsplash.com/photo-1548013146-724950e3d0c7?w=1200&q=80",
-        alt: "ශ්‍රී ලංකාවේ භූ දර්ශනය",
+        src: "/media/wedding/21-lankan-poruwa/images/wed2.jpg",
+        alt: "අපේ මතකය",
       },
       {
-        src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
-        alt: "විවාහ ඡායාරූපය",
+        src: "/media/wedding/21-lankan-poruwa/images/wed3.jpg",
+        alt: "එකට එකතු වූ අවස්ථාව",
       },
     ],
   },
