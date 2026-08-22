@@ -71,13 +71,13 @@ const data: TemplateData = {
         caption: "HQ balloon drop",
       },
       {
-        src: "https://images.unsplash.com/photo-1558304970-27d9f2fadc29?w=1200&q=85",
-        alt: "Birthday cake with candles",
+        src: "https://images.unsplash.com/photo-1608790672275-309c02d888ff?w=1200&q=85",
+        alt: "Kids blowing out birthday cake candles",
         caption: "Power-up cake",
       },
       {
-        src: "https://images.unsplash.com/photo-1515488042361-ee00e17d4b44?w=1200&q=85",
-        alt: "Kids celebrating at a birthday party",
+        src: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=85",
+        alt: "Happy kid celebrating at a birthday party",
         caption: "Mission complete",
       },
     ],
