@@ -1,14 +1,16 @@
 /**
  * PERSONALIZE THIS FILE ONLY.
- * Names, dates, copy, photos, colors, and music all live here.
  *
- * Character art lives in:
- *   public/media/birthday/19-anime-wish/wishes/{wishId}/images/
+ * Design-level art: public/media/birthday/19-anime-wish/images/
+ * Wish-level art:   public/media/birthday/19-anime-wish/wishes/{wishId}/images/
  *
  * meta.wishId must match this filename (without .ts).
  * URL: /{occasion}/{slug}/{wishId}
  */
 import type { TemplateData } from "@/templates/_shared/types";
+
+const design = (file: string) =>
+  `/media/birthday/19-anime-wish/images/${file}`;
 
 const data: TemplateData = {
   meta: {
@@ -16,8 +18,8 @@ const data: TemplateData = {
     slug: "anime-wish",
     wishId: "hana",
     name: "Anime Wish",
-    mood: "Anime movie world — comet sky, cartoon heroes, soft bloom light",
-    standout: "Illustrated characters with idle motion, scene wipes, sparkle FX, cinematic gate",
+    mood: "Anime movie night — comet twilight, soft bloom, cinematic scroll",
+    standout: "Cinematic gate, parallax sky, triptych gallery, comet scroll trail",
     buildPhase: 4,
   },
   people: [{ name: "Hana", role: "Birthday star" }],
@@ -31,10 +33,10 @@ const data: TemplateData = {
     },
   },
   copy: {
-    headline: "Welcome to her movie night",
+    headline: "Her story continues tonight",
     subhead: "アニメの世界へ",
     message:
-      "Hana — tonight the sky opens like an opening theme. A comet for courage, a spirit for luck, and a whole anime world cheering your name. Level up another year. Happy birthday, main character.",
+      "Hana — the sky splits open like an opening theme. A comet for courage, a cat spirit for luck, and a whole cast cheering your name. Level up another year. Happy birthday, main character.",
     cta: "Join her episode",
   },
   palette: {
@@ -52,21 +54,25 @@ const data: TemplateData = {
     body: "Noto Sans JP",
   },
   media: {
+    heroImage: {
+      src: design("anime.png"),
+      alt: "Hana with her spirit cat",
+    },
     photos: [
       {
-        src: "anime-world-sky.png",
-        alt: "Anime dusk sky world",
-        caption: "World map",
+        src: design("anime.png"),
+        alt: "Main character portrait",
+        caption: "Episode 18 — Hana",
       },
       {
-        src: "anime-hero-girl.png",
-        alt: "Anime birthday heroine",
-        caption: "Heroine",
+        src: design("anime1.png"),
+        alt: "Spirit guardian",
+        caption: "Spirit realm",
       },
       {
-        src: "anime-spirit-fox.png",
-        alt: "Cute spirit companion",
-        caption: "Spirit friend",
+        src: design("anime2.png"),
+        alt: "Celebration mode",
+        caption: "After-party arc",
       },
     ],
     music: {
@@ -77,6 +83,23 @@ const data: TemplateData = {
   extras: {
     backgroundMusic: true,
     milestoneAge: 18,
+    timeline: [
+      {
+        label: "Act I",
+        title: "Twilight gate",
+        body: "The comet crosses. You step into her movie world.",
+      },
+      {
+        label: "Act II",
+        title: "Character scroll",
+        body: "Three frames — main cast, spirit guide, celebration mode.",
+      },
+      {
+        label: "Act III",
+        title: "Birthday scene",
+        body: "Rooftop party under the same sky as the opening credits.",
+      },
+    ],
     rsvp: {
       enabled: true,
       note: "Enter the world — reply by 10 September.",
