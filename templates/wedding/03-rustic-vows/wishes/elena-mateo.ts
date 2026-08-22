@@ -58,13 +58,17 @@ const data: TemplateData = {
     body: "Nunito Sans",
   },
   media: {
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1600&q=80",
+      alt: "Elena and Mateo — garden wedding",
+    },
     photos: [
       {
         src: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1200&q=80",
         alt: "Outdoor wedding tables",
       },
       {
-        src: "https://images.unsplash.com/photo-1478146893571-ce65caea764c?w=1200&q=80",
+        src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1200&q=80",
         alt: "Garden ceremony",
       },
       {

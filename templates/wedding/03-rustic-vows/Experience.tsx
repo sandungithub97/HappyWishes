@@ -9,6 +9,7 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { PetalFall } from "@/templates/_shared/components/PetalFall";
 import { ParticleField } from "@/templates/_shared/components/ParticleField";
 import { Reveal } from "@/templates/_shared/components/Reveal";
 import { RsvpCard } from "@/templates/_shared/components/RsvpCard";
@@ -20,6 +21,107 @@ import { themeStyle } from "@/templates/_shared/theme";
 import type { TemplateData } from "@/templates/_shared/types";
 
 const soft = [0.22, 1, 0.36, 1] as const;
+
+const LEAF_COLORS = ["#6B7F5A", "#8FA87A", "#A65D3F", "#C4A882", "#D9CBB6"];
+
+function GardenBackground({ src, alt }: { src: string; alt: string }) {
+  return (
+    <motion.div
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.35, ease: soft, delay: 0.1 }}
+      aria-hidden
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center"
+        style={{ opacity: 0.2 }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `
+            linear-gradient(180deg, color-mix(in srgb, var(--hw-bg) 50%, transparent) 0%, color-mix(in srgb, var(--hw-bg) 30%, transparent) 40%, color-mix(in srgb, var(--hw-bg) 65%, transparent) 100%),
+            radial-gradient(ellipse at 20% 10%, color-mix(in srgb, var(--hw-accent) 18%, transparent), transparent 45%)
+          `,
+        }}
+      />
+    </motion.div>
+  );
+}
+
+function AmbientGlow() {
+  const reduce = useReducedMotion();
+  if (reduce) return null;
+
+  return (
+    <motion.div
+      className="pointer-events-none fixed inset-0 z-[3]"
+      aria-hidden
+      animate={{ opacity: [0.3, 0.5, 0.3] }}
+      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      style={{
+        background: `
+          radial-gradient(ellipse at 30% 15%, color-mix(in srgb, var(--hw-accent) 35%, transparent), transparent 50%),
+          radial-gradient(ellipse at 75% 25%, color-mix(in srgb, var(--hw-primary) 18%, transparent), transparent 42%)
+        `,
+      }}
+    />
+  );
+}
+
+function FloatingPollen() {
+  const reduce = useReducedMotion();
+  if (reduce) return null;
+
+  const motes = Array.from({ length: 14 }, (_, i) => ({
+    id: i,
+    left: `${(i * 23) % 100}%`,
+    top: `${(i * 17) % 100}%`,
+    size: 3 + (i % 4),
+    delay: (i % 7) * 0.6,
+    duration: 5 + (i % 5) * 1.2,
+    drift: (i % 2 === 0 ? 1 : -1) * (12 + (i % 4) * 6),
+  }));
+
+  return (
+    <div
+      className="pointer-events-none fixed inset-0 z-[6] overflow-hidden"
+      aria-hidden
+    >
+      {motes.map((m) => (
+        <motion.span
+          key={m.id}
+          className="absolute rounded-full"
+          style={{
+            left: m.left,
+            top: m.top,
+            width: m.size,
+            height: m.size,
+            background: "color-mix(in srgb, var(--hw-accent) 55%, #fff8e8)",
+            boxShadow: "0 0 8px color-mix(in srgb, var(--hw-accent) 40%, transparent)",
+          }}
+          animate={{
+            y: [0, -28, 0],
+            x: [0, m.drift, 0],
+            opacity: [0.2, 0.75, 0.2],
+          }}
+          transition={{
+            duration: m.duration,
+            delay: m.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 function GrowingVine({
   className,
@@ -361,6 +463,13 @@ export function Experience({ data }: { data: TemplateData }) {
         ) : null}
       </AnimatePresence>
 
+      {opened && data.media.heroImage ? (
+        <GardenBackground
+          src={data.media.heroImage.src}
+          alt={data.media.heroImage.alt}
+        />
+      ) : null}
+
       <TextureOverlay variant="paper" opacity={0.42} />
       {/* Soft watercolor wash */}
       <div
@@ -373,6 +482,14 @@ export function Experience({ data }: { data: TemplateData }) {
           `,
         }}
       />
+      {opened ? <AmbientGlow /> : null}
+      {opened ? (
+        <PetalFall
+          colors={LEAF_COLORS}
+          count={32}
+          className="z-[4] opacity-55"
+        />
+      ) : null}
       {opened ? (
         <ParticleField
           variant="bokeh"
@@ -382,10 +499,13 @@ export function Experience({ data }: { data: TemplateData }) {
             "rgba(166,93,63,0.2)",
             "rgba(255,248,235,0.25)",
           ]}
+          className="fixed inset-0 z-[5]"
         />
       ) : null}
+      {opened ? <FloatingPollen /> : null}
 
       <motion.div
+        className="relative z-10"
         initial={false}
         animate={
           opened
