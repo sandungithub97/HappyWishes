@@ -4,9 +4,8 @@
  *
  * Photos / music / video — use either:
  *   src: "https://..."        any image or file URL
+ *   src: "/media/birthday/08-kids-wonderland/images/party.jpg"
  *   src: "hero.jpg"           public/media/.../wishes/{wishId}/images/hero.jpg
- *   src: "background.mp3"     public/media/.../wishes/{wishId}/music/background.mp3
- *   src: "wish.mp4"           public/media/.../wishes/{wishId}/video/wish.mp4
  *
  * meta.wishId must match this filename (without .ts).
  * URL: /{occasion}/{slug}/{wishId}
@@ -19,8 +18,8 @@ const data: TemplateData = {
     slug: "kids-wonderland",
     wishId: "ayaan",
     name: "Kids' Wonderland",
-    mood: "Cartoon-bright, bouncing, simple",
-    standout: "Castle gate, star buddy mascot, sparkle field, photo wiggle",
+    mood: "Cartoon-bright, bouncing, playful scroll",
+    standout: "Castle doors open, emoji rain, parallax photos, party schedule",
     buildPhase: 4,
   },
   people: [{ name: "Ayaan", role: "Birthday kid" }],
@@ -34,7 +33,7 @@ const data: TemplateData = {
     },
   },
   copy: {
-    headline: "Ayaan is 7!",
+    headline: "Happy 7th Birthday!",
     subhead: "A wonderland afternoon",
     message:
       "Cupcakes, bubbles, and a very important dinosaur cake. Parents, you're invited too — juice boxes provided.",
@@ -55,23 +54,63 @@ const data: TemplateData = {
     body: "Quicksand",
   },
   media: {
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1527529482834-994677725fe3?w=1600&q=85",
+      alt: "Colourful balloon arch",
+    },
     photos: [
       {
-        src: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80",
-        alt: "Child laughing",
+        src: "https://images.unsplash.com/photo-1515488042361-ee00e17d4b44?w=1200&q=85",
+        alt: "Kids celebrating with balloons",
+        caption: "Balloon squad ready",
       },
       {
-        src: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800&q=80",
-        alt: "Birthday cake",
+        src: "https://images.unsplash.com/photo-1558304970-27d9f2fadc29?w=1200&q=85",
+        alt: "Birthday cake with candles",
+        caption: "Dino cake incoming",
       },
       {
-        src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80",
-        alt: "Balloons",
+        src: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=85",
+        alt: "Child blowing bubbles",
+        caption: "Bubble chase o'clock",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1576612478650-224608ba0a85?w=1200&q=85",
+        alt: "Colourful cupcakes on a tray",
+        caption: "Cupcake mountain",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=85",
+        alt: "Rainbow balloon bunch",
+        caption: "Wonderland colours",
       },
     ],
   },
   extras: {
     milestoneAge: 7,
+    stickers: ["🎈", "🦕", "⭐", "🧁", "🎉", "🎪"],
+    timeline: [
+      {
+        label: "4:00",
+        title: "Castle opens",
+        body: "Arrive, grab a juice box, and say hi to Star Buddy.",
+      },
+      {
+        label: "4:30",
+        title: "Dinosaur cake",
+        body: "The most important roar of the afternoon. Candles included.",
+      },
+      {
+        label: "5:00",
+        title: "Bubble chase",
+        body: "Grown-ups welcome. Competitive popping optional.",
+      },
+      {
+        label: "5:30",
+        title: "Goodie bags",
+        body: "Stickers, treats, and one very tired birthday kid.",
+      },
+    ],
     rsvp: {
       enabled: true,
       note: "Tell us if you're bringing siblings",
