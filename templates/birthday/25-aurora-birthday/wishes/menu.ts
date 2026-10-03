@@ -2,7 +2,7 @@
  * PERSONALIZE THIS FILE ONLY.
  * Names, dates, copy, photos, colors, and music all live here.
  *
- * Photos — use either:
+ * Photos, use either:
  *   src: "https://..."   any image URL
  *   src: "menu-1.jpg"    public/media/birthday/25-aurora-birthday/wishes/menu/images/menu-1.jpg
  * The first photo is the large tile in the gallery.
@@ -28,9 +28,9 @@ const data: TemplateData = {
     slug: "aurora-birthday",
     wishId: "menu",
     name: "Aurora Birthday",
-    mood: "Modern midnight aurora — blush, lavender, champagne glow",
+    mood: "Modern midnight aurora: blush, lavender, champagne glow",
     standout:
-      "Countdown gate, live life counter, glass letter, bento gallery, blow-out candle cake",
+      "Countdown gate, live life counter, glass letter, bento gallery, blow out candle cake",
     buildPhase: 7,
   },
   people: [{ name: "Menu", role: "To" }],
@@ -41,9 +41,9 @@ const data: TemplateData = {
   copy: {
     headline: "Happy Birthday, Menu",
     subhead:
-      "Twenty-four looks beautiful on you. Today the whole world gets to celebrate the most special person in it.",
+      "Twenty four looks beautiful on you. Today the whole world gets to celebrate the most special person in it.",
     message:
-      "Happy birthday to the girl who makes ordinary days feel like something worth remembering. Twenty-four years ago today, the world got a little brighter — and somehow you keep making it brighter every single day. Your smile, your kindness, the way you care so deeply about the people around you… it's rare, and it's beautiful. I hope this year gives back everything you give to everyone else: endless laughter, big dreams coming true, quiet moments of peace, and people who love you loudly. Never stop being exactly who you are. Today is all about you — enjoy every single second of it.",
+      "Happy birthday to the girl who makes ordinary days feel like something worth remembering. Twenty four years ago today, the world got a little brighter, and somehow you keep making it brighter every single day. Your smile, your kindness, the way you care so deeply about the people around you… it's rare, and it's beautiful. I hope this year gives back everything you give to everyone else: endless laughter, big dreams coming true, quiet moments of peace, and people who love you loudly. Never stop being exactly who you are. Today is all about you, so enjoy every single second of it.",
     cta: "Today is yours",
   },
   palette: {
@@ -70,7 +70,7 @@ const data: TemplateData = {
       {
         src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=85",
         alt: "Birthday balloons",
-        caption: "Twenty-four",
+        caption: "Twenty four",
       },
       {
         src: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=900&q=85",
@@ -109,12 +109,12 @@ const data: TemplateData = {
       {
         label: "01",
         title: "Endless laughter",
-        body: "The kind that makes your eyes water and your cheeks hurt — every single week.",
+        body: "The kind that makes your eyes water and your cheeks hurt, every single week.",
       },
       {
         label: "02",
         title: "Dreams coming true",
-        body: "Every goal you've been quietly chasing — may this be the year it finally happens.",
+        body: "Every goal you've been quietly chasing. May this be the year it finally happens.",
       },
       {
         label: "03",
@@ -129,7 +129,7 @@ const data: TemplateData = {
       {
         label: "05",
         title: "People who cherish you",
-        body: "Friends and family who see how special you are — and tell you often.",
+        body: "Friends and family who see how special you are, and tell you often.",
       },
       {
         label: "06",

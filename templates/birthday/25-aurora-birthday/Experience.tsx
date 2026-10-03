@@ -382,7 +382,7 @@ function BirthdayStatus({ date }: { date?: string }) {
   if (now - start < DAY_MS) {
     return (
       <span>
-        <span style={{ color: "var(--hw-accent)" }}>●</span> It&apos;s your day — right now
+        <span style={{ color: "var(--hw-accent)" }}>●</span> It&apos;s your day, right now
       </span>
     );
   }
@@ -664,13 +664,13 @@ function LifeCounter({ birthMs, age }: { birthMs: number; age: number }) {
   const lived = now === null ? null : Math.max(0, now - birthMs);
 
   const tiles = [
-    { label: "Days", value: lived === null ? "—" : formatNumber(lived / DAY_MS) },
-    { label: "Hours", value: lived === null ? "—" : formatNumber(lived / 3_600_000) },
-    { label: "Minutes", value: lived === null ? "—" : formatNumber(lived / 60_000) },
-    { label: "Seconds", value: lived === null ? "—" : formatNumber(lived / 1000) },
+    { label: "Days", value: lived === null ? "…" : formatNumber(lived / DAY_MS) },
+    { label: "Hours", value: lived === null ? "…" : formatNumber(lived / 3_600_000) },
+    { label: "Minutes", value: lived === null ? "…" : formatNumber(lived / 60_000) },
+    { label: "Seconds", value: lived === null ? "…" : formatNumber(lived / 1000) },
   ];
 
-  const heartbeats = lived === null ? "—" : formatNumber((lived / 60_000) * 80);
+  const heartbeats = lived === null ? "…" : formatNumber((lived / 60_000) * 80);
 
   return (
     <section className="relative mx-auto max-w-5xl px-6 py-24 sm:py-32">
@@ -715,7 +715,7 @@ function LifeCounter({ birthMs, age }: { birthMs: number; age: number }) {
           <span className="font-semibold tabular-nums" style={{ color: "var(--hw-primary)" }}>
             {heartbeats}
           </span>{" "}
-          heartbeats and {age} trips around the sun — and every one of them made the world better.
+          heartbeats and {age} trips around the sun, and every one of them made the world better.
         </p>
       </Reveal>
     </section>
