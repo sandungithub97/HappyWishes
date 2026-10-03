@@ -63,7 +63,7 @@ const data: TemplateData = {
   media: {
     photos: [
       {
-        src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1400&q=85",
+        src: "birthdaygirl.jpeg",
         alt: "Portrait of Menu",
         caption: "The birthday girl ✨",
       },
