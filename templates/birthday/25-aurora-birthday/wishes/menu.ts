@@ -78,11 +78,6 @@ const data: TemplateData = {
         caption: "Sweetest day",
       },
       {
-        src: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900&q=85",
-        alt: "Smiling portrait",
-        caption: "That smile",
-      },
-      {
         src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&q=85",
         alt: "Celebration lights",
         caption: "Celebrate you",

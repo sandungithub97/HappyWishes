@@ -1355,7 +1355,13 @@ export function Experience({ data }: { data: TemplateData }) {
                   <Reveal
                     key={`${photo.src}-${i}`}
                     delay={(i % 4) * 0.07}
-                    className={i === 0 ? "col-span-2 row-span-2" : ""}
+                    className={
+                      i === 0
+                        ? "col-span-2 row-span-2"
+                        : i === photos.length - 1 && photos.length % 2 === 0
+                          ? "col-span-2"
+                          : ""
+                    }
                   >
                     <motion.figure
                       className="group relative h-full w-full overflow-hidden rounded-[1.5rem] border"
