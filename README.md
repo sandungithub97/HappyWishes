@@ -289,6 +289,7 @@ Graphic enhancement phases **0–7** are complete (shared FX, all 21 designs, fi
 | Golden Years | `/birthday/golden-years/lakshmi` | Album gate, Ken Burns |
 | Surprise Reveal | `/birthday/surprise-reveal/priya` | Gift-box unwrap |
 | Anime Wish | `/birthday/anime-wish/hana` | Character art, scene wipes |
+| Aurora Birthday | `/birthday/aurora-birthday/menu` | Countdown gate, live life counter, blow-out cake |
 
 **Anniversary**
 

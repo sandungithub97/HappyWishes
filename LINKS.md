@@ -51,6 +51,7 @@ Swap the host if you use a custom domain. Paths stay the same.
 | Surprise Reveal | priya | https://happy-wishes-eight.vercel.app/birthday/surprise-reveal/priya |
 | Anime Wish | hana | https://happy-wishes-eight.vercel.app/birthday/anime-wish/hana |
 | Lovely GF Birthday | aria | https://happy-wishes-eight.vercel.app/birthday/lovely-gf-birthday/aria |
+| Aurora Birthday | menu | https://happy-wishes-eight.vercel.app/birthday/aurora-birthday/menu |
 
 ### Anniversary
 
@@ -135,6 +136,7 @@ http://localhost:3000/birthday/golden-years/lakshmi
 http://localhost:3000/birthday/surprise-reveal/priya
 http://localhost:3000/birthday/anime-wish/hana
 http://localhost:3000/birthday/lovely-gf-birthday/aria
+http://localhost:3000/birthday/aurora-birthday/menu
 
 http://localhost:3000/anniversary/still-us/hannah-theo
 http://localhost:3000/anniversary/years-of-us/ravi-anjali
@@ -178,6 +180,7 @@ http://localhost:3000/signature/ask-for-a-date/luna
 22 Lovely GF Birthday           birthday
 23 Do You Love Me?              signature
 24 Ask For A Date               signature
+25 Aurora Birthday              birthday
 ```
 
 Example — set Ask For A Date live:

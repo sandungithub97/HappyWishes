@@ -1,7 +1,7 @@
 /**
  * Pick what guests see at /
  *
- * LIVE_TEMPLATE = design number (1–24)
+ * LIVE_TEMPLATE = design number (1–25)
  * LIVE_WISH     = wishId from wishes/{wishId}.ts (URL ending)
  *
  * Example Sakura Vows wishes:
@@ -32,6 +32,7 @@
  * 22 Lovely GF Birthday           birthday
  * 23 Do You Love Me?              signature
  * 24 Ask For A Date               signature
+ * 25 Aurora Birthday              birthday
  */
 export const LIVE_TEMPLATE = 24;
 export const LIVE_WISH = "luna";
